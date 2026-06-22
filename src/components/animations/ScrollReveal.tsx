@@ -38,7 +38,7 @@ export function ScrollReveal({
       transition: { 
         duration, 
         delay, 
-        ease: [0.21, 0.47, 0.32, 0.98],
+        ease: [0.21, 0.47, 0.32, 0.98] as [number, number, number, number],
         staggerChildren: staggerChildren || 0,
         delayChildren: delay
       }
