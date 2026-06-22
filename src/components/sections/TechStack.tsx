@@ -1,5 +1,5 @@
 "use client"
-import { motion } from 'framer-motion'
+import { motion, type Variants } from 'framer-motion'
 import { Typography } from '@/components/ui/Typography'
 
 const techCategories = [
@@ -33,7 +33,19 @@ const techCategories = [
   }
 ]
 
-import { ScrollReveal, revealItemVariants } from '@/components/animations/ScrollReveal'
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: [0.21, 0.47, 0.32, 0.98] as [number, number, number, number]
+    }
+  }
+}
+
+import { ScrollReveal } from '@/components/animations/ScrollReveal'
 export function TechStackSection() {
   return (
     <section
@@ -51,7 +63,7 @@ export function TechStackSection() {
         {techCategories.map((group, idx) => (
           <motion.div 
             key={idx} 
-            variants={revealItemVariants}
+            variants={itemVariants}
             className="flex flex-col gap-5"
           >
             <Typography variant="small" className="uppercase tracking-widest text-zinc-400 dark:text-zinc-600 font-bold text-xs transition-colors">

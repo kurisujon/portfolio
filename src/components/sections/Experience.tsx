@@ -1,5 +1,5 @@
 "use client"
-import { motion } from 'framer-motion'
+import { motion, type Variants } from 'framer-motion'
 import { Typography } from '@/components/ui/Typography'
 
 const experiences = [
@@ -17,7 +17,17 @@ const experiences = [
   }
 ]
 
-import { ScrollReveal, revealItemVariants } from '@/components/animations/ScrollReveal'
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: [0.21, 0.47, 0.32, 0.98] as [number, number, number, number]
+    }
+  }
+}
 
 export function ExperienceSection() {
   return (
@@ -38,7 +48,7 @@ export function ExperienceSection() {
           {experiences.map((exp, index) => (
             <motion.div 
               key={index} 
-              variants={revealItemVariants}
+              variants={itemVariants}
               className="relative pl-12 md:pl-20 group"
             >
               {/* Glowing Timeline Node */}
