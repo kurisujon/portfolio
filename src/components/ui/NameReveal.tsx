@@ -27,7 +27,7 @@ export const NameReveal: React.FC<NameRevealProps> = ({ text, className }) => {
         transition={{ 
           duration: 0.9, 
           times: [0, 0.5, 1],
-          ease: [0.77, 0, 0.175, 1],
+          ease: [0.77, 0, 0.175, 1] as [number, number, number, number],
           delay: 0.2
         }}
         className="absolute inset-0 bg-white z-20"

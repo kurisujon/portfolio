@@ -22,7 +22,7 @@ export function HeroSection() {
       y: 0,
       transition: {
         duration: 0.8,
-        ease: [0.21, 1, 0.36, 1]
+        ease: [0.21, 1, 0.36, 1] as [number, number, number, number]
       }
     }
   }

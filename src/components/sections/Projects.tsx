@@ -125,7 +125,7 @@ export function ProjectsSection() {
                   zIndex: isExpanded ? 20 : 1
                 }}
                 transition={{
-                  layout: { duration: 0.7, ease: [0.23, 1, 0.32, 1] },
+                  layout: { duration: 0.7, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] },
                   opacity: { duration: 0.5 },
                   scale: { duration: 0.5 }
                 }}
