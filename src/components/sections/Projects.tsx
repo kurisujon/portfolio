@@ -26,8 +26,8 @@ const projectsData = [
   { 
     id: 1,
     title: "Studflow", 
-    description: "AI-powered study workflow system converting PDFs to interactive learning tools.",
-    longDescription: "A comprehensive monorepo application integrating Next.js, FastAPI, Celery, and Gemini. It processes learning materials asynchronously to generate summaries, flashcards, quizzes, and offers an AI-explained interactive study workspace.",
+    description: "An AI-powered web application that transforms study documents into summaries, flashcards, quizzes, and notes.",
+    longDescription: "A comprehensive application integrating Next.js, FastAPI, Celery, and Gemini. It transforms study documents into interactive learning workflows using Large Language Models to generate summaries, flashcards, quizzes, and an AI-explained interactive study workspace.",
     technologies: ["Next.js", "FastAPI", "PostgreSQL", "Celery", "Redis", "Gemini"],
     features: ["Asynchronous document processing", "AI-generated quizzes & flashcards", "Interactive study workspace", "Clerk Authentication"],
     liveUrl: "https://studflow.webcris.dev/",
@@ -35,13 +35,13 @@ const projectsData = [
   },
   { 
     id: 2,
-    title: "Project Beta", 
-    description: "High-performance ecommerce architecture using Next.js.",
-    longDescription: "A scalable ecommerce solution designed for high traffic and seamless user experience. Includes advanced features like real-time inventory management and personalized recommendations.",
-    technologies: ["React", "Node.js", "PostgreSQL", "Redis"],
-    features: ["Server-side rendering", "Dynamic pricing engine", "Multi-region support"],
-    liveUrl: "#",
-    githubUrl: "#"
+    title: "Veldra", 
+    description: "A Smart Document Verification Platform tailored for checking student visa application documents.",
+    longDescription: "It automates the extraction and cross-referencing of critical data across documents using Next.js and Supabase, streamlining the student visa verification process.",
+    technologies: ["Next.js", "Supabase", "TypeScript", "Tailwind"],
+    features: ["Automated data extraction", "Cross-referencing documents", "Smart verification workflows"],
+    liveUrl: "https://veldra-sand.vercel.app/",
+    githubUrl: "https://github.com/kurisujon/veldra.git"
   },
   { 
     id: 3,

@@ -78,7 +78,7 @@ export function HeroSection() {
             whileTap={{ scale: 0.98 }}
             className="flex items-center justify-center gap-2 bg-[#3b82f6] text-white px-8 py-3.5 rounded-md font-bold text-sm transition-all"
           >
-            [ View Projects ]
+            View Projects
           </motion.a>
           <motion.a 
             href="#contact"
