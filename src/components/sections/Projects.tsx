@@ -1,5 +1,6 @@
 "use client"
 import { useState } from 'react'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Typography } from '@/components/ui/Typography'
 import { Card } from '@/components/ui/Card'
@@ -26,6 +27,7 @@ const projectsData = [
   { 
     id: 1,
     title: "Studflow", 
+    image: "/studflow_preview.jpg",
     description: "An AI-powered web application that transforms study documents into summaries, flashcards, quizzes, and notes.",
     longDescription: "A comprehensive application integrating Next.js, FastAPI, Celery, and Gemini. It transforms study documents into interactive learning workflows using Large Language Models to generate summaries, flashcards, quizzes, and an AI-explained interactive study workspace.",
     technologies: ["Next.js", "FastAPI", "PostgreSQL", "Celery", "Redis", "Gemini"],
@@ -36,6 +38,7 @@ const projectsData = [
   { 
     id: 2,
     title: "Veldra", 
+    image: "/veldra_preview.jpg",
     description: "A Smart Document Verification Platform tailored for checking student visa application documents.",
     longDescription: "It automates the extraction and cross-referencing of critical data across documents using Next.js and Supabase, streamlining the student visa verification process.",
     technologies: ["Next.js", "Supabase", "TypeScript", "Tailwind"],
@@ -46,6 +49,7 @@ const projectsData = [
   { 
     id: 3,
     title: "Project Gamma", 
+    image: "/gamma_preview.jpg",
     description: "Minimalist task management system with offline capabilities.",
     longDescription: "A productivity tool that focuses on speed and simplicity. It works fully offline and syncs automatically when a connection is restored, ensuring you never lose your flow.",
     technologies: ["TypeScript", "PWA", "IndexedDB", "Framer Motion"],
@@ -56,6 +60,7 @@ const projectsData = [
   { 
     id: 4,
     title: "Project Delta", 
+    image: "/delta_preview.jpg",
     description: "Automated workflow engine integrating multiple third-party APIs.",
     longDescription: "A powerful automation platform that connects your favorite tools. Build complex multi-step workflows with a visual builder and monitor executions in real-time.",
     technologies: ["Laravel", "Inertia.js", "Vue.js", "AWS"],
@@ -131,7 +136,32 @@ export function ProjectsSection() {
                 }}
                 className={`${isExpanded ? 'md:col-span-2 order-first' : ''}`}
               >
-                <Card className={`relative flex flex-col gap-5 p-8 h-full bg-zinc-50 dark:bg-white/[0.02] border border-zinc-200/50 dark:border-white/5 transition-all duration-500 ease-out ${isExpanded ? 'border-zinc-300 dark:border-white/20 ring-1 ring-zinc-300/50 dark:ring-white/10 shadow-2xl bg-zinc-100/50 dark:bg-white/[0.04]' : ''}`}>
+                <Card className={`relative flex flex-col gap-5 h-full bg-zinc-50 dark:bg-white/[0.02] border border-zinc-200/50 dark:border-white/5 transition-all duration-500 ease-out overflow-hidden ${isExpanded ? 'p-8 border-zinc-300 dark:border-white/20 ring-1 ring-zinc-300/50 dark:ring-white/10 shadow-2xl bg-zinc-100/50 dark:bg-white/[0.04]' : 'p-0'}`}>
+                  
+                  {/* Project Preview Image — only visible in collapsed state */}
+                  <AnimatePresence>
+                    {!isExpanded && (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="relative w-full h-44 overflow-hidden"
+                      >
+                        <Image
+                          src={project.image}
+                          alt={`${project.title} preview`}
+                          fill
+                          className="object-cover object-top"
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-zinc-50 dark:to-[#171717]" />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
+                  {/* Card content wrapper with padding */}
+                  <div className={`flex flex-col gap-5 flex-1 ${isExpanded ? '' : 'px-6 pb-6'}`}>
                   
                   {/* Close/Minimize Button */}
                   <AnimatePresence>
@@ -226,7 +256,7 @@ export function ProjectsSection() {
                   </div>
 
                   {!isExpanded && (
-                    <motion.div layout="position" className="pt-4 mt-auto">
+                    <motion.div layout="position" className="pt-4 mt-auto px-6 pb-6">
                       <button 
                         onClick={() => handleToggle(project.id)}
                         className="group flex items-center gap-2 bg-transparent border border-zinc-300 dark:border-white/20 hover:border-zinc-500 dark:hover:border-white/40 text-zinc-900 dark:text-white px-6 py-2.5 text-sm rounded-full transition-all font-medium active:scale-95"
@@ -236,6 +266,7 @@ export function ProjectsSection() {
                       </button>
                     </motion.div>
                   )}
+                  </div>
                 </Card>
               </motion.div>
             )
