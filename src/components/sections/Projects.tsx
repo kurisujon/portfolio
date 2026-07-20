@@ -261,8 +261,6 @@ export function ProjectsSection() {
                         </motion.div>
                       )}
                     </div>
-                  </div>
-
                   {!isExpanded && (
                     <motion.div layout="position" className="pt-4 mt-auto px-6 pb-6">
                       <button 
