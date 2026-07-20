@@ -100,17 +100,6 @@ export function ProjectsSection() {
         <h2 className="text-sm font-bold tracking-[0.2em] text-zinc-500 uppercase">
           Projects
         </h2>
-        {activeId && (
-          <motion.button
-            initial={{ opacity: 0, x: 10 }}
-            animate={{ opacity: 1, x: 0 }}
-            onClick={() => setActiveId(null)}
-            className="text-xs font-bold uppercase tracking-widest text-zinc-400 hover:text-white flex items-center gap-2 transition-colors group"
-          >
-            <ChevronLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
-            Back to Grid
-          </motion.button>
-        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 relative">
@@ -138,27 +127,22 @@ export function ProjectsSection() {
               >
                 <Card className={`relative flex flex-col gap-5 h-full bg-zinc-50 dark:bg-white/[0.02] border border-zinc-200/50 dark:border-white/5 transition-all duration-500 ease-out overflow-hidden ${isExpanded ? 'p-8 border-zinc-300 dark:border-white/20 ring-1 ring-zinc-300/50 dark:ring-white/10 shadow-2xl bg-zinc-100/50 dark:bg-white/[0.04]' : 'p-0'}`}>
                   
-                  {/* Project Preview Image — only visible in collapsed state */}
-                  <AnimatePresence>
+                  {/* Project Preview Image */}
+                  <motion.div
+                    layout="position"
+                    className={`relative w-full overflow-hidden transition-all duration-500 ${isExpanded ? 'h-56 md:h-80 rounded-xl ring-1 ring-zinc-200/50 dark:ring-white/10 shrink-0' : 'h-44'}`}
+                  >
+                    <Image
+                      src={project.image}
+                      alt={`${project.title} preview`}
+                      fill
+                      className={`object-cover object-top transition-transform duration-700 ${!isExpanded ? 'group-hover:scale-105' : ''}`}
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
                     {!isExpanded && (
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="relative w-full h-44 overflow-hidden"
-                      >
-                        <Image
-                          src={project.image}
-                          alt={`${project.title} preview`}
-                          fill
-                          className="object-cover object-top"
-                          sizes="(max-width: 768px) 100vw, 50vw"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-zinc-50 dark:to-[#171717]" />
-                      </motion.div>
+                      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-zinc-50 dark:to-[#171717]" />
                     )}
-                  </AnimatePresence>
+                  </motion.div>
 
                   {/* Card content wrapper with padding */}
                   <div className={`flex flex-col gap-5 flex-1 ${isExpanded ? '' : 'px-6 pb-6'}`}>
