@@ -127,22 +127,24 @@ export function ProjectsSection() {
               >
                 <Card className={`relative flex flex-col gap-5 h-full bg-zinc-50 dark:bg-white/[0.02] border border-zinc-200/50 dark:border-white/5 transition-all duration-500 ease-out overflow-hidden ${isExpanded ? 'p-8 border-zinc-300 dark:border-white/20 ring-1 ring-zinc-300/50 dark:ring-white/10 shadow-2xl bg-zinc-100/50 dark:bg-white/[0.04]' : 'p-0'}`}>
                   
-                  {/* Project Preview Image */}
-                  <motion.div
-                    layout="position"
-                    className={`relative w-full overflow-hidden transition-all duration-500 ${isExpanded ? 'h-56 md:h-80 rounded-xl ring-1 ring-zinc-200/50 dark:ring-white/10 shrink-0' : 'h-44'}`}
-                  >
-                    <Image
-                      src={project.image}
-                      alt={`${project.title} preview`}
-                      fill
-                      className={`object-cover object-top transition-transform duration-700 ${!isExpanded ? 'group-hover:scale-105' : ''}`}
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                    />
+                  {/* Project Preview Image (Collapsed) */}
+                  <AnimatePresence>
                     {!isExpanded && (
-                      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-zinc-50 dark:to-[#171717]" />
+                      <motion.div
+                        layoutId={`project-image-${project.id}`}
+                        className="relative w-full h-44 overflow-hidden shrink-0"
+                      >
+                        <Image
+                          src={project.image}
+                          alt={`${project.title} preview`}
+                          fill
+                          className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-zinc-50 dark:to-[#171717]" />
+                      </motion.div>
                     )}
-                  </motion.div>
+                  </AnimatePresence>
 
                   {/* Card content wrapper with padding */}
                   <div className={`flex flex-col gap-5 flex-1 ${isExpanded ? '' : 'px-6 pb-6'}`}>
@@ -162,29 +164,51 @@ export function ProjectsSection() {
                     )}
                   </AnimatePresence>
 
-                  <div className={`flex flex-col gap-2 ${isExpanded ? 'md:flex-row md:justify-between md:items-start md:gap-12' : ''}`}>
-                    <div className="flex flex-col gap-4 flex-1">
-                      <motion.div layout="position">
-                        <Typography variant="h3" className={`text-zinc-900 dark:text-white font-bold transition-all duration-700 ${isExpanded ? 'text-4xl md:text-5xl' : 'text-2xl'}`}>
-                          {project.title}
-                        </Typography>
-                      </motion.div>
-                      
-                      <motion.div layout className="relative">
-                        <AnimatePresence mode="wait">
+                  <div className="flex flex-col gap-4 flex-1">
+                    {/* Top Section: Title, Description, and (if expanded) Image */}
+                    <div className={`flex flex-col gap-6 ${isExpanded ? 'md:flex-row md:justify-between md:items-start md:gap-12' : ''}`}>
+                      <div className="flex flex-col gap-4 flex-1">
+                        <motion.div layout="position">
+                          <Typography variant="h3" className={`text-zinc-900 dark:text-white font-bold transition-all duration-700 ${isExpanded ? 'text-4xl md:text-5xl' : 'text-2xl'}`}>
+                            {project.title}
+                          </Typography>
+                        </motion.div>
+                        
+                        <motion.div layout className="relative">
+                          <AnimatePresence mode="wait">
+                            <motion.div
+                              key={isExpanded ? 'expanded' : 'collapsed'}
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              exit={{ opacity: 0 }}
+                              transition={{ duration: 0.15 }}
+                            >
+                              <Typography variant="body" className={`leading-relaxed text-zinc-600 dark:text-zinc-400 ${isExpanded ? 'text-lg md:text-xl max-w-2xl' : ''}`}>
+                                {isExpanded ? project.longDescription : project.description}
+                              </Typography>
+                            </motion.div>
+                          </AnimatePresence>
+                        </motion.div>
+                      </div>
+
+                      {/* Project Preview Image (Expanded) */}
+                      <AnimatePresence>
+                        {isExpanded && (
                           <motion.div
-                            key={isExpanded ? 'expanded' : 'collapsed'}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.15 }}
+                            layoutId={`project-image-${project.id}`}
+                            className="relative w-full md:w-80 h-56 rounded-xl ring-1 ring-zinc-200/50 dark:ring-white/10 overflow-hidden shrink-0 mt-4 md:mt-0"
                           >
-                            <Typography variant="body" className={`leading-relaxed text-zinc-600 dark:text-zinc-400 ${isExpanded ? 'text-lg md:text-xl max-w-2xl' : ''}`}>
-                              {isExpanded ? project.longDescription : project.description}
-                            </Typography>
+                            <Image
+                              src={project.image}
+                              alt={`${project.title} preview`}
+                              fill
+                              className="object-cover object-top"
+                              sizes="(max-width: 768px) 100vw, 320px"
+                            />
                           </motion.div>
-                        </AnimatePresence>
-                      </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
                       {isExpanded && (
                         <motion.div
                           initial={{ opacity: 0, y: 10 }}
