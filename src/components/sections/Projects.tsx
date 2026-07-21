@@ -191,59 +191,6 @@ export function ProjectsSection() {
                         </motion.div>
                       </div>
 
-                        {isExpanded && (
-                          <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.3 }}
-                            className="flex flex-col gap-8 mt-4"
-                          >
-                            <div className="flex flex-col xl:flex-row gap-8">
-                              {/* Key Features */}
-                              <div className="flex flex-col gap-4 flex-1">
-                                <h4 className="text-xs font-bold uppercase tracking-widest text-zinc-500">Key Features</h4>
-                                <ul className="flex flex-col gap-3">
-                                  {project.features.map((feature, i) => (
-                                    <li key={i} className="flex items-center gap-3 text-base text-zinc-600 dark:text-zinc-300">
-                                      <div className="w-1 h-1 rounded-full bg-zinc-400 shrink-0" />
-                                      {feature}
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-
-                              {/* Tech Stack */}
-                              <div className="flex flex-col gap-4 flex-1">
-                                <h4 className="text-xs font-bold uppercase tracking-widest text-zinc-500">Technologies</h4>
-                                <div className="flex flex-wrap gap-2">
-                                  {project.technologies.map((tech) => (
-                                    <span key={tech} className="px-4 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded-full bg-zinc-200/50 dark:bg-white/5 text-zinc-700 dark:text-zinc-300 border border-zinc-300 dark:border-white/10">
-                                      {tech}
-                                    </span>
-                                  ))}
-                                </div>
-                              </div>
-                            </div>
-
-                            {/* Action Buttons */}
-                            <div className="flex flex-wrap items-center gap-4 pt-6 border-t border-zinc-200 dark:border-white/5">
-                              {project.liveUrl && project.liveUrl !== "#" && (
-                                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#3b82f6] text-white px-8 py-3.5 rounded-md text-sm font-bold transition-all hover:opacity-90 active:scale-95 shadow-lg shadow-[#3b82f6]/20">
-                                  <ExternalLink size={16} />
-                                  Live Project
-                                </a>
-                              )}
-                              {project.githubUrl && project.githubUrl !== "#" && (
-                                <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 border border-zinc-300 dark:border-white/10 hover:bg-zinc-100 dark:hover:bg-white/5 text-zinc-900 dark:text-white px-8 py-3.5 rounded-md text-sm font-bold transition-all active:scale-95">
-                                  <GithubIcon size={16} />
-                                  View Source
-                                </a>
-                              )}
-                            </div>
-                          </motion.div>
-                        )}
-                      </div>
-
                       {/* Project Preview Image (Expanded) */}
                       <AnimatePresence>
                         {isExpanded && (
@@ -262,6 +209,59 @@ export function ProjectsSection() {
                         )}
                       </AnimatePresence>
                     </div>
+
+                    {/* Bottom Row: Features, Tech Stack, and Buttons */}
+                    {isExpanded && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3 }}
+                        className="flex flex-col gap-8 mt-4"
+                      >
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                          {/* Key Features */}
+                          <div className="flex flex-col gap-4">
+                            <h4 className="text-xs font-bold uppercase tracking-widest text-zinc-500">Key Features</h4>
+                            <ul className="flex flex-col gap-3">
+                              {project.features.map((feature, i) => (
+                                <li key={i} className="flex items-center gap-3 text-base text-zinc-600 dark:text-zinc-300">
+                                  <div className="w-1 h-1 rounded-full bg-zinc-400 shrink-0" />
+                                  {feature}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          {/* Tech Stack */}
+                          <div className="flex flex-col gap-4">
+                            <h4 className="text-xs font-bold uppercase tracking-widest text-zinc-500">Technologies</h4>
+                            <div className="flex flex-wrap gap-2">
+                              {project.technologies.map((tech) => (
+                                <span key={tech} className="px-4 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded-full bg-zinc-200/50 dark:bg-white/5 text-zinc-700 dark:text-zinc-300 border border-zinc-300 dark:border-white/10">
+                                  {tech}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Action Buttons */}
+                        <div className="flex flex-wrap items-center gap-4 pt-6 border-t border-zinc-200 dark:border-white/5">
+                          {project.liveUrl && project.liveUrl !== "#" && (
+                            <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#3b82f6] text-white px-8 py-3.5 rounded-md text-sm font-bold transition-all hover:opacity-90 active:scale-95 shadow-lg shadow-[#3b82f6]/20">
+                              <ExternalLink size={16} />
+                              Live Project
+                            </a>
+                          )}
+                          {project.githubUrl && project.githubUrl !== "#" && (
+                            <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 border border-zinc-300 dark:border-white/10 hover:bg-zinc-100 dark:hover:bg-white/5 text-zinc-900 dark:text-white px-8 py-3.5 rounded-md text-sm font-bold transition-all active:scale-95">
+                              <GithubIcon size={16} />
+                              View Source
+                            </a>
+                          )}
+                        </div>
+                      </motion.div>
+                    )}
                   {!isExpanded && (
                     <motion.div layout="position" className="pt-4 mt-auto px-6 pb-6">
                       <button 
