@@ -125,7 +125,7 @@ export function ProjectsSection() {
                 }}
                 className={`${isExpanded ? 'md:col-span-2 order-first' : ''}`}
               >
-                <Card className={`relative flex flex-col gap-5 h-full bg-zinc-50 dark:bg-white/[0.02] border border-zinc-200/50 dark:border-white/5 transition-all duration-500 ease-out overflow-hidden ${isExpanded ? 'p-8 border-zinc-300 dark:border-white/20 ring-1 ring-zinc-300/50 dark:ring-white/10 shadow-2xl bg-zinc-100/50 dark:bg-white/[0.04]' : 'p-0'}`}>
+                <Card className={`relative flex flex-col gap-5 h-full bg-zinc-50 dark:bg-white/[0.02] border border-zinc-200/50 dark:border-white/5 transition-colors duration-500 overflow-hidden ${isExpanded ? 'p-8 border-zinc-300 dark:border-white/20 ring-1 ring-zinc-300/50 dark:ring-white/10 shadow-2xl bg-zinc-100/50 dark:bg-white/[0.04]' : 'p-0'}`}>
                   
                   {/* Close/Minimize Button */}
                   <AnimatePresence>
@@ -150,7 +150,7 @@ export function ProjectsSection() {
                       {/* Unified Single Image Node (eliminates glitch) */}
                       <motion.div
                         layout
-                        className={`relative overflow-hidden shrink-0 transition-all duration-700 ease-in-out origin-top ${
+                        className={`relative overflow-hidden shrink-0 origin-top ${
                           isExpanded 
                             ? 'w-full md:w-[45%] lg:w-[50%] h-64 md:h-[450px] rounded-xl ring-1 ring-zinc-200/50 dark:ring-white/10 mt-4 md:mt-0' 
                             : 'w-full h-44'
@@ -160,7 +160,7 @@ export function ProjectsSection() {
                           src={project.image}
                           alt={`${project.title} preview`}
                           fill
-                          className={`object-cover object-top transition-transform duration-700 ${!isExpanded ? 'group-hover:scale-105' : ''}`}
+                          className="object-cover object-top"
                           sizes="(max-width: 768px) 100vw, 50vw"
                         />
                         {!isExpanded && (
@@ -171,7 +171,7 @@ export function ProjectsSection() {
                       {/* Content Wrapper */}
                       <div className={`flex flex-col gap-4 flex-1 ${isExpanded ? '' : 'px-6'}`}>
                         <motion.div layout="position">
-                          <Typography variant="h3" className={`text-zinc-900 dark:text-white font-bold transition-all duration-700 ${isExpanded ? 'text-4xl md:text-5xl' : 'text-2xl'}`}>
+                          <Typography variant="h3" className={`text-zinc-900 dark:text-white font-bold ${isExpanded ? 'text-4xl md:text-5xl' : 'text-2xl'}`}>
                             {project.title}
                           </Typography>
                         </motion.div>
@@ -199,11 +199,12 @@ export function ProjectsSection() {
                     <AnimatePresence>
                       {isExpanded && (
                         <motion.div
-                          initial={{ opacity: 0, height: 0, marginTop: 0 }}
-                          animate={{ opacity: 1, height: 'auto', marginTop: 16 }}
-                          exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                          layout
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
                           transition={{ duration: 0.4 }}
-                          className="flex flex-col gap-8 overflow-hidden"
+                          className="flex flex-col gap-8 mt-4 overflow-hidden"
                         >
                           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
                             {/* Key Features */}
