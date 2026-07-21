@@ -127,28 +127,6 @@ export function ProjectsSection() {
               >
                 <Card className={`relative flex flex-col gap-5 h-full bg-zinc-50 dark:bg-white/[0.02] border border-zinc-200/50 dark:border-white/5 transition-all duration-500 ease-out overflow-hidden ${isExpanded ? 'p-8 border-zinc-300 dark:border-white/20 ring-1 ring-zinc-300/50 dark:ring-white/10 shadow-2xl bg-zinc-100/50 dark:bg-white/[0.04]' : 'p-0'}`}>
                   
-                  {/* Project Preview Image (Collapsed) */}
-                  <AnimatePresence>
-                    {!isExpanded && (
-                      <motion.div
-                        layoutId={`project-image-${project.id}`}
-                        className="relative w-full h-44 overflow-hidden shrink-0"
-                      >
-                        <Image
-                          src={project.image}
-                          alt={`${project.title} preview`}
-                          fill
-                          className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                          sizes="(max-width: 768px) 100vw, 50vw"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-zinc-50 dark:to-[#171717]" />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-
-                  {/* Card content wrapper with padding */}
-                  <div className={`flex flex-col gap-5 flex-1 ${isExpanded ? '' : 'px-6 pb-6'}`}>
-                  
                   {/* Close/Minimize Button */}
                   <AnimatePresence>
                     {isExpanded && (
@@ -164,10 +142,34 @@ export function ProjectsSection() {
                     )}
                   </AnimatePresence>
 
-                  <div className="flex flex-col gap-4 flex-1">
-                    {/* Top Section: Title, Description, and (if expanded) Image */}
-                    <div className={`flex flex-col gap-6 ${isExpanded ? 'md:flex-row md:justify-between md:items-start md:gap-12' : ''}`}>
-                      <div className="flex flex-col gap-4 flex-1">
+                  <div className={`flex flex-col gap-6 ${isExpanded ? '' : 'h-full'}`}>
+                    
+                    {/* Top Row: Image & Title/Desc */}
+                    <div className={`flex flex-col ${isExpanded ? 'md:flex-row-reverse md:justify-between md:items-start md:gap-12' : 'h-full gap-5'}`}>
+                      
+                      {/* Unified Single Image Node (eliminates glitch) */}
+                      <motion.div
+                        layout
+                        className={`relative overflow-hidden shrink-0 transition-all duration-700 ease-in-out origin-top ${
+                          isExpanded 
+                            ? 'w-full md:w-[45%] lg:w-[50%] h-64 md:h-[450px] rounded-xl ring-1 ring-zinc-200/50 dark:ring-white/10 mt-4 md:mt-0' 
+                            : 'w-full h-44'
+                        }`}
+                      >
+                        <Image
+                          src={project.image}
+                          alt={`${project.title} preview`}
+                          fill
+                          className={`object-cover object-top transition-transform duration-700 ${!isExpanded ? 'group-hover:scale-105' : ''}`}
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                        />
+                        {!isExpanded && (
+                          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-zinc-50 dark:to-[#171717]" />
+                        )}
+                      </motion.div>
+
+                      {/* Content Wrapper */}
+                      <div className={`flex flex-col gap-4 flex-1 ${isExpanded ? '' : 'px-6'}`}>
                         <motion.div layout="position">
                           <Typography variant="h3" className={`text-zinc-900 dark:text-white font-bold transition-all duration-700 ${isExpanded ? 'text-4xl md:text-5xl' : 'text-2xl'}`}>
                             {project.title}
@@ -191,89 +193,76 @@ export function ProjectsSection() {
                         </motion.div>
                       </div>
 
-                      {/* Project Preview Image (Expanded) */}
-                      <AnimatePresence>
-                        {isExpanded && (
-                          <motion.div
-                            layoutId={`project-image-${project.id}`}
-                            className="relative w-full md:w-[45%] lg:w-[50%] h-64 md:h-[450px] rounded-xl ring-1 ring-zinc-200/50 dark:ring-white/10 overflow-hidden shrink-0 mt-4 md:mt-0"
-                          >
-                            <Image
-                              src={project.image}
-                              alt={`${project.title} preview`}
-                              fill
-                              className="object-cover object-top"
-                              sizes="(max-width: 768px) 100vw, 50vw"
-                            />
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
                     </div>
 
                     {/* Bottom Row: Features, Tech Stack, and Buttons */}
-                    {isExpanded && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3 }}
-                        className="flex flex-col gap-8 mt-4"
-                      >
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                          {/* Key Features */}
-                          <div className="flex flex-col gap-4">
-                            <h4 className="text-xs font-bold uppercase tracking-widest text-zinc-500">Key Features</h4>
-                            <ul className="flex flex-col gap-3">
-                              {project.features.map((feature, i) => (
-                                <li key={i} className="flex items-center gap-3 text-base text-zinc-600 dark:text-zinc-300">
-                                  <div className="w-1 h-1 rounded-full bg-zinc-400 shrink-0" />
-                                  {feature}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
+                    <AnimatePresence>
+                      {isExpanded && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                          animate={{ opacity: 1, height: 'auto', marginTop: 16 }}
+                          exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                          transition={{ duration: 0.4 }}
+                          className="flex flex-col gap-8 overflow-hidden"
+                        >
+                          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                            {/* Key Features */}
+                            <div className="flex flex-col gap-4">
+                              <h4 className="text-xs font-bold uppercase tracking-widest text-zinc-500">Key Features</h4>
+                              <ul className="flex flex-col gap-3">
+                                {project.features.map((feature, i) => (
+                                  <li key={i} className="flex items-center gap-3 text-base text-zinc-600 dark:text-zinc-300">
+                                    <div className="w-1 h-1 rounded-full bg-zinc-400 shrink-0" />
+                                    {feature}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
 
-                          {/* Tech Stack */}
-                          <div className="flex flex-col gap-4">
-                            <h4 className="text-xs font-bold uppercase tracking-widest text-zinc-500">Technologies</h4>
-                            <div className="flex flex-wrap gap-2">
-                              {project.technologies.map((tech) => (
-                                <span key={tech} className="px-4 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded-full bg-zinc-200/50 dark:bg-white/5 text-zinc-700 dark:text-zinc-300 border border-zinc-300 dark:border-white/10">
-                                  {tech}
-                                </span>
-                              ))}
+                            {/* Tech Stack */}
+                            <div className="flex flex-col gap-4">
+                              <h4 className="text-xs font-bold uppercase tracking-widest text-zinc-500">Technologies</h4>
+                              <div className="flex flex-wrap gap-2">
+                                {project.technologies.map((tech) => (
+                                  <span key={tech} className="px-4 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded-full bg-zinc-200/50 dark:bg-white/5 text-zinc-700 dark:text-zinc-300 border border-zinc-300 dark:border-white/10">
+                                    {tech}
+                                  </span>
+                                ))}
+                              </div>
                             </div>
                           </div>
-                        </div>
 
-                        {/* Action Buttons */}
-                        <div className="flex flex-wrap items-center gap-4 pt-6 border-t border-zinc-200 dark:border-white/5">
-                          {project.liveUrl && project.liveUrl !== "#" && (
-                            <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#3b82f6] text-white px-8 py-3.5 rounded-md text-sm font-bold transition-all hover:opacity-90 active:scale-95 shadow-lg shadow-[#3b82f6]/20">
-                              <ExternalLink size={16} />
-                              Live Project
-                            </a>
-                          )}
-                          {project.githubUrl && project.githubUrl !== "#" && (
-                            <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 border border-zinc-300 dark:border-white/10 hover:bg-zinc-100 dark:hover:bg-white/5 text-zinc-900 dark:text-white px-8 py-3.5 rounded-md text-sm font-bold transition-all active:scale-95">
-                              <GithubIcon size={16} />
-                              View Source
-                            </a>
-                          )}
-                        </div>
+                          {/* Action Buttons */}
+                          <div className="flex flex-wrap items-center gap-4 pt-6 border-t border-zinc-200 dark:border-white/5">
+                            {project.liveUrl && project.liveUrl !== "#" && (
+                              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#3b82f6] text-white px-8 py-3.5 rounded-md text-sm font-bold transition-all hover:opacity-90 active:scale-95 shadow-lg shadow-[#3b82f6]/20">
+                                <ExternalLink size={16} />
+                                Live Project
+                              </a>
+                            )}
+                            {project.githubUrl && project.githubUrl !== "#" && (
+                              <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 border border-zinc-300 dark:border-white/10 hover:bg-zinc-100 dark:hover:bg-white/5 text-zinc-900 dark:text-white px-8 py-3.5 rounded-md text-sm font-bold transition-all active:scale-95">
+                                <GithubIcon size={16} />
+                                View Source
+                              </a>
+                            )}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                    {/* View Details Button (Only in collapsed state) */}
+                    {!isExpanded && (
+                      <motion.div layout="position" className="pt-4 mt-auto px-6 pb-6">
+                        <button 
+                          onClick={() => handleToggle(project.id)}
+                          className="group flex items-center gap-2 bg-transparent border border-zinc-300 dark:border-white/20 hover:border-zinc-500 dark:hover:border-white/40 text-zinc-900 dark:text-white px-6 py-2.5 text-sm rounded-full transition-all font-medium active:scale-95"
+                        >
+                          View Details
+                          <ChevronRight size={16} className="transition-transform group-hover:translate-x-0.5" />
+                        </button>
                       </motion.div>
                     )}
-                  </div>
-                  {!isExpanded && (
-                    <motion.div layout="position" className="pt-4 mt-auto px-6 pb-6">
-                      <button 
-                        onClick={() => handleToggle(project.id)}
-                        className="group flex items-center gap-2 bg-transparent border border-zinc-300 dark:border-white/20 hover:border-zinc-500 dark:hover:border-white/40 text-zinc-900 dark:text-white px-6 py-2.5 text-sm rounded-full transition-all font-medium active:scale-95"
-                      >
-                        View Details
-                        <ChevronRight size={16} className="transition-transform group-hover:translate-x-0.5" />
-                      </button>
-                    </motion.div>
-                  )}
                   </div>
                 </Card>
               </motion.div>
