@@ -23,13 +23,17 @@ export const NameReveal: React.FC<NameRevealProps> = ({ text, className }) => {
       {/* The Block Overlay - Faster slide animation */}
       <motion.div
         initial={{ x: "-100%" }}
-        animate={{ x: ["-100%", "0%", "100%"] }}
+        animate={{
+          x: ["-100%", "0%", "100%"],
+          transitionEnd: { visibility: "hidden" }
+        }}
         transition={{ 
           duration: 0.9, 
           times: [0, 0.5, 1],
           ease: [0.77, 0, 0.175, 1] as [number, number, number, number],
           delay: 0.2
         }}
+        aria-hidden="true"
         className="absolute inset-0 bg-white z-20"
       />
     </div>
