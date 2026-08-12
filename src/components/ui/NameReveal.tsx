@@ -22,9 +22,10 @@ export const NameReveal: React.FC<NameRevealProps> = ({ text, className }) => {
 
       {/* The Block Overlay - Faster slide animation */}
       <motion.div
-        initial={{ x: "-100%" }}
+        initial={{ x: "-101%" }}
         animate={{
-          x: ["-100%", "0%", "100%"],
+          // Overshoot the clipped edges to avoid a subpixel seam at exactly 100%.
+          x: ["-101%", "0%", "101%"],
           transitionEnd: { visibility: "hidden" }
         }}
         transition={{ 
