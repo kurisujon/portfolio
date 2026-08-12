@@ -28,6 +28,7 @@ const projectsData = [
     id: 1,
     title: "Studflow", 
     image: "/studflow_preview.jpg",
+    imageClassName: "object-cover object-top",
     description: "An AI-powered web application that transforms study documents into summaries, flashcards, quizzes, and notes.",
     longDescription: "A comprehensive application integrating Next.js, FastAPI, Celery, and Gemini. It transforms study documents into interactive learning workflows using Large Language Models to generate summaries, flashcards, quizzes, and an AI-explained interactive study workspace.",
     technologies: ["Next.js", "FastAPI", "PostgreSQL", "Celery", "Redis", "Gemini"],
@@ -39,6 +40,7 @@ const projectsData = [
     id: 2,
     title: "Veldra", 
     image: "/veldra_preview.jpg",
+    imageClassName: "object-cover object-top",
     description: "A Smart Document Verification Platform tailored for checking student visa application documents.",
     longDescription: "It automates the extraction and cross-referencing of critical data across documents using Next.js and Supabase, streamlining the student visa verification process.",
     technologies: ["Next.js", "Supabase", "TypeScript", "Tailwind"],
@@ -48,25 +50,27 @@ const projectsData = [
   },
   { 
     id: 3,
-    title: "Project Gamma", 
-    image: "/gamma_preview.jpg",
-    description: "Minimalist task management system with offline capabilities.",
-    longDescription: "A productivity tool that focuses on speed and simplicity. It works fully offline and syncs automatically when a connection is restored, ensuring you never lose your flow.",
-    technologies: ["TypeScript", "PWA", "IndexedDB", "Framer Motion"],
-    features: ["Offline-first architecture", "Drag-and-drop workflow", "Smart notification system"],
+    title: "CHoDaMS Web",
+    image: "/chodams_web_preview.png",
+    imageClassName: "object-contain bg-white",
+    description: "A city housing data platform for relocation management, automated eligibility scoring, and geospatial analytics.",
+    longDescription: "A multi-layered housing management platform that centralizes census and beneficiary records, applies a custom weighted scoring algorithm to evaluate eligibility, and supports housing operations with interactive maps and data dashboards.",
+    technologies: ["Laravel", "PHP", "MariaDB", "JavaScript", "Tailwind CSS", "GeoJSON"],
+    features: ["Weighted eligibility scoring", "Beneficiary and project-site management", "Interactive geospatial analytics", "Role-based administration workflows"],
     liveUrl: "#",
-    githubUrl: "#"
+    githubUrl: "https://github.com/kurisujon/chodams_web"
   },
   { 
     id: 4,
-    title: "Project Delta", 
-    image: "/delta_preview.jpg",
-    description: "Automated workflow engine integrating multiple third-party APIs.",
-    longDescription: "A powerful automation platform that connects your favorite tools. Build complex multi-step workflows with a visual builder and monitor executions in real-time.",
-    technologies: ["Laravel", "Inertia.js", "Vue.js", "AWS"],
-    features: ["Visual flow builder", "Webhook integration", "Error recovery automation"],
+    title: "CHoDaMS Mobile",
+    image: "/chodams_mobile_preview.png",
+    imageClassName: "object-contain bg-white",
+    description: "An offline-first field census app with digital surveys, GPS geo-tagging, and reliable data synchronization.",
+    longDescription: "A Flutter field application designed for disconnected census operations. It stores surveys securely in SQLite, captures photos, GPS coordinates, and e-signatures, then uses a custom bidirectional synchronization workflow to send records to the central CHoDaMS platform when connectivity returns.",
+    technologies: ["Flutter", "Dart", "SQLite", "REST API", "GPS", "Android"],
+    features: ["Offline survey collection", "Bidirectional data synchronization", "GPS, photo, and e-signature capture", "Excel export for offline backup"],
     liveUrl: "#",
-    githubUrl: "#"
+    githubUrl: "https://github.com/kurisujon/chodams_mobile"
   }
 ]
 
@@ -160,7 +164,7 @@ export function ProjectsSection() {
                           src={project.image}
                           alt={`${project.title} preview`}
                           fill
-                          className="object-cover object-top"
+                          className={project.imageClassName}
                           sizes="(max-width: 768px) 100vw, 50vw"
                         />
                         {!isExpanded && (
