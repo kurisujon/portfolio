@@ -7,7 +7,7 @@ const experiences = [
     role: "Internship | Backend Developer",
     company: "Infosoft Tech Solutions Davao City, Philippines",
     duration: "January 2026 - Present",
-    description: "Contributed to full-stack government LTS platforms serving Tagum, Panabo, and Davao de Oro. Developed and tested RESTful APIs, implemented responsive frontend interfaces, and used Postman to validate reliable application workflows.",
+    description: "Contributed to the development and maintenance of government LTS platforms for Tagum, Panabo, and Davao de Oro, supporting frontend interfaces, backend workflows, REST API integrations, testing, and debugging.",
   },
   {
     role: "Software Developer",
