@@ -76,7 +76,7 @@ export function ContactSection() {
         </a>
 
         <a 
-          href="#" 
+          href="https://www.linkedin.com/in/labiagacrisjohn/"
           target="_blank" 
           rel="noopener noreferrer"
           className="flex items-center gap-3 px-6 py-4 bg-zinc-50 dark:bg-surface border border-zinc-200/50 dark:border-white/5 hover:border-[#3b82f6] dark:hover:border-[#3b82f6] transition-all duration-500 ease-out rounded-full hover:-translate-y-[2px]"
