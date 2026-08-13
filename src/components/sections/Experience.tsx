@@ -4,16 +4,16 @@ import { Typography } from '@/components/ui/Typography'
 
 const experiences = [
   {
-    role: "Internship | Backend Developer",
-    company: "Infosoft Tech Solutions Davao City, Philippines",
+    role: "OJT Backend Developer",
+    company: "Infosoft Tech Solutions · Davao City, Philippines",
     duration: "January 2026 - Present",
-    description: "Contributed to the development and maintenance of government LTS platforms for Tagum, Panabo, and Davao de Oro, supporting frontend interfaces, backend workflows, REST API integrations, testing, and debugging.",
+    description: "Contributed to the development and maintenance of government LTS platforms for Tagum, Panabo, and Davao de Oro, supporting frontend interfaces, backend workflows, REST API integrations, relational data handling, testing, debugging, and system maintenance.",
   },
   {
-    role: "Software Developer",
+    role: "Full Stack Developer — Independent Projects",
     company: "Independent & Academic Projects",
     duration: "2023 - Present",
-    description: "Personally architected and built full-stack applications through independent and academic projects, owning decisions across frontend interfaces, backend APIs, databases, deployment, and AI integrations. Delivered projects including Studflow and other workflow-focused systems.",
+    description: "Architected and built full-stack applications through independent and academic projects, working across frontend interfaces, backend APIs, databases, deployment, AI integrations, and automation. Projects include Veldra, StudFlow, and CHoDaMS.",
   }
 ]
 

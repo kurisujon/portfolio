@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Typography } from '@/components/ui/Typography'
 import { Card } from '@/components/ui/Card'
-import { X, ExternalLink, ChevronRight, ChevronLeft } from 'lucide-react'
+import { X, ExternalLink, ChevronRight } from 'lucide-react'
 
 // Custom SVG Icons for Brand logos as they are missing in the current lucide-react version
 const GithubIcon = ({ size = 20 }: { size?: number }) => (
@@ -26,48 +26,52 @@ const GithubIcon = ({ size = 20 }: { size?: number }) => (
 const projectsData = [
   { 
     id: 1,
-    title: "Studflow", 
-    image: "/studflow_preview.jpg",
+    title: "Veldra",
+    role: "Full Stack & AI Developer",
+    image: "/veldra_preview.jpg",
     imageClassName: "object-cover object-top",
-    description: "An AI-powered web application that transforms study documents into summaries, flashcards, quizzes, and notes.",
-    longDescription: "A comprehensive application integrating Next.js, FastAPI, Celery, and Gemini. It transforms study documents into interactive learning workflows using Large Language Models to generate summaries, flashcards, quizzes, and an AI-explained interactive study workspace.",
-    technologies: ["Next.js", "FastAPI", "PostgreSQL", "Celery", "Redis", "Gemini"],
-    features: ["Asynchronous document processing", "AI-generated quizzes & flashcards", "Interactive study workspace", "Clerk Authentication"],
-    liveUrl: "https://studflow.webcris.dev/",
-    githubUrl: "https://github.com/Kurisujon/studflow"
+    description: "A document verification workspace that extracts, compares, and reviews student visa application records.",
+    longDescription: "Built a Next.js and Supabase review platform that uses Gemini-powered structured extraction and OCR to process visa documents. A cross-document comparison engine flags inconsistencies with source evidence, while reviewers validate findings and prepare reports or legal drafts.",
+    technologies: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Google Gemini", "OCR"],
+    features: ["Structured document extraction", "Cross-document discrepancy analysis", "Source-linked findings", "Human review and document generation"],
+    liveUrl: "https://veldra-sand.vercel.app/",
+    githubUrl: "https://github.com/kurisujon/veldra"
   },
   { 
     id: 2,
-    title: "Veldra", 
-    image: "/veldra_preview.jpg",
+    title: "StudFlow",
+    role: "Full Stack & AI Developer",
+    image: "/studflow_preview.jpg",
     imageClassName: "object-cover object-top",
-    description: "A Smart Document Verification Platform tailored for checking student visa application documents.",
-    longDescription: "It automates the extraction and cross-referencing of critical data across documents using Next.js and Supabase, streamlining the student visa verification process.",
-    technologies: ["Next.js", "Supabase", "TypeScript", "Tailwind"],
-    features: ["Automated data extraction", "Cross-referencing documents", "Smart verification workflows"],
-    liveUrl: "https://veldra-sand.vercel.app/",
-    githubUrl: "https://github.com/kurisujon/veldra.git"
+    description: "A document-grounded study system that turns learning materials into interactive study workflows.",
+    longDescription: "Built a Next.js and FastAPI application that processes PDF and DOCX materials asynchronously and generates summaries, flashcards, quizzes, notes, and AI explanations. Gemini embeddings and pgvector power semantic retrieval so responses remain grounded in uploaded source material.",
+    technologies: ["Next.js", "React", "TypeScript", "FastAPI", "PostgreSQL", "pgvector", "Gemini"],
+    features: ["Document-grounded RAG", "Semantic retrieval", "Summaries, flashcards, quizzes, and notes", "Source-backed AI study responses"],
+    liveUrl: "https://studflow.webcris.dev/",
+    githubUrl: "https://github.com/kurisujon/studflow"
   },
   { 
     id: 3,
     title: "CHoDaMS Web",
+    role: "Full Stack Developer",
     image: "/chodams_web_preview.png",
-    imageClassName: "object-contain bg-white",
+    imageClassName: "object-cover object-top bg-white",
     description: "A city housing data platform for relocation management, automated eligibility scoring, and geospatial analytics.",
-    longDescription: "A multi-layered housing management platform that centralizes census and beneficiary records, applies a custom weighted scoring algorithm to evaluate eligibility, and supports housing operations with interactive maps and data dashboards.",
+    longDescription: "Built a responsive web administration and validation platform for city housing operations. It centralizes census and beneficiary records, applies a weighted scoring algorithm for eligibility, and supports project sites, assignments, revocations, dashboards, and geospatial analysis.",
     technologies: ["Laravel", "PHP", "MariaDB", "JavaScript", "Tailwind CSS", "GeoJSON"],
-    features: ["Weighted eligibility scoring", "Beneficiary and project-site management", "Interactive geospatial analytics", "Role-based administration workflows"],
+    features: ["Weighted eligibility scoring", "Housing-data management", "Responsive administration workflows", "Interactive geospatial analytics"],
     liveUrl: "#",
     githubUrl: "https://github.com/kurisujon/chodams_web"
   },
   { 
     id: 4,
     title: "CHoDaMS Mobile",
-    image: "/chodams_mobile_preview.png",
-    imageClassName: "object-contain bg-white",
+    role: "Full Stack Developer",
+    image: "/images/projects/chodams-mobile/cover-dashboard-gps.png",
+    imageClassName: "object-cover object-center",
     description: "An offline-first field census app with digital surveys, GPS geo-tagging, and reliable data synchronization.",
-    longDescription: "A Flutter field application designed for disconnected census operations. It stores surveys securely in SQLite, captures photos, GPS coordinates, and e-signatures, then uses a custom bidirectional synchronization workflow to send records to the central CHoDaMS platform when connectivity returns.",
-    technologies: ["Flutter", "Dart", "SQLite", "REST API", "GPS", "Android"],
+    longDescription: "Built a Flutter field application for disconnected census operations. It stores surveys in SQLite, captures photos, GPS coordinates, and e-signatures, then synchronizes records through PHP REST APIs to the central MariaDB-backed CHoDaMS platform when connectivity returns.",
+    technologies: ["Flutter", "Dart", "SQLite", "PHP REST APIs", "MariaDB", "Android"],
     features: ["Offline survey collection", "Bidirectional data synchronization", "GPS, photo, and e-signature capture", "Excel export for offline backup"],
     liveUrl: "#",
     githubUrl: "https://github.com/kurisujon/chodams_mobile"
@@ -178,6 +182,9 @@ export function ProjectsSection() {
                           <Typography variant="h3" className={`text-zinc-900 dark:text-white font-bold ${isExpanded ? 'text-4xl md:text-5xl' : 'text-2xl'}`}>
                             {project.title}
                           </Typography>
+                          <p className="mt-2 text-xs font-bold uppercase tracking-widest text-[#3b82f6]">
+                            {project.role}
+                          </p>
                         </motion.div>
                         
                         <motion.div layout className="relative">

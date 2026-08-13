@@ -1,5 +1,4 @@
 "use client"
-import { motion } from 'framer-motion'
 import { Mail, Download } from 'lucide-react'
 
 // Custom SVG Icons for Brand logos
@@ -45,15 +44,15 @@ export function ContactSection() {
       className="py-32 md:py-48 flex flex-col items-center text-center gap-6 w-full"
     >
       <span className="text-[#3b82f6] font-mono font-bold tracking-widest text-sm uppercase">
-        What's Next?
+        What&apos;s Next?
       </span>
       
       <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-zinc-900 dark:text-primary max-w-4xl">
-        Let's build something <span className="text-[#3b82f6]">impactful.</span>
+        Let&apos;s build something <span className="text-[#3b82f6]">useful.</span>
       </h2>
       
       <p className="max-w-[50ch] text-lg md:text-xl leading-relaxed text-zinc-500 dark:text-zinc-400 mt-4">
-        I am currently open for new opportunities. Whether you have a complex system to build, an API to optimize, or just want to connect, my inbox is always open.
+        I&apos;m open to full-stack, backend/API, AI integration, and automation opportunities. If you need a developer who can work across the application stack and integrate practical AI workflows, feel free to get in touch.
       </p>
       
       <div className="flex flex-wrap justify-center gap-4 w-full mt-8">

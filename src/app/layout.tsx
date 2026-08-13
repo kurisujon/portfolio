@@ -7,8 +7,8 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 
 export const metadata: Metadata = {
-  title: 'Cris John | Portfolio',
-  description: 'Personal portfolio of Cris John, Full Stack Developer.',
+  title: 'Cris John Labiaga | Full Stack & AI Developer',
+  description: 'Full Stack & AI Developer building modern web applications, REST APIs, database-driven systems, RAG workflows, AI integrations, and automation.',
   icons: {
     icon: [
       { url: '/portfolio_logo.png' },

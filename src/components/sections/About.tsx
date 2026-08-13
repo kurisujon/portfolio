@@ -1,8 +1,7 @@
 "use client"
-import { motion } from 'framer-motion'
 import { Typography } from '@/components/ui/Typography'
 import { Card } from '@/components/ui/Card'
-import { BookOpen, Award, Terminal } from 'lucide-react'
+import { BookOpen, Award } from 'lucide-react'
 
 export function AboutSection() {
   return (
@@ -19,15 +18,18 @@ export function AboutSection() {
         {/* Main Bio (No Container) */}
         <div className="lg:col-span-7 flex flex-col justify-center gap-8">
           <Typography variant="h2" className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-zinc-900 dark:text-primary transition-colors tracking-tight">
-            Full-Stack Developer specializing in resilient APIs and AI-driven workflows.
+            Full Stack &amp; AI Developer building end-to-end applications across frontend, backend, APIs, databases, and AI integrations.
           </Typography>
           
           <div className="flex flex-col gap-6 border-l-2 border-[#3b82f6] pl-6 mt-4">
             <Typography variant="body" className="text-lg md:text-xl leading-relaxed text-zinc-600 dark:text-secondary transition-colors">
-              I am a Full-Stack Developer dedicated to building intelligent, data-centric products and automation systems.
+              I build complete web systems from frontend interfaces to backend services, REST APIs, relational databases, authentication, and third-party integrations.
             </Typography>
             <Typography variant="body" className="text-base md:text-lg leading-relaxed text-zinc-500 dark:text-zinc-400 transition-colors">
-              I specialize in architecting workflows where data-crawling and AI-driven logic are core components, delivering scalable applications that multiply team productivity and future-proof business operations.
+              I integrate practical AI capabilities such as RAG, embeddings, semantic retrieval, LLM-powered workflows, and automation when they solve real application requirements.
+            </Typography>
+            <Typography variant="body" className="text-base md:text-lg leading-relaxed text-zinc-500 dark:text-zinc-400 transition-colors">
+              I use AI coding agents for research, implementation, debugging, testing, refactoring, and documentation. I review generated changes, validate architecture and integrations, and remain responsible for final code quality.
             </Typography>
           </div>
         </div>
@@ -46,8 +48,11 @@ export function AboutSection() {
             
             <div className="flex flex-col gap-2">
               <h4 className="text-xl font-bold text-zinc-900 dark:text-primary leading-snug">Bachelor of Science in Information Technology</h4>
-              <p className="text-zinc-600 dark:text-secondary text-sm leading-relaxed mt-2">
-                Core focus areas include Software Development, Cybersecurity, LLM Integration, and AI Agents architecture.
+              <p className="text-zinc-600 dark:text-secondary text-sm leading-relaxed">
+                University of Mindanao - Digos College
+              </p>
+              <p className="text-[#3b82f6] font-mono text-xs font-bold uppercase tracking-wider">
+                Graduated: June 2026
               </p>
             </div>
           </Card>

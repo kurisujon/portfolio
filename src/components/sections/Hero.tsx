@@ -1,6 +1,5 @@
 "use client"
 import { motion } from 'framer-motion'
-import { ChevronDown } from 'lucide-react'
 import { NameReveal } from '@/components/ui/NameReveal'
 
 export function HeroSection() {
@@ -47,10 +46,19 @@ export function HeroSection() {
           />
         </div>
 
-        {/* Human-Centered Slogan */}
+        {/* Professional title and supporting copy */}
         <motion.div variants={itemVariants} className="flex flex-col gap-6 items-center">
-          <p className="text-zinc-400 text-lg md:text-xl max-w-2xl font-light tracking-wide leading-relaxed">
-            Creating scalable web systems with clean UI and AI integrations.
+          <div className="flex flex-col gap-3 items-center">
+            <p className="text-xl md:text-2xl font-semibold text-white tracking-wide">
+              Full Stack &amp; AI Developer
+            </p>
+            <p className="text-zinc-400 text-base md:text-xl max-w-3xl font-light tracking-wide leading-relaxed">
+              Building scalable web systems, reliable APIs, AI-powered applications, and automation workflows.
+            </p>
+          </div>
+
+          <p className="sr-only">
+            Full Stack and AI Developer experienced in frontend applications, backend services, databases, RAG, and AI-assisted development.
           </p>
 
           {/* Subtle Tech Stack Row */}

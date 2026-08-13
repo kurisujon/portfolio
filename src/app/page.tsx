@@ -45,7 +45,7 @@ export default function Home() {
 
       <footer className="w-full border-t border-zinc-200 dark:border-white/5 py-8 mt-auto flex justify-center items-center">
         <p className="text-sm text-zinc-500 dark:text-zinc-400">
-          © {new Date().getFullYear()} John Cris Labiaga. All rights reserved.
+          © {new Date().getFullYear()} Cris John Labiaga. All rights reserved.
         </p>
       </footer>
     </main>

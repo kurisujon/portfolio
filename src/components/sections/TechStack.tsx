@@ -5,31 +5,27 @@ import { Typography } from '@/components/ui/Typography'
 const techCategories = [
   {
     category: "Languages",
-    items: ["JavaScript", "TypeScript", "Python", "PHP", "SQL", "Java"]
-  },
-  {
-    category: "Frameworks",
-    items: ["Next.js", "React", "Laravel"]
+    items: ["JavaScript", "TypeScript", "Python", "PHP", "SQL", "Dart"]
   },
   {
     category: "Frontend",
-    items: ["Tailwind CSS", "React Native"]
+    items: ["React", "Next.js", "Tailwind CSS"]
   },
   {
     category: "Backend & APIs",
-    items: ["Node.js", "FastAPI", "Rest APIs", "n8n"]
+    items: ["Node.js", "Laravel", "FastAPI", "REST APIs"]
   },
   {
-    category: "AI & ML",
-    items: ["LLM Integration", "LangChain", "Qdrant", "Google Gemini",]
+    category: "Databases & Data",
+    items: ["PostgreSQL", "MySQL / MariaDB", "SQLite", "Supabase", "pgvector"]
   },
   {
-    category: "Cloud & DevOps",
-    items: ["AWS", "Azure", "Docker", "Nginx", "Git", "GitHub Actions", "CI/CD"]
+    category: "AI & Automation",
+    items: ["Google Gemini", "RAG", "LLM Integration", "Embeddings", "LangChain", "Qdrant", "n8n", "Agent-Assisted Development"]
   },
   {
-    category: "Databases",
-    items: ["PostgreSQL", "MongoDB", "MySQL", "Redis", "Supabase", "Firebase"]
+    category: "Development & DevOps",
+    items: ["Git", "GitHub", "Docker", "GitHub Actions", "CI/CD"]
   }
 ]
 
@@ -45,7 +41,6 @@ const itemVariants: Variants = {
   }
 }
 
-import { ScrollReveal } from '@/components/animations/ScrollReveal'
 export function TechStackSection() {
   return (
     <section
