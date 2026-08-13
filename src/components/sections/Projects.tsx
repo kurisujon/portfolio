@@ -54,7 +54,7 @@ const projectsData = [
     id: 3,
     title: "CHoDaMS Web",
     role: "Full Stack Developer",
-    image: "/chodams_web_preview.png",
+    image: "/images/projects/chodams-web/chodams-portfolio-cover-v2.png",
     imageClassName: "object-cover object-top bg-white",
     description: "A city housing data platform for relocation management, automated eligibility scoring, and geospatial analytics.",
     longDescription: "Built a responsive web administration and validation platform for city housing operations. It centralizes census and beneficiary records, applies a weighted scoring algorithm for eligibility, and supports project sites, assignments, revocations, dashboards, and geospatial analysis.",
