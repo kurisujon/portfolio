@@ -27,8 +27,8 @@ const projectsData = [
   { 
     id: 1,
     title: "Veldra",
-    role: "Full Stack & AI Developer",
-    image: "/veldra_preview.jpg",
+    role: "Full Stack AI Software Developer",
+    image: "/veldra_preview.png",
     imageClassName: "object-cover object-top",
     description: "A document verification workspace that extracts, compares, and reviews student visa application records.",
     longDescription: "Built a Next.js and Supabase review platform that uses Gemini-powered structured extraction and OCR to process visa documents. A cross-document comparison engine flags inconsistencies with source evidence, while reviewers validate findings and prepare reports or legal drafts.",
@@ -40,8 +40,8 @@ const projectsData = [
   { 
     id: 2,
     title: "StudFlow",
-    role: "Full Stack & AI Developer",
-    image: "/studflow_preview.jpg",
+    role: "Full Stack AI Software Developer",
+    image: "/studflow_preview.png",
     imageClassName: "object-cover object-top",
     description: "A document-grounded study system that turns learning materials into interactive study workflows.",
     longDescription: "Built a Next.js and FastAPI application that processes PDF and DOCX materials asynchronously and generates summaries, flashcards, quizzes, notes, and AI explanations. Gemini embeddings and pgvector power semantic retrieval so responses remain grounded in uploaded source material.",

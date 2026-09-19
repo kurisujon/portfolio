@@ -18,7 +18,7 @@ export function AboutSection() {
         {/* Main Bio (No Container) */}
         <div className="lg:col-span-7 flex flex-col justify-center gap-8">
           <Typography variant="h2" className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-zinc-900 dark:text-primary transition-colors tracking-tight">
-            Full Stack &amp; AI Developer building end-to-end applications across frontend, backend, APIs, databases, and AI integrations.
+            Full Stack AI Software Developer building end-to-end applications across frontend, backend, APIs, databases, and AI integrations.
           </Typography>
           
           <div className="flex flex-col gap-6 border-l-2 border-[#3b82f6] pl-6 mt-4">

@@ -46,9 +46,9 @@ export function HeroSection() {
         {/* Introduction */}
         <motion.h1 
           variants={itemVariants}
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-tight"
         >
-          Hi, I’m Cris John Labiaga.
+          Cris John Labiaga.
         </motion.h1>
 
         {/* Role */}
