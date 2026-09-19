@@ -1,5 +1,6 @@
 "use client"
 import { motion } from 'framer-motion'
+import { NameReveal } from '@/components/ui/NameReveal'
 
 export function HeroSection() {
   const containerVariants = {
@@ -43,18 +44,18 @@ export function HeroSection() {
         animate="visible"
         className="flex flex-col items-center text-center max-w-3xl mx-auto z-10"
       >
-        {/* Introduction */}
-        <motion.h1 
-          variants={itemVariants}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-tight"
-        >
-          Cris John Labiaga.
-        </motion.h1>
+        {/* Name Reveal - Integrated with Block Animation */}
+        <div className="flex flex-col items-center">
+          <NameReveal 
+            text="CRIS JOHN" 
+            className="text-6xl md:text-8xl lg:text-9xl tracking-[0.1em]"
+          />
+        </div>
 
         {/* Role */}
         <motion.p 
           variants={itemVariants}
-          className="text-xl sm:text-2xl md:text-3xl font-semibold text-zinc-200 tracking-tight mt-3 md:mt-4"
+          className="text-lg sm:text-xl md:text-2xl font-semibold text-zinc-200 tracking-tight mt-4 md:mt-5"
         >
           Full Stack AI Software Developer
         </motion.p>
