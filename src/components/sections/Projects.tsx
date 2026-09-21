@@ -126,14 +126,16 @@ export function ProjectsSection() {
                   scale: isSecondary ? 0.98 : 1,
                   zIndex: isExpanded ? 20 : 1
                 }}
+                whileHover={!isExpanded ? { y: -5 } : undefined}
                 transition={{
                   layout: { duration: 0.7, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] },
                   opacity: { duration: 0.5 },
-                  scale: { duration: 0.5 }
+                  scale: { duration: 0.5 },
+                  y: { duration: 0.25, ease: "easeOut" }
                 }}
                 className={`${isExpanded ? 'md:col-span-2 order-first' : ''}`}
               >
-                <Card className={`group relative flex flex-col gap-5 h-full bg-zinc-50 dark:bg-white/[0.02] border border-zinc-200/50 dark:border-white/5 transition-all duration-500 ease-out overflow-hidden ${isExpanded ? 'p-8 border-zinc-300 dark:border-white/20 ring-1 ring-zinc-300/50 dark:ring-white/10 shadow-2xl bg-zinc-100/50 dark:bg-white/[0.04]' : 'p-0 hover:-translate-y-1.5 hover:border-zinc-300/80 dark:hover:border-white/20 hover:shadow-2xl hover:shadow-black/20 dark:hover:shadow-[0_20px_40px_rgba(0,0,0,0.6)]'}`}>
+                <Card className={`group relative flex flex-col gap-5 h-full bg-zinc-50 dark:bg-surface border border-zinc-200/80 dark:border-white/10 transition-colors duration-300 overflow-hidden ${isExpanded ? 'p-8 border-zinc-300 dark:border-white/20 ring-1 ring-zinc-300/50 dark:ring-white/10 shadow-2xl bg-zinc-100/50 dark:bg-white/[0.04]' : 'p-0 hover:border-zinc-300 dark:hover:border-white/20 hover:shadow-2xl hover:shadow-black/20 dark:hover:shadow-[0_20px_40px_rgba(0,0,0,0.6)]'}`}>
                   
                   {/* Close/Minimize Button */}
                   <AnimatePresence>
@@ -158,7 +160,7 @@ export function ProjectsSection() {
                       {/* Unified Single Image Node (eliminates glitch) */}
                       <motion.div
                         layout
-                        className={`relative overflow-hidden shrink-0 origin-top ${
+                        className={`relative overflow-hidden shrink-0 origin-top bg-zinc-900 ${
                           isExpanded 
                             ? 'w-full md:w-[45%] lg:w-[50%] h-64 md:h-[450px] rounded-xl ring-1 ring-zinc-200/50 dark:ring-white/10 mt-4 md:mt-0' 
                             : 'w-full h-44'
@@ -168,11 +170,11 @@ export function ProjectsSection() {
                           src={project.image}
                           alt={`${project.title} preview`}
                           fill
-                          className={`${project.imageClassName} transition-transform duration-700 ease-out group-hover:scale-[1.03]`}
+                          className={`${project.imageClassName} transition-transform duration-500 ease-out group-hover:scale-105`}
                           sizes="(max-width: 768px) 100vw, 50vw"
                         />
                         {!isExpanded && (
-                          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-zinc-50 dark:to-[#171717]" />
+                          <div className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-b from-transparent via-transparent 30% to-zinc-50 dark:to-surface" />
                         )}
                       </motion.div>
 
