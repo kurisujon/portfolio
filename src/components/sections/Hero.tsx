@@ -42,13 +42,13 @@ export function HeroSection() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="flex flex-col items-center text-center max-w-3xl mx-auto z-10"
+        className="flex flex-col items-center text-center max-w-5xl mx-auto z-10 w-full"
       >
         {/* Name Reveal - Integrated with Block Animation */}
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center max-w-full">
           <NameReveal 
             text="CRIS JOHN" 
-            className="text-6xl md:text-8xl lg:text-9xl tracking-[0.1em]"
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl tracking-[0.08em] whitespace-nowrap"
           />
         </div>
 

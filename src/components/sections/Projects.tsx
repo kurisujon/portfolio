@@ -133,7 +133,7 @@ export function ProjectsSection() {
                 }}
                 className={`${isExpanded ? 'md:col-span-2 order-first' : ''}`}
               >
-                <Card className={`relative flex flex-col gap-5 h-full bg-zinc-50 dark:bg-white/[0.02] border border-zinc-200/50 dark:border-white/5 transition-colors duration-500 overflow-hidden ${isExpanded ? 'p-8 border-zinc-300 dark:border-white/20 ring-1 ring-zinc-300/50 dark:ring-white/10 shadow-2xl bg-zinc-100/50 dark:bg-white/[0.04]' : 'p-0'}`}>
+                <Card className={`group relative flex flex-col gap-5 h-full bg-zinc-50 dark:bg-white/[0.02] border border-zinc-200/50 dark:border-white/5 transition-all duration-500 ease-out overflow-hidden ${isExpanded ? 'p-8 border-zinc-300 dark:border-white/20 ring-1 ring-zinc-300/50 dark:ring-white/10 shadow-2xl bg-zinc-100/50 dark:bg-white/[0.04]' : 'p-0 hover:-translate-y-1.5 hover:border-zinc-300/80 dark:hover:border-white/20 hover:shadow-2xl hover:shadow-black/20 dark:hover:shadow-[0_20px_40px_rgba(0,0,0,0.6)]'}`}>
                   
                   {/* Close/Minimize Button */}
                   <AnimatePresence>
@@ -168,7 +168,7 @@ export function ProjectsSection() {
                           src={project.image}
                           alt={`${project.title} preview`}
                           fill
-                          className={project.imageClassName}
+                          className={`${project.imageClassName} transition-transform duration-700 ease-out group-hover:scale-[1.03]`}
                           sizes="(max-width: 768px) 100vw, 50vw"
                         />
                         {!isExpanded && (
@@ -196,7 +196,7 @@ export function ProjectsSection() {
                               exit={{ opacity: 0 }}
                               transition={{ duration: 0.15 }}
                             >
-                              <Typography variant="body" className={`leading-relaxed text-zinc-600 dark:text-zinc-400 ${isExpanded ? 'text-lg md:text-xl max-w-2xl' : ''}`}>
+                              <Typography variant="body" className={`text-justify leading-relaxed text-zinc-600 dark:text-zinc-400 ${isExpanded ? 'text-lg md:text-xl max-w-2xl' : ''}`}>
                                 {isExpanded ? project.longDescription : project.description}
                               </Typography>
                             </motion.div>

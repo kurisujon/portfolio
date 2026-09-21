@@ -9,13 +9,13 @@ interface NameRevealProps {
 
 export const NameReveal: React.FC<NameRevealProps> = ({ text, className }) => {
   return (
-    <div className="relative inline-block overflow-hidden py-2 px-1">
+    <div className="relative inline-block overflow-hidden py-2 px-1 max-w-full">
       {/* The Text - Revealed exactly when the block covers it */}
       <motion.h1
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5, duration: 0.01 }}
-        className={`${className} text-white uppercase font-bold tracking-[0.1em] leading-none`}
+        className={`${className} text-white uppercase font-bold tracking-[0.1em] leading-none whitespace-nowrap`}
       >
         {text}
       </motion.h1>
