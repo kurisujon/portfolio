@@ -180,9 +180,14 @@ export function ProjectsSection() {
           >
             <div className="group relative z-30 flex flex-col justify-between h-full bg-[#141414] border border-white/10 hover:border-white/20 transition-all duration-300 rounded-2xl p-6 md:p-8 overflow-hidden shadow-2xl">
               
-              {/* Card Top: Number, Title, and Role */}
-              <div className="flex flex-col gap-4">
-                <div className="flex justify-between items-center">
+              {/* Card Top: Number, Title, and Role - Clickable to open Case Study */}
+              <button
+                type="button"
+                onClick={() => setSelectedProject(project)}
+                className="relative z-50 pointer-events-auto cursor-pointer text-left w-full flex flex-col gap-4 focus:outline-none"
+                aria-label={`Open case study for ${project.title}`}
+              >
+                <div className="flex justify-between items-center w-full">
                   <span className="text-xs font-mono font-bold text-zinc-500">
                     {project.number} / 04
                   </span>
@@ -197,19 +202,24 @@ export function ProjectsSection() {
                 <p className="text-sm md:text-base text-zinc-400 font-normal leading-relaxed line-clamp-2">
                   {project.tagline}
                 </p>
-              </div>
+              </button>
 
-              {/* Card Center: Project Preview Image */}
-              <div className="relative w-full h-52 sm:h-64 md:h-72 my-6 rounded-xl overflow-hidden bg-zinc-900 border border-white/5">
+              {/* Card Center: Project Preview Image - Clickable button to open Case Study */}
+              <button
+                type="button"
+                onClick={() => setSelectedProject(project)}
+                className="relative z-50 pointer-events-auto cursor-pointer w-full h-52 sm:h-64 md:h-72 my-6 rounded-xl overflow-hidden bg-zinc-900 border border-white/5 group/img focus:outline-none"
+                aria-label={`View ${project.title} case study`}
+              >
                 <Image
                   src={project.image}
                   alt={`${project.title} preview`}
                   fill
-                  className={`${project.imageClassName} transition-transform duration-700 ease-out group-hover:scale-105`}
+                  className={`${project.imageClassName} transition-transform duration-700 ease-out group-hover/img:scale-105`}
                   sizes="(max-width: 768px) 85vw, 680px"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-              </div>
+              </button>
 
               {/* Card Bottom: Technologies & Actions */}
               <div className="flex flex-col gap-6 mt-auto">

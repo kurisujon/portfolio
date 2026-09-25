@@ -57,18 +57,36 @@ export function Magnetic({
   // Forward props and ensure child has pointer-events-auto and merged handlers
   let content = children
   if (React.isValidElement(children)) {
-    const childProps = (children as React.ReactElement<any>).props || {}
-    content = React.cloneElement(children as React.ReactElement<any>, {
+    const child = children as React.ReactElement<any>
+    const childProps = child.props || {}
+    const hasClick = typeof childProps.onClick === 'function' || typeof onClick === 'function'
+
+    const mergedProps: Record<string, any> = {
       ...childProps,
       href: childProps.href || href,
       target: childProps.target || target,
       rel: childProps.rel || rel,
-      onClick: (e: React.MouseEvent) => {
-        childProps.onClick?.(e)
-        onClick?.(e as any)
-      },
       className: `${childProps.className || ''} pointer-events-auto cursor-pointer relative z-50`.trim(),
-    })
+    }
+
+    if (hasClick) {
+      mergedProps.onClick = (e: React.MouseEvent) => {
+        if (typeof childProps.onClick === 'function') {
+          childProps.onClick(e)
+        }
+        if (typeof onClick === 'function') {
+          onClick(e as any)
+        }
+      }
+    }
+
+    content = React.cloneElement(child, mergedProps)
+  }
+
+  const handleWrapperClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === ref.current && ref.current?.firstElementChild) {
+      (ref.current.firstElementChild as HTMLElement).click?.()
+    }
   }
 
   return (
@@ -76,7 +94,7 @@ export function Magnetic({
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      onClick={onClick}
+      onClick={handleWrapperClick}
       style={{ x: springX, y: springY }}
       className={`inline-block relative z-50 pointer-events-auto cursor-pointer ${className}`}
       {...props}
