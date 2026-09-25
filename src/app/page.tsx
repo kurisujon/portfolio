@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <div className="relative w-full">
       {/* Main content wrapper with solid black background and higher z-index */}
-      <main className="relative z-10 bg-[#0a0a0a] min-h-screen shadow-[0_40px_80px_rgba(0,0,0,0.9)]">
+      <main className="relative z-10 bg-[#0a0a0a] min-h-screen shadow-[0_40px_80px_rgba(0,0,0,0.9)] pb-12 sm:pb-16 md:pb-24">
         <Navbar />
         
         <HeroSection />
@@ -41,13 +41,13 @@ export default function Home() {
 
       {/* Curtain Reveal Footer / Contact Section */}
       <footer 
-        className="sticky bottom-0 -z-[1] w-full min-h-[70vh] md:min-h-[85vh] bg-[#0a0a0a] flex flex-col justify-between py-12 px-6"
+        className="sticky bottom-0 -z-[1] w-full min-h-screen bg-[#0a0a0a] flex flex-col justify-center items-center py-8 md:py-12 px-6"
       >
-        <Container className="my-auto">
+        <Container className="w-full my-auto flex flex-col justify-center items-center">
           <ContactSection />
         </Container>
 
-        <div className="w-full border-t border-white/5 py-8 mt-auto flex justify-center items-center">
+        <div className="w-full border-t border-white/5 py-6 mt-auto flex justify-center items-center shrink-0">
           <p className="text-sm text-zinc-500 dark:text-zinc-400">
             © {new Date().getFullYear()} Cris John Labiaga. All rights reserved.
           </p>

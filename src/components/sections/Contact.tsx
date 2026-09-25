@@ -42,17 +42,17 @@ export function ContactSection() {
   return (
     <section 
       id="contact"
-      className="py-20 md:py-28 flex flex-col items-center text-center gap-6 w-full"
+      className="py-6 md:py-10 flex flex-col items-center text-center gap-5 w-full my-auto"
     >
-      <span className="text-[#3b82f6] font-mono font-bold tracking-widest text-sm uppercase">
+      <span className="text-[#3b82f6] font-mono font-bold tracking-widest text-xs uppercase">
         What&apos;s Next?
       </span>
       
-      <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-zinc-900 dark:text-primary max-w-4xl">
+      <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-zinc-900 dark:text-primary max-w-4xl">
         Let&apos;s build something <span className="text-[#3b82f6]">useful.</span>
       </h2>
       
-      <p className="max-w-[50ch] text-base sm:text-lg md:text-xl leading-relaxed text-zinc-500 dark:text-zinc-400 mt-4">
+      <p className="max-w-[50ch] text-sm sm:text-base md:text-lg leading-relaxed text-zinc-500 dark:text-zinc-400 mt-2">
         I&apos;m open to full-stack, backend/API, AI integration, and automation opportunities. If you need a developer who can work across the application stack and integrate practical AI workflows, feel free to get in touch.
       </p>
       
@@ -108,3 +108,5 @@ export function ContactSection() {
     </section>
   )
 }
+
+export default ContactSection

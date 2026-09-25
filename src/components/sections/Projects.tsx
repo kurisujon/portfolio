@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { X, ExternalLink, ArrowRight, BookOpen } from 'lucide-react'
+import { X, ExternalLink, ArrowRight } from 'lucide-react'
 import { Magnetic } from '@/components/ui/MagneticButton'
 
 const GithubIcon = ({ size = 18 }: { size?: number }) => (
@@ -151,19 +151,19 @@ export function ProjectsSection() {
     <section
       ref={sectionRef}
       id="projects"
-      className="relative w-full min-h-screen bg-[#0a0a0a] flex flex-col justify-center overflow-hidden py-16 md:py-20"
+      className="relative w-full h-screen max-h-screen bg-[#0a0a0a] flex flex-col justify-between overflow-hidden py-4 sm:py-6"
     >
       {/* Section Header */}
-      <div className="w-full max-w-7xl mx-auto px-6 md:px-12 mb-8 md:mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div className="w-full max-w-7xl mx-auto px-6 md:px-12 mb-2 sm:mb-3 flex flex-col sm:flex-row sm:items-end justify-between gap-2 shrink-0">
         <div>
           <span className="text-xs font-mono font-bold tracking-[0.25em] text-[#3b82f6] uppercase">
             Selected Works
           </span>
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mt-2">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white mt-0.5">
             Engineering & Systems
           </h2>
         </div>
-        <p className="text-sm text-zinc-400 max-w-md">
+        <p className="text-xs sm:text-sm text-zinc-400 max-w-md hidden sm:block">
           Horizontal gallery showcasing end-to-end applications, distributed backends, and AI pipelines. Scroll down to travel through projects.
         </p>
       </div>
@@ -171,35 +171,35 @@ export function ProjectsSection() {
       {/* Horizontal Scroll Track */}
       <div
         ref={trackRef}
-        className="flex flex-row items-stretch gap-8 px-6 md:px-12 w-max will-change-transform"
+        className="flex flex-row items-center gap-6 sm:gap-8 px-6 md:px-12 w-max will-change-transform my-auto"
       >
         {projectsData.map((project) => (
           <div
             key={project.id}
-            className="w-[85vw] sm:w-[540px] md:w-[620px] lg:w-[680px] shrink-0 flex flex-col relative z-30 pointer-events-auto"
+            className="w-[85vw] sm:w-[480px] md:w-[540px] lg:w-[580px] shrink-0 flex flex-col relative z-30 pointer-events-auto h-[75vh] max-h-[570px] min-h-[450px]"
           >
-            <div className="group relative z-30 flex flex-col justify-between h-full bg-[#141414] border border-white/10 hover:border-white/20 transition-all duration-300 rounded-2xl p-6 md:p-8 overflow-hidden shadow-2xl">
+            <div className="group relative z-30 flex flex-col justify-between h-full bg-[#141414] border border-white/10 hover:border-white/20 transition-all duration-300 rounded-2xl p-5 sm:p-6 overflow-hidden shadow-2xl">
               
               {/* Card Top: Number, Title, and Role - Clickable to open Case Study */}
               <button
                 type="button"
                 onClick={() => setSelectedProject(project)}
-                className="relative z-50 pointer-events-auto cursor-pointer text-left w-full flex flex-col gap-4 focus:outline-none"
+                className="relative z-50 pointer-events-auto cursor-pointer text-left w-full flex flex-col gap-2.5 focus:outline-none"
                 aria-label={`Open case study for ${project.title}`}
               >
                 <div className="flex justify-between items-center w-full">
                   <span className="text-xs font-mono font-bold text-zinc-500">
                     {project.number} / 04
                   </span>
-                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#3b82f6] bg-[#3b82f6]/10 px-3 py-1 rounded-full border border-[#3b82f6]/20">
+                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#3b82f6] bg-[#3b82f6]/10 px-3 py-0.5 rounded-full border border-[#3b82f6]/20">
                     {project.role}
                   </span>
                 </div>
 
-                <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white group-hover:text-[#3b82f6] transition-colors">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white group-hover:text-[#3b82f6] transition-colors leading-tight">
                   {project.title}
                 </h3>
-                <p className="text-sm md:text-base text-zinc-400 font-normal leading-relaxed line-clamp-2">
+                <p className="text-xs sm:text-sm text-zinc-400 font-normal leading-relaxed line-clamp-2">
                   {project.tagline}
                 </p>
               </button>
@@ -208,7 +208,7 @@ export function ProjectsSection() {
               <button
                 type="button"
                 onClick={() => setSelectedProject(project)}
-                className="relative z-50 pointer-events-auto cursor-pointer w-full h-52 sm:h-64 md:h-72 my-6 rounded-xl overflow-hidden bg-zinc-900 border border-white/5 group/img focus:outline-none"
+                className="relative z-50 pointer-events-auto cursor-pointer w-full h-36 sm:h-44 md:h-48 my-3 rounded-xl overflow-hidden bg-zinc-900 border border-white/5 group/img focus:outline-none shrink-0"
                 aria-label={`View ${project.title} case study`}
               >
                 <Image
@@ -216,40 +216,40 @@ export function ProjectsSection() {
                   alt={`${project.title} preview`}
                   fill
                   className={`${project.imageClassName} transition-transform duration-700 ease-out group-hover/img:scale-105`}
-                  sizes="(max-width: 768px) 85vw, 680px"
+                  sizes="(max-width: 768px) 85vw, 580px"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
               </button>
 
               {/* Card Bottom: Technologies & Actions */}
-              <div className="flex flex-col gap-6 mt-auto">
-                <div className="flex flex-wrap gap-1.5 md:gap-2">
+              <div className="flex flex-col gap-3.5 mt-auto relative z-50 pointer-events-auto">
+                <div className="flex flex-wrap gap-1.5">
                   {project.technologies.slice(0, 5).map((tech) => (
                     <span
                       key={tech}
-                      className="px-2.5 py-1 text-[11px] font-mono font-medium rounded-md bg-white/5 text-zinc-300 border border-white/10"
+                      className="px-2 py-0.5 text-[10px] sm:text-[11px] font-mono font-medium rounded-md bg-white/5 text-zinc-300 border border-white/10"
                     >
                       {tech}
                     </span>
                   ))}
                   {project.technologies.length > 5 && (
-                    <span className="px-2 py-1 text-[11px] font-mono text-zinc-500">
+                    <span className="px-2 py-0.5 text-[10px] sm:text-[11px] font-mono text-zinc-500">
                       +{project.technologies.length - 5} more
                     </span>
                   )}
                 </div>
 
-                <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-white/10 relative z-50 pointer-events-auto">
-                  <div className="flex items-center gap-3 relative z-50 pointer-events-auto">
+                <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-white/10 relative z-50 pointer-events-auto">
+                  <div className="flex items-center gap-2.5 relative z-50 pointer-events-auto">
                     {project.liveUrl && project.liveUrl !== '#' && (
                       <Magnetic className="relative z-50 pointer-events-auto cursor-pointer">
                         <a
                           href={project.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="relative z-50 pointer-events-auto cursor-pointer inline-flex items-center gap-2 bg-[#3b82f6] hover:bg-[#2563eb] text-white px-5 py-2.5 rounded-md text-xs font-semibold transition-all shadow-md shadow-blue-500/15"
+                          className="relative z-50 pointer-events-auto cursor-pointer inline-flex items-center gap-1.5 bg-[#3b82f6] hover:bg-[#2563eb] text-white px-3.5 py-1.5 rounded-md text-xs font-semibold transition-all shadow-md shadow-blue-500/15"
                         >
-                          <ExternalLink size={14} />
+                          <ExternalLink size={13} />
                           Live Demo
                         </a>
                       </Magnetic>
@@ -260,23 +260,25 @@ export function ProjectsSection() {
                           href={project.githubUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="relative z-50 pointer-events-auto cursor-pointer inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-zinc-200 border border-white/10 px-4 py-2.5 rounded-md text-xs font-semibold transition-all"
+                          className="relative z-50 pointer-events-auto cursor-pointer inline-flex items-center gap-1.5 bg-white/5 hover:bg-white/10 text-zinc-200 border border-white/10 px-3 py-1.5 rounded-md text-xs font-semibold transition-all"
                         >
-                          <GithubIcon size={14} />
+                          <GithubIcon size={13} />
                           Code
                         </a>
                       </Magnetic>
                     )}
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={() => setSelectedProject(project)}
-                    className="relative z-50 pointer-events-auto cursor-pointer inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-400 hover:text-white transition-colors"
-                  >
-                    <span>Full Case Study</span>
-                    <ArrowRight size={14} />
-                  </button>
+                  <Magnetic className="relative z-50 pointer-events-auto cursor-pointer">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedProject(project)}
+                      className="relative z-50 pointer-events-auto cursor-pointer inline-flex items-center gap-1 text-xs font-semibold text-zinc-400 hover:text-white transition-colors py-1 px-1.5"
+                    >
+                      <span>Full Case Study</span>
+                      <ArrowRight size={13} />
+                    </button>
+                  </Magnetic>
                 </div>
               </div>
 
@@ -307,7 +309,7 @@ export function ProjectsSection() {
                 type="button"
                 onClick={() => setSelectedProject(null)}
                 aria-label="Close modal"
-                className="relative z-50 pointer-events-auto cursor-pointer absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-zinc-300 transition-colors"
+                className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors z-50 text-white cursor-pointer"
               >
                 <X size={20} />
               </button>
@@ -371,26 +373,30 @@ export function ProjectsSection() {
 
               <div className="flex items-center gap-4 pt-6 border-t border-white/10 relative z-50 pointer-events-auto">
                 {selectedProject.liveUrl && selectedProject.liveUrl !== '#' && (
-                  <a
-                    href={selectedProject.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="relative z-50 pointer-events-auto cursor-pointer inline-flex items-center gap-2 bg-[#3b82f6] hover:bg-[#2563eb] text-white px-6 py-3 rounded-md text-sm font-semibold transition-all"
-                  >
-                    <ExternalLink size={16} />
-                    Live Project
-                  </a>
+                  <Magnetic className="relative z-50 pointer-events-auto cursor-pointer">
+                    <a
+                      href={selectedProject.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="relative z-50 pointer-events-auto cursor-pointer inline-flex items-center gap-2 bg-[#3b82f6] hover:bg-[#2563eb] text-white px-6 py-3 rounded-md text-sm font-semibold transition-all"
+                    >
+                      <ExternalLink size={16} />
+                      Live Project
+                    </a>
+                  </Magnetic>
                 )}
                 {selectedProject.githubUrl && selectedProject.githubUrl !== '#' && (
-                  <a
-                    href={selectedProject.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="relative z-50 pointer-events-auto cursor-pointer inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 text-white px-6 py-3 rounded-md text-sm font-semibold transition-all border border-white/10"
-                  >
-                    <GithubIcon size={16} />
-                    View Source
-                  </a>
+                  <Magnetic className="relative z-50 pointer-events-auto cursor-pointer">
+                    <a
+                      href={selectedProject.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="relative z-50 pointer-events-auto cursor-pointer inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 text-white px-6 py-3 rounded-md text-sm font-semibold transition-all border border-white/10"
+                    >
+                      <GithubIcon size={16} />
+                      View Source
+                    </a>
+                  </Magnetic>
                 )}
               </div>
             </motion.div>
