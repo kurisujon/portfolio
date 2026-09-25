@@ -1,5 +1,6 @@
 "use client"
 import { Mail, Download } from 'lucide-react'
+import { Magnetic } from '@/components/ui/MagneticButton'
 
 // Custom SVG Icons for Brand logos
 const GithubIcon = ({ size = 20, className = "" }: { size?: number, className?: string }) => (
@@ -41,59 +42,67 @@ export function ContactSection() {
   return (
     <section 
       id="contact"
-      className="py-32 md:py-48 flex flex-col items-center text-center gap-6 w-full"
+      className="py-20 md:py-28 flex flex-col items-center text-center gap-6 w-full"
     >
       <span className="text-[#3b82f6] font-mono font-bold tracking-widest text-sm uppercase">
         What&apos;s Next?
       </span>
       
-      <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-zinc-900 dark:text-primary max-w-4xl">
+      <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-zinc-900 dark:text-primary max-w-4xl">
         Let&apos;s build something <span className="text-[#3b82f6]">useful.</span>
       </h2>
       
-      <p className="max-w-[50ch] text-lg md:text-xl leading-relaxed text-zinc-500 dark:text-zinc-400 mt-4">
+      <p className="max-w-[50ch] text-base sm:text-lg md:text-xl leading-relaxed text-zinc-500 dark:text-zinc-400 mt-4">
         I&apos;m open to full-stack, backend/API, AI integration, and automation opportunities. If you need a developer who can work across the application stack and integrate practical AI workflows, feel free to get in touch.
       </p>
       
       <div className="flex flex-wrap justify-center gap-4 w-full mt-8">
         
-        <a 
-          href="mailto:johncrislabiaga@gmail.com" 
-          className="flex items-center gap-3 px-6 py-4 bg-zinc-50 dark:bg-surface border border-zinc-200/50 dark:border-white/5 hover:border-[#3b82f6] dark:hover:border-[#3b82f6] transition-all duration-500 ease-out rounded-full hover:-translate-y-[2px]"
-        >
-          <Mail size={20} className="text-[#3b82f6]" />
-          <span className="font-bold text-sm text-zinc-900 dark:text-primary">Email</span>
-        </a>
+        <Magnetic>
+          <a 
+            href="mailto:johncrislabiaga@gmail.com" 
+            className="flex items-center gap-3 px-6 py-4 bg-zinc-50 dark:bg-surface border border-zinc-200/50 dark:border-white/10 hover:border-[#3b82f6] dark:hover:border-[#3b82f6] transition-all duration-300 rounded-full"
+          >
+            <Mail size={20} className="text-[#3b82f6]" />
+            <span className="font-bold text-sm text-zinc-900 dark:text-primary">Email</span>
+          </a>
+        </Magnetic>
 
-        <a 
-          href="https://github.com/Kurisujon" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="flex items-center gap-3 px-6 py-4 bg-zinc-50 dark:bg-surface border border-zinc-200/50 dark:border-white/5 hover:border-[#3b82f6] dark:hover:border-[#3b82f6] transition-all duration-500 ease-out rounded-full hover:-translate-y-[2px]"
-        >
-          <GithubIcon size={20} className="text-[#3b82f6]" />
-          <span className="font-bold text-sm text-zinc-900 dark:text-primary">GitHub</span>
-        </a>
+        <Magnetic>
+          <a 
+            href="https://github.com/Kurisujon" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="flex items-center gap-3 px-6 py-4 bg-zinc-50 dark:bg-surface border border-zinc-200/50 dark:border-white/10 hover:border-[#3b82f6] dark:hover:border-[#3b82f6] transition-all duration-300 rounded-full"
+          >
+            <GithubIcon size={20} className="text-[#3b82f6]" />
+            <span className="font-bold text-sm text-zinc-900 dark:text-primary">GitHub</span>
+          </a>
+        </Magnetic>
 
-        <a 
-          href="https://www.linkedin.com/in/labiagacrisjohn/"
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="flex items-center gap-3 px-6 py-4 bg-zinc-50 dark:bg-surface border border-zinc-200/50 dark:border-white/5 hover:border-[#3b82f6] dark:hover:border-[#3b82f6] transition-all duration-500 ease-out rounded-full hover:-translate-y-[2px]"
-        >
-          <LinkedinIcon size={20} className="text-[#3b82f6]" />
-          <span className="font-bold text-sm text-zinc-900 dark:text-primary">LinkedIn</span>
-        </a>
+        <Magnetic>
+          <a 
+            href="https://www.linkedin.com/in/labiagacrisjohn/"
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="flex items-center gap-3 px-6 py-4 bg-zinc-50 dark:bg-surface border border-zinc-200/50 dark:border-white/10 hover:border-[#3b82f6] dark:hover:border-[#3b82f6] transition-all duration-300 rounded-full"
+          >
+            <LinkedinIcon size={20} className="text-[#3b82f6]" />
+            <span className="font-bold text-sm text-zinc-900 dark:text-primary">LinkedIn</span>
+          </a>
+        </Magnetic>
 
-        <a 
-          href="/resume.pdf" 
-          target="_blank" 
-          download
-          className="flex items-center gap-3 px-6 py-4 bg-zinc-50 dark:bg-surface border border-zinc-200/50 dark:border-white/5 hover:border-[#3b82f6] dark:hover:border-[#3b82f6] transition-all duration-500 ease-out rounded-full hover:-translate-y-[2px]"
-        >
-          <Download size={20} className="text-[#3b82f6]" />
-          <span className="font-bold text-sm text-zinc-900 dark:text-primary">Resume</span>
-        </a>
+        <Magnetic>
+          <a 
+            href="/resume.pdf" 
+            target="_blank" 
+            download
+            className="flex items-center gap-3 px-6 py-4 bg-zinc-50 dark:bg-surface border border-zinc-200/50 dark:border-white/10 hover:border-[#3b82f6] dark:hover:border-[#3b82f6] transition-all duration-300 rounded-full"
+          >
+            <Download size={20} className="text-[#3b82f6]" />
+            <span className="font-bold text-sm text-zinc-900 dark:text-primary">Resume</span>
+          </a>
+        </Magnetic>
 
       </div>
     </section>

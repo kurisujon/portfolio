@@ -6,6 +6,12 @@
   body {
     @apply antialiased bg-[#0a0a0a] selection:bg-zinc-800 selection:text-white dark:selection:bg-white dark:selection:text-black;
   }
+
+  @media (pointer: fine) {
+    body, a, button, [role="button"] {
+      cursor: none !important;
+    }
+  }
 }
 
 @layer utilities {

@@ -2,6 +2,7 @@
 import { Typography } from '@/components/ui/Typography'
 import { Card } from '@/components/ui/Card'
 import { BookOpen, Award } from 'lucide-react'
+import { TextMaskReveal } from '@/components/animations/TextMaskReveal'
 
 export function AboutSection() {
   return (
@@ -22,15 +23,27 @@ export function AboutSection() {
           </Typography>
           
           <div className="flex flex-col gap-6 border-l-2 border-[#3b82f6] pl-6 mt-4">
-            <Typography variant="body" className="text-lg md:text-xl leading-relaxed text-zinc-600 dark:text-secondary transition-colors">
-              I build complete web systems from frontend interfaces to backend services, REST APIs, relational databases, authentication, and third-party integrations.
-            </Typography>
-            <Typography variant="body" className="text-base md:text-lg leading-relaxed text-zinc-500 dark:text-zinc-400 transition-colors">
-              I integrate practical AI capabilities such as RAG, embeddings, semantic retrieval, LLM-powered workflows, and automation when they solve real application requirements.
-            </Typography>
-            <Typography variant="body" className="text-base md:text-lg leading-relaxed text-zinc-500 dark:text-zinc-400 transition-colors">
-              I use AI coding agents for research, implementation, debugging, testing, refactoring, and documentation. I review generated changes, validate architecture and integrations, and remain responsible for final code quality.
-            </Typography>
+            <TextMaskReveal 
+              text="I build complete web systems from frontend interfaces to backend services, REST APIs, relational databases, authentication, and third-party integrations."
+              as="p"
+              className="text-lg md:text-xl leading-relaxed text-zinc-600 dark:text-secondary"
+              start="top 80%"
+              stagger={0.03}
+            />
+            <TextMaskReveal 
+              text="I integrate practical AI capabilities such as RAG, embeddings, semantic retrieval, LLM-powered workflows, and automation when they solve real application requirements."
+              as="p"
+              className="text-base md:text-lg leading-relaxed text-zinc-500 dark:text-zinc-400"
+              start="top 80%"
+              stagger={0.03}
+            />
+            <TextMaskReveal 
+              text="I use AI coding agents for research, implementation, debugging, testing, refactoring, and documentation. I review generated changes, validate architecture and integrations, and remain responsible for final code quality."
+              as="p"
+              className="text-base md:text-lg leading-relaxed text-zinc-500 dark:text-zinc-400"
+              start="top 80%"
+              stagger={0.03}
+            />
           </div>
         </div>
 

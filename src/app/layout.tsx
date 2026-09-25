@@ -2,6 +2,9 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Background } from '@/components/layout/Background'
 import { ScrollProgressCircle } from '@/components/ui/ScrollProgressCircle'
+import { Preloader } from '@/components/ui/Preloader'
+import { CustomCursor } from '@/components/ui/CustomCursor'
+import SmoothScroll from '@/components/SmoothScroll'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
@@ -29,13 +32,17 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} font-sans scroll-smooth dark`} suppressHydrationWarning>
-      <body className="text-zinc-100 antialiased min-h-screen">
-        <Background />
-        <ScrollProgressCircle />
-        <div className="relative z-10">
-          {children}
-        </div>
+    <html lang="en" className={`${inter.variable} font-sans dark`} suppressHydrationWarning>
+      <body className="text-zinc-100 antialiased min-h-screen cursor-none">
+        <CustomCursor />
+        <Preloader />
+        <SmoothScroll>
+          <Background />
+          <ScrollProgressCircle />
+          <div className="relative z-10">
+            {children}
+          </div>
+        </SmoothScroll>
       </body>
     </html>
   )

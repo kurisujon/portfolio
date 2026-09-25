@@ -1,13 +1,14 @@
-"use client"
-import { useState } from 'react'
+'use client'
+
+import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Typography } from '@/components/ui/Typography'
-import { Card } from '@/components/ui/Card'
-import { X, ExternalLink, ChevronRight } from 'lucide-react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { X, ExternalLink, ArrowRight, BookOpen } from 'lucide-react'
+import { Magnetic } from '@/components/ui/MagneticButton'
 
-// Custom SVG Icons for Brand logos as they are missing in the current lucide-react version
-const GithubIcon = ({ size = 20 }: { size?: number }) => (
+const GithubIcon = ({ size = 18 }: { size?: number }) => (
   <svg 
     width={size} 
     height={size} 
@@ -23,21 +24,23 @@ const GithubIcon = ({ size = 20 }: { size?: number }) => (
   </svg>
 )
 
-const projectsData = [
+export const projectsData = [
   { 
     id: 1,
+    number: "01",
     title: "Veldra",
     role: "Full Stack AI Software Developer",
     image: "/veldra_preview.png",
     imageClassName: "object-cover object-top",
-    description: "A smart document verification platform engineered for student visa applications. It automates structured extraction from PSA birth certificates, academic transcripts, and diplomas, employing a cross-document comparison engine to detect timeline, name, and record discrepancies. Features automated findings generation with severity ratings and legal draft preparation such as Affidavits of Discrepancy.",
+    tagline: "Enterprise document verification & anomaly detection platform for visa workflows.",
+    description: "A smart document verification platform engineered for student visa applications. It automates structured extraction from PSA birth certificates, academic transcripts, and diplomas, employing a cross-document comparison engine to detect timeline, name, and record discrepancies.",
     longDescription: "Architected an enterprise-grade document verification platform using Next.js and Supabase tailored for high-stakes student visa applications. Integrates Google Gemini structured extraction and OCR to ingest PSA birth certificates, academic transcripts, and diplomas. A cross-document comparison engine systematically cross-references dates, personal identifiers, and academic records to flag inconsistencies with source citations, while automated workflows generate legally formatted Affidavits of Discrepancy, Explanation Letters, and audit-ready verification packages.",
     technologies: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Google Gemini", "OCR", "Zod", "Tailwind CSS"],
     features: [
       "Cross-Document Comparison Engine across multi-source records",
       "Structured Extraction for PSA Birth Certificates, Transcripts & Diplomas",
       "Automated Discrepancy Detection with severity levels & source citations",
-      "Automated Legal Draft Generation (Affidavits of Discrepancy & Explanation Letters)",
+      "Automated Legal Draft Generation (Affidavits & Explanation Letters)",
       "Comprehensive verification reports & exportable package bundles"
     ],
     liveUrl: "https://veldra-sand.vercel.app/",
@@ -45,11 +48,13 @@ const projectsData = [
   },
   { 
     id: 2,
+    number: "02",
     title: "StudFlow",
     role: "Full Stack AI Software Developer",
     image: "/studflow_preview.png",
     imageClassName: "object-cover object-top",
-    description: "An AI-powered study workflow platform that transforms PDF and DOCX learning materials into structured, interactive study sessions. Built with Next.js and a FastAPI backend featuring asynchronous Celery processing, it generates AI summaries, flashcards, and quizzes. Employs document-grounded RAG with pgvector embeddings to provide source-backed explanations, note annotations, and contextual learning videos.",
+    tagline: "Asynchronous learning platform with document-grounded RAG & pgvector embeddings.",
+    description: "An AI-powered study workflow platform that transforms PDF and DOCX learning materials into structured, interactive study sessions. Built with Next.js and a FastAPI backend featuring asynchronous Celery processing, generating AI summaries, flashcards, and quizzes.",
     longDescription: "Engineered an asynchronous, document-grounded learning platform structured as a monorepo with Next.js 16 and FastAPI (Python 3.12). Background workers powered by Celery and Redis process uploaded PDF and DOCX documents to generate structured summaries, adaptive flashcards, and comprehensive quizzes. Implements a semantic RAG pipeline using Gemini embeddings and PostgreSQL pgvector cosine similarity search, enabling grounded AI explanations, interactive in-document annotations, study history tracking, and YouTube learning integrations.",
     technologies: ["Next.js 16", "React 19", "FastAPI", "Python 3.12", "PostgreSQL", "pgvector", "Celery", "Redis", "Google Gemini", "Clerk"],
     features: [
@@ -64,11 +69,13 @@ const projectsData = [
   },
   { 
     id: 3,
+    number: "03",
     title: "CHoDaMS Web",
     role: "Full Stack Developer",
     image: "/images/projects/chodams-web/chodams-portfolio-cover-v2.png",
     imageClassName: "object-cover object-top bg-white",
-    description: "A multi-layered city housing data and relocation management platform powered by PHP and MariaDB. Features a custom Weighted Scoring Algorithm that automates applicant eligibility calculations based on socio-economic, demographic, and hazard zone metrics. Integrates real-time geospatial mapping using KML/GeoJSON polygons to manage project site boundaries, lot allocations, HOA records, and post-relocation monitoring.",
+    tagline: "Municipal housing allocation platform with Weighted Scoring & geospatial analysis.",
+    description: "A multi-layered city housing data and relocation management platform powered by PHP and MariaDB. Features a custom Weighted Scoring Algorithm that automates applicant eligibility calculations based on socio-economic, demographic, and hazard zone metrics.",
     longDescription: "Developed a centralized administrative and decision-support web platform for city housing and relocation operations. Implements an automated Weighted Scoring Algorithm to objectively evaluate beneficiary eligibility across socio-economic indicators, living conditions, and hazard vulnerability. Incorporates interactive geospatial visualization via KML/GeoJSON boundaries to track city relocation zones, HOA structures, lot assignments, and policy revocations, supported by dynamic analytics dashboards filtering intricate demographic data.",
     technologies: ["PHP", "MariaDB", "RESTful API", "JavaScript", "Tailwind CSS", "GeoJSON / KML"],
     features: [
@@ -83,11 +90,13 @@ const projectsData = [
   },
   { 
     id: 4,
+    number: "04",
     title: "CHoDaMS Mobile",
     role: "Full Stack Developer",
     image: "/images/projects/chodams-mobile/cover-dashboard-gps.png",
     imageClassName: "object-cover object-center",
-    description: "An offline-first Android field census application developed with Flutter and SQLite for disconnected survey operations. Employs a custom bi-directional synchronization algorithm to reliably buffer field data and sync with the central MariaDB backend when online. Integrates hardware sensors for high-accuracy GPS geo-tagging, camera capture for household verification, digital e-signatures, and Excel backup export.",
+    tagline: "Offline-first Android census application with bi-directional syncing & GPS.",
+    description: "An offline-first Android field census application developed with Flutter and SQLite for disconnected survey operations. Employs a custom bi-directional synchronization algorithm to reliably buffer field data and sync with the central MariaDB backend when online.",
     longDescription: "Engineered an offline-first mobile field application in Dart/Flutter designed for zero-connectivity municipal census operations. Built with a local SQLite architecture guaranteeing data preservation in remote areas, paired with a custom bi-directional synchronization algorithm that resolves state and securely transmits buffered survey payloads, photo evidence, and digital e-signatures to the central web platform. Deeply integrates device hardware for meter-accurate GPS geo-tagging and provides local Excel exports for redundant field data safety.",
     technologies: ["Flutter", "Dart", "SQLite", "PHP REST API", "MariaDB", "Android SDK"],
     features: [
@@ -103,211 +112,281 @@ const projectsData = [
 ]
 
 export function ProjectsSection() {
-  const [activeId, setActiveId] = useState<number | null>(null)
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
+  const [selectedProject, setSelectedProject] = useState<typeof projectsData[0] | null>(null)
 
-  // Sort projects so the active one is at the top, but preserve relative order of others
-  const displayProjects = activeId 
-    ? [
-        projectsData.find(p => p.id === activeId)!,
-        ...projectsData.filter(p => p.id !== activeId)
-      ]
-    : projectsData;
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger)
 
-  const handleToggle = (id: number) => {
-    if (activeId === id) {
-      setActiveId(null)
-    } else {
-      setActiveId(id)
-      // Smoothly scroll to the top of the projects section when opening
-      document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
-  }
+    const section = sectionRef.current
+    const track = trackRef.current
+    if (!section || !track) return
+
+    const ctx = gsap.context(() => {
+      const getScrollAmount = () => {
+        const trackWidth = track.scrollWidth
+        const viewportWidth = window.innerWidth
+        return -(trackWidth - viewportWidth + 96)
+      }
+
+      gsap.to(track, {
+        x: getScrollAmount,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          pin: true,
+          start: 'top top',
+          end: () => `+=${track.scrollWidth - window.innerWidth + 300}`,
+          scrub: 1,
+          invalidateOnRefresh: true,
+        },
+      })
+    }, section)
+
+    return () => ctx.revert()
+  }, [])
 
   return (
-    <section 
+    <section
+      ref={sectionRef}
       id="projects"
-      className="py-24 flex flex-col gap-12"
+      className="relative w-full min-h-screen bg-[#0a0a0a] flex flex-col justify-center overflow-hidden py-16 md:py-20"
     >
-      <div className="flex justify-between items-end">
-        <h2 className="text-sm font-bold tracking-[0.2em] text-zinc-500 uppercase">
-          Projects
-        </h2>
+      {/* Section Header */}
+      <div className="w-full max-w-7xl mx-auto px-6 md:px-12 mb-8 md:mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <span className="text-xs font-mono font-bold tracking-[0.25em] text-[#3b82f6] uppercase">
+            Selected Works
+          </span>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mt-2">
+            Engineering & Systems
+          </h2>
+        </div>
+        <p className="text-sm text-zinc-400 max-w-md">
+          Horizontal gallery showcasing end-to-end applications, distributed backends, and AI pipelines. Scroll down to travel through projects.
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 relative">
-        <AnimatePresence mode="popLayout">
-          {displayProjects.map((project) => {
-            const isExpanded = activeId === project.id
-            const isSecondary = activeId !== null && !isExpanded
+      {/* Horizontal Scroll Track */}
+      <div
+        ref={trackRef}
+        className="flex flex-row items-stretch gap-8 px-6 md:px-12 w-max will-change-transform"
+      >
+        {projectsData.map((project) => (
+          <div
+            key={project.id}
+            className="w-[85vw] sm:w-[540px] md:w-[620px] lg:w-[680px] shrink-0 flex flex-col"
+          >
+            <div className="group relative flex flex-col justify-between h-full bg-[#141414] border border-white/10 hover:border-white/20 transition-all duration-300 rounded-2xl p-6 md:p-8 overflow-hidden shadow-2xl">
+              
+              {/* Card Top: Number, Title, and Role */}
+              <div className="flex flex-col gap-4">
+                <div className="flex justify-between items-center">
+                  <span className="text-xs font-mono font-bold text-zinc-500">
+                    {project.number} / 04
+                  </span>
+                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#3b82f6] bg-[#3b82f6]/10 px-3 py-1 rounded-full border border-[#3b82f6]/20">
+                    {project.role}
+                  </span>
+                </div>
 
-            return (
-              <motion.div
-                key={project.id}
-                layout
-                initial={false}
-                animate={{
-                  opacity: isSecondary ? 0.3 : 1,
-                  scale: isSecondary ? 0.98 : 1,
-                  zIndex: isExpanded ? 20 : 1
-                }}
-                whileHover={!isExpanded ? { y: -5 } : undefined}
-                transition={{
-                  layout: { duration: 0.7, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] },
-                  opacity: { duration: 0.5 },
-                  scale: { duration: 0.5 },
-                  y: { duration: 0.25, ease: "easeOut" }
-                }}
-                className={`${isExpanded ? 'md:col-span-2 order-first' : ''}`}
-              >
-                <Card className={`group relative flex flex-col gap-5 h-full bg-zinc-50 dark:bg-surface border border-zinc-200/80 dark:border-white/10 transition-colors duration-300 overflow-hidden ${isExpanded ? 'p-8 border-zinc-300 dark:border-white/20 ring-1 ring-zinc-300/50 dark:ring-white/10 shadow-2xl bg-zinc-100/50 dark:bg-white/[0.04]' : 'p-0 hover:border-zinc-300 dark:hover:border-white/20 hover:shadow-2xl hover:shadow-black/20 dark:hover:shadow-[0_20px_40px_rgba(0,0,0,0.6)]'}`}>
-                  
-                  {/* Close/Minimize Button */}
-                  <AnimatePresence>
-                    {isExpanded && (
-                      <motion.button
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.8 }}
-                        onClick={() => setActiveId(null)}
-                        className="absolute top-6 right-6 p-2 rounded-full bg-zinc-200/50 dark:bg-white/10 hover:bg-zinc-300 dark:hover:bg-white/20 text-zinc-600 dark:text-zinc-400 transition-colors z-30"
-                      >
-                        <X size={18} />
-                      </motion.button>
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white group-hover:text-[#3b82f6] transition-colors">
+                  {project.title}
+                </h3>
+                <p className="text-sm md:text-base text-zinc-400 font-normal leading-relaxed line-clamp-2">
+                  {project.tagline}
+                </p>
+              </div>
+
+              {/* Card Center: Project Preview Image */}
+              <div className="relative w-full h-52 sm:h-64 md:h-72 my-6 rounded-xl overflow-hidden bg-zinc-900 border border-white/5">
+                <Image
+                  src={project.image}
+                  alt={`${project.title} preview`}
+                  fill
+                  className={`${project.imageClassName} transition-transform duration-700 ease-out group-hover:scale-105`}
+                  sizes="(max-width: 768px) 85vw, 680px"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+              </div>
+
+              {/* Card Bottom: Technologies & Actions */}
+              <div className="flex flex-col gap-6 mt-auto">
+                <div className="flex flex-wrap gap-1.5 md:gap-2">
+                  {project.technologies.slice(0, 5).map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-2.5 py-1 text-[11px] font-mono font-medium rounded-md bg-white/5 text-zinc-300 border border-white/10"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                  {project.technologies.length > 5 && (
+                    <span className="px-2 py-1 text-[11px] font-mono text-zinc-500">
+                      +{project.technologies.length - 5} more
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-white/10">
+                  <div className="flex items-center gap-3">
+                    {project.liveUrl && project.liveUrl !== '#' && (
+                      <Magnetic>
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 bg-[#3b82f6] hover:bg-[#2563eb] text-white px-5 py-2.5 rounded-md text-xs font-semibold transition-all shadow-md shadow-blue-500/15"
+                        >
+                          <ExternalLink size={14} />
+                          Live Demo
+                        </a>
+                      </Magnetic>
                     )}
-                  </AnimatePresence>
-
-                  <div className={`flex flex-col gap-6 ${isExpanded ? '' : 'h-full'}`}>
-                    
-                    {/* Top Row: Image & Title/Desc */}
-                    <div className={`flex flex-col ${isExpanded ? 'md:flex-row-reverse md:justify-between md:items-start md:gap-12' : 'h-full gap-5'}`}>
-                      
-                      {/* Unified Single Image Node (eliminates glitch) */}
-                      <motion.div
-                        layout
-                        className={`relative overflow-hidden shrink-0 origin-top bg-zinc-900 ${
-                          isExpanded 
-                            ? 'w-full md:w-[45%] lg:w-[50%] h-64 md:h-[450px] rounded-xl ring-1 ring-zinc-200/50 dark:ring-white/10 mt-4 md:mt-0' 
-                            : 'w-full h-44'
-                        }`}
-                      >
-                        <Image
-                          src={project.image}
-                          alt={`${project.title} preview`}
-                          fill
-                          className={`${project.imageClassName} transition-transform duration-500 ease-out group-hover:scale-105`}
-                          sizes="(max-width: 768px) 100vw, 50vw"
-                        />
-                        {!isExpanded && (
-                          <div className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-b from-transparent via-transparent 30% to-zinc-50 dark:to-surface" />
-                        )}
-                      </motion.div>
-
-                      {/* Content Wrapper */}
-                      <div className={`flex flex-col gap-4 flex-1 ${isExpanded ? '' : 'px-6'}`}>
-                        <motion.div layout="position">
-                          <Typography variant="h3" className={`text-zinc-900 dark:text-white font-bold ${isExpanded ? 'text-4xl md:text-5xl' : 'text-2xl'}`}>
-                            {project.title}
-                          </Typography>
-                          <p className="mt-2 text-xs font-bold uppercase tracking-widest text-[#3b82f6]">
-                            {project.role}
-                          </p>
-                        </motion.div>
-                        
-                        <motion.div layout className="relative">
-                          <AnimatePresence mode="wait">
-                            <motion.div
-                              key={isExpanded ? 'expanded' : 'collapsed'}
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              exit={{ opacity: 0 }}
-                              transition={{ duration: 0.15 }}
-                            >
-                              <Typography variant="body" className={`text-justify leading-relaxed text-zinc-600 dark:text-zinc-400 ${isExpanded ? 'text-lg md:text-xl max-w-2xl' : ''}`}>
-                                {isExpanded ? project.longDescription : project.description}
-                              </Typography>
-                            </motion.div>
-                          </AnimatePresence>
-                        </motion.div>
-                      </div>
-
-                    </div>
-
-                    {/* Bottom Row: Features, Tech Stack, and Buttons */}
-                    <AnimatePresence>
-                      {isExpanded && (
-                        <motion.div
-                          layout
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          transition={{ duration: 0.4 }}
-                          className="flex flex-col gap-8 mt-4 overflow-hidden"
+                    {project.githubUrl && project.githubUrl !== '#' && (
+                      <Magnetic>
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-zinc-200 border border-white/10 px-4 py-2.5 rounded-md text-xs font-semibold transition-all"
                         >
-                          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                            {/* Key Features */}
-                            <div className="flex flex-col gap-4">
-                              <h4 className="text-xs font-bold uppercase tracking-widest text-zinc-500">Key Features</h4>
-                              <ul className="flex flex-col gap-3">
-                                {project.features.map((feature, i) => (
-                                  <li key={i} className="flex items-center gap-3 text-base text-zinc-600 dark:text-zinc-300">
-                                    <div className="w-1 h-1 rounded-full bg-zinc-400 shrink-0" />
-                                    {feature}
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-
-                            {/* Tech Stack */}
-                            <div className="flex flex-col gap-4">
-                              <h4 className="text-xs font-bold uppercase tracking-widest text-zinc-500">Technologies</h4>
-                              <div className="flex flex-wrap gap-2">
-                                {project.technologies.map((tech) => (
-                                  <span key={tech} className="px-4 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded-full bg-zinc-200/50 dark:bg-white/5 text-zinc-700 dark:text-zinc-300 border border-zinc-300 dark:border-white/10">
-                                    {tech}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* Action Buttons */}
-                          <div className="flex flex-wrap items-center gap-4 pt-6 border-t border-zinc-200 dark:border-white/5">
-                            {project.liveUrl && project.liveUrl !== "#" && (
-                              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#3b82f6] text-white px-8 py-3.5 rounded-md text-sm font-bold transition-all hover:opacity-90 active:scale-95 shadow-lg shadow-[#3b82f6]/20">
-                                <ExternalLink size={16} />
-                                Live Project
-                              </a>
-                            )}
-                            {project.githubUrl && project.githubUrl !== "#" && (
-                              <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 border border-zinc-300 dark:border-white/10 hover:bg-zinc-100 dark:hover:bg-white/5 text-zinc-900 dark:text-white px-8 py-3.5 rounded-md text-sm font-bold transition-all active:scale-95">
-                                <GithubIcon size={16} />
-                                View Source
-                              </a>
-                            )}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-
-                    {/* View Details Button (Only in collapsed state) */}
-                    {!isExpanded && (
-                      <motion.div layout="position" className="pt-4 mt-auto px-6 pb-6">
-                        <button 
-                          onClick={() => handleToggle(project.id)}
-                          className="group flex items-center gap-2 bg-transparent border border-zinc-300 dark:border-white/20 hover:border-zinc-500 dark:hover:border-white/40 text-zinc-900 dark:text-white px-6 py-2.5 text-sm rounded-full transition-all font-medium active:scale-95"
-                        >
-                          View Details
-                          <ChevronRight size={16} className="transition-transform group-hover:translate-x-0.5" />
-                        </button>
-                      </motion.div>
+                          <GithubIcon size={14} />
+                          Code
+                        </a>
+                      </Magnetic>
                     )}
                   </div>
-                </Card>
-              </motion.div>
-            )
-          })}
-        </AnimatePresence>
+
+                  <button
+                    onClick={() => setSelectedProject(project)}
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-400 hover:text-white transition-colors"
+                  >
+                    <span>Full Case Study</span>
+                    <ArrowRight size={14} />
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        ))}
       </div>
+
+      {/* Case Study Modal Overlay */}
+      <AnimatePresence>
+        {selectedProject && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedProject(null)}
+            className="fixed inset-0 z-[9999] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-3xl max-h-[85vh] overflow-y-auto bg-[#171717] border border-white/15 rounded-2xl p-6 sm:p-10 shadow-2xl flex flex-col gap-6 text-white"
+            >
+              <button
+                onClick={() => setSelectedProject(null)}
+                aria-label="Close modal"
+                className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-zinc-300 transition-colors"
+              >
+                <X size={20} />
+              </button>
+
+              <div className="flex flex-col gap-2">
+                <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#3b82f6]">
+                  {selectedProject.role}
+                </span>
+                <h3 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+                  {selectedProject.title}
+                </h3>
+              </div>
+
+              <div className="relative w-full h-64 sm:h-80 rounded-xl overflow-hidden bg-zinc-900 border border-white/10">
+                <Image
+                  src={selectedProject.image}
+                  alt={selectedProject.title}
+                  fill
+                  className={selectedProject.imageClassName}
+                />
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <h4 className="text-xs font-bold uppercase tracking-widest text-zinc-400">
+                  Architectural Summary
+                </h4>
+                <p className="text-zinc-300 text-base leading-relaxed">
+                  {selectedProject.longDescription}
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <h4 className="text-xs font-bold uppercase tracking-widest text-zinc-400">
+                  Key Features & Capabilities
+                </h4>
+                <ul className="flex flex-col gap-2.5">
+                  {selectedProject.features.map((feat, idx) => (
+                    <li key={idx} className="flex items-start gap-3 text-sm text-zinc-300">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#3b82f6] mt-2 shrink-0" />
+                      <span>{feat}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="flex flex-col gap-3">
+                <h4 className="text-xs font-bold uppercase tracking-widest text-zinc-400">
+                  Technology Stack
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {selectedProject.technologies.map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-3 py-1 text-xs font-mono rounded-md bg-white/5 text-zinc-200 border border-white/10"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4 pt-6 border-t border-white/10">
+                {selectedProject.liveUrl && selectedProject.liveUrl !== '#' && (
+                  <a
+                    href={selectedProject.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-[#3b82f6] hover:bg-[#2563eb] text-white px-6 py-3 rounded-md text-sm font-semibold transition-all"
+                  >
+                    <ExternalLink size={16} />
+                    Live Project
+                  </a>
+                )}
+                {selectedProject.githubUrl && selectedProject.githubUrl !== '#' && (
+                  <a
+                    href={selectedProject.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 text-white px-6 py-3 rounded-md text-sm font-semibold transition-all border border-white/10"
+                  >
+                    <GithubIcon size={16} />
+                    View Source
+                  </a>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }
+
+export default ProjectsSection

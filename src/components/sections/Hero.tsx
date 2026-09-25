@@ -1,6 +1,8 @@
 "use client"
 import { motion } from 'framer-motion'
 import { NameReveal } from '@/components/ui/NameReveal'
+import { TextMaskReveal } from '@/components/animations/TextMaskReveal'
+import { Magnetic } from '@/components/ui/MagneticButton'
 
 export function HeroSection() {
   const containerVariants = {
@@ -60,35 +62,42 @@ export function HeroSection() {
           Full Stack AI Software Developer
         </motion.p>
 
-        {/* Description */}
-        <motion.p 
-          variants={itemVariants}
-          className="text-base sm:text-lg md:text-xl text-zinc-400 font-normal leading-relaxed max-w-2xl mt-5 md:mt-6 text-pretty"
-        >
-          I design and build full-stack applications, backend systems, and AI-powered tools that turn complex workflows into reliable software.
-        </motion.p>
+        {/* Description - Mask Reveal */}
+        <motion.div variants={itemVariants} className="max-w-2xl mt-5 md:mt-6">
+          <TextMaskReveal 
+            text="I design and build full-stack applications, backend systems, and AI-powered tools that turn complex workflows into reliable software."
+            as="p"
+            className="text-base sm:text-lg md:text-xl text-zinc-400 font-normal leading-relaxed text-pretty"
+            delay={1.8}
+            stagger={0.03}
+          />
+        </motion.div>
 
-        {/* Call-to-Action Buttons */}
+        {/* Call-to-Action Buttons with Magnetic Pull */}
         <motion.div
           variants={itemVariants}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8 sm:mt-10 w-full sm:w-auto"
         >
-          <motion.a 
-            href="#projects"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="w-full sm:w-auto inline-flex items-center justify-center bg-[#3b82f6] hover:bg-[#2563eb] text-white px-8 py-3.5 rounded-md font-medium text-sm transition-all shadow-md shadow-blue-500/15"
-          >
-            View Projects
-          </motion.a>
-          <motion.a 
-            href="#contact"
-            whileHover={{ scale: 1.02, backgroundColor: "rgba(59,130,246,0.08)" }}
-            whileTap={{ scale: 0.98 }}
-            className="w-full sm:w-auto inline-flex items-center justify-center border border-[#3b82f6]/40 hover:border-[#3b82f6] text-[#3b82f6] hover:text-white px-8 py-3.5 rounded-md font-medium text-sm transition-all"
-          >
-            Get in Touch
-          </motion.a>
+          <Magnetic className="w-full sm:w-auto">
+            <motion.a 
+              href="#projects"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="w-full sm:w-auto inline-flex items-center justify-center bg-[#3b82f6] hover:bg-[#2563eb] text-white px-8 py-3.5 rounded-md font-medium text-sm transition-all shadow-md shadow-blue-500/15"
+            >
+              View Projects
+            </motion.a>
+          </Magnetic>
+          <Magnetic className="w-full sm:w-auto">
+            <motion.a 
+              href="#contact"
+              whileHover={{ scale: 1.02, backgroundColor: "rgba(59,130,246,0.08)" }}
+              whileTap={{ scale: 0.98 }}
+              className="w-full sm:w-auto inline-flex items-center justify-center border border-[#3b82f6]/40 hover:border-[#3b82f6] text-[#3b82f6] hover:text-white px-8 py-3.5 rounded-md font-medium text-sm transition-all"
+            >
+              Get in Touch
+            </motion.a>
+          </Magnetic>
         </motion.div>
       </motion.div>
     </section>
