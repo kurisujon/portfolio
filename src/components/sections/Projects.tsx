@@ -176,9 +176,9 @@ export function ProjectsSection() {
         {projectsData.map((project) => (
           <div
             key={project.id}
-            className="w-[85vw] sm:w-[540px] md:w-[620px] lg:w-[680px] shrink-0 flex flex-col"
+            className="w-[85vw] sm:w-[540px] md:w-[620px] lg:w-[680px] shrink-0 flex flex-col relative z-30 pointer-events-auto"
           >
-            <div className="group relative flex flex-col justify-between h-full bg-[#141414] border border-white/10 hover:border-white/20 transition-all duration-300 rounded-2xl p-6 md:p-8 overflow-hidden shadow-2xl">
+            <div className="group relative z-30 flex flex-col justify-between h-full bg-[#141414] border border-white/10 hover:border-white/20 transition-all duration-300 rounded-2xl p-6 md:p-8 overflow-hidden shadow-2xl">
               
               {/* Card Top: Number, Title, and Role */}
               <div className="flex flex-col gap-4">
@@ -229,15 +229,15 @@ export function ProjectsSection() {
                   )}
                 </div>
 
-                <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-white/10">
-                  <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-white/10 relative z-50 pointer-events-auto">
+                  <div className="flex items-center gap-3 relative z-50 pointer-events-auto">
                     {project.liveUrl && project.liveUrl !== '#' && (
-                      <Magnetic>
+                      <Magnetic className="relative z-50 pointer-events-auto cursor-pointer">
                         <a
                           href={project.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 bg-[#3b82f6] hover:bg-[#2563eb] text-white px-5 py-2.5 rounded-md text-xs font-semibold transition-all shadow-md shadow-blue-500/15"
+                          className="relative z-50 pointer-events-auto cursor-pointer inline-flex items-center gap-2 bg-[#3b82f6] hover:bg-[#2563eb] text-white px-5 py-2.5 rounded-md text-xs font-semibold transition-all shadow-md shadow-blue-500/15"
                         >
                           <ExternalLink size={14} />
                           Live Demo
@@ -245,12 +245,12 @@ export function ProjectsSection() {
                       </Magnetic>
                     )}
                     {project.githubUrl && project.githubUrl !== '#' && (
-                      <Magnetic>
+                      <Magnetic className="relative z-50 pointer-events-auto cursor-pointer">
                         <a
                           href={project.githubUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-zinc-200 border border-white/10 px-4 py-2.5 rounded-md text-xs font-semibold transition-all"
+                          className="relative z-50 pointer-events-auto cursor-pointer inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-zinc-200 border border-white/10 px-4 py-2.5 rounded-md text-xs font-semibold transition-all"
                         >
                           <GithubIcon size={14} />
                           Code
@@ -260,8 +260,9 @@ export function ProjectsSection() {
                   </div>
 
                   <button
+                    type="button"
                     onClick={() => setSelectedProject(project)}
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-400 hover:text-white transition-colors"
+                    className="relative z-50 pointer-events-auto cursor-pointer inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-400 hover:text-white transition-colors"
                   >
                     <span>Full Case Study</span>
                     <ArrowRight size={14} />
@@ -282,7 +283,7 @@ export function ProjectsSection() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedProject(null)}
-            className="fixed inset-0 z-[9999] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
+            className="fixed inset-0 z-[9999] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 pointer-events-auto"
           >
             <motion.div
               initial={{ scale: 0.95, opacity: 0, y: 20 }}
@@ -290,12 +291,13 @@ export function ProjectsSection() {
               exit={{ scale: 0.95, opacity: 0, y: 20 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-3xl max-h-[85vh] overflow-y-auto bg-[#171717] border border-white/15 rounded-2xl p-6 sm:p-10 shadow-2xl flex flex-col gap-6 text-white"
+              className="relative z-50 pointer-events-auto w-full max-w-3xl max-h-[85vh] overflow-y-auto bg-[#171717] border border-white/15 rounded-2xl p-6 sm:p-10 shadow-2xl flex flex-col gap-6 text-white"
             >
               <button
+                type="button"
                 onClick={() => setSelectedProject(null)}
                 aria-label="Close modal"
-                className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-zinc-300 transition-colors"
+                className="relative z-50 pointer-events-auto cursor-pointer absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-zinc-300 transition-colors"
               >
                 <X size={20} />
               </button>
@@ -357,13 +359,13 @@ export function ProjectsSection() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 pt-6 border-t border-white/10">
+              <div className="flex items-center gap-4 pt-6 border-t border-white/10 relative z-50 pointer-events-auto">
                 {selectedProject.liveUrl && selectedProject.liveUrl !== '#' && (
                   <a
                     href={selectedProject.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-[#3b82f6] hover:bg-[#2563eb] text-white px-6 py-3 rounded-md text-sm font-semibold transition-all"
+                    className="relative z-50 pointer-events-auto cursor-pointer inline-flex items-center gap-2 bg-[#3b82f6] hover:bg-[#2563eb] text-white px-6 py-3 rounded-md text-sm font-semibold transition-all"
                   >
                     <ExternalLink size={16} />
                     Live Project
@@ -374,7 +376,7 @@ export function ProjectsSection() {
                     href={selectedProject.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 text-white px-6 py-3 rounded-md text-sm font-semibold transition-all border border-white/10"
+                    className="relative z-50 pointer-events-auto cursor-pointer inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 text-white px-6 py-3 rounded-md text-sm font-semibold transition-all border border-white/10"
                   >
                     <GithubIcon size={16} />
                     View Source

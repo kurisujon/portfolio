@@ -1,18 +1,26 @@
 'use client'
 
 import React, { useRef } from 'react'
-import { motion, useMotionValue, useSpring } from 'framer-motion'
+import { motion, useMotionValue, useSpring, type HTMLMotionProps } from 'framer-motion'
 
-interface MagneticProps {
+interface MagneticProps extends Omit<HTMLMotionProps<'div'>, 'children'> {
   children: React.ReactNode
   className?: string
   distanceLimit?: number
+  href?: string
+  target?: string
+  rel?: string
 }
 
 export function Magnetic({
   children,
   className = '',
   distanceLimit = 20,
+  onClick,
+  href,
+  target,
+  rel,
+  ...props
 }: MagneticProps) {
   const ref = useRef<HTMLDivElement>(null)
 
@@ -46,15 +54,34 @@ export function Magnetic({
     y.set(0)
   }
 
+  // Forward props and ensure child has pointer-events-auto and merged handlers
+  let content = children
+  if (React.isValidElement(children)) {
+    const childProps = (children as React.ReactElement<any>).props || {}
+    content = React.cloneElement(children as React.ReactElement<any>, {
+      ...childProps,
+      href: childProps.href || href,
+      target: childProps.target || target,
+      rel: childProps.rel || rel,
+      onClick: (e: React.MouseEvent) => {
+        childProps.onClick?.(e)
+        onClick?.(e as any)
+      },
+      className: `${childProps.className || ''} pointer-events-auto cursor-pointer relative z-50`.trim(),
+    })
+  }
+
   return (
     <motion.div
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      onClick={onClick}
       style={{ x: springX, y: springY }}
-      className={`inline-block ${className}`}
+      className={`inline-block relative z-50 pointer-events-auto cursor-pointer ${className}`}
+      {...props}
     >
-      {children}
+      {content}
     </motion.div>
   )
 }

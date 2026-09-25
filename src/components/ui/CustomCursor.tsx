@@ -59,6 +59,7 @@ export function CustomCursor() {
         y: cursorY,
         translateX: '-50%',
         translateY: '-50%',
+        pointerEvents: 'none',
       }}
       animate={{
         scale: isHovered ? 2.2 : 1,
@@ -68,7 +69,7 @@ export function CustomCursor() {
         scale: { duration: 0.2, ease: 'easeOut' },
         opacity: { duration: 0.15 },
       }}
-      className={`fixed top-0 left-0 pointer-events-none z-[99999] rounded-full transition-colors duration-200 ${
+      className={`fixed top-0 left-0 pointer-events-none z-[99999] rounded-full transition-colors duration-200 select-none ${
         isHovered
           ? 'w-6 h-6 bg-white/20 border border-white/60 backdrop-invert'
           : 'w-3 h-3 bg-white'

@@ -52,7 +52,9 @@ export function Preloader({ onComplete }: { onComplete?: () => void }) {
           setShouldRender(false)
         }
       }}
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#0a0a0a] text-white"
+      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-[#0a0a0a] text-white ${
+        isFinished ? 'pointer-events-none' : ''
+      }`}
     >
       <div className="flex items-center gap-3 px-6 overflow-hidden">
         <span className="w-2.5 h-2.5 rounded-full bg-[#3b82f6] animate-pulse" />
