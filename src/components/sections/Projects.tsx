@@ -30,10 +30,16 @@ const projectsData = [
     role: "Full Stack AI Software Developer",
     image: "/veldra_preview.png",
     imageClassName: "object-cover object-top",
-    description: "A document verification workspace that extracts, compares, and reviews student visa application records.",
-    longDescription: "Built a Next.js and Supabase review platform that uses Gemini-powered structured extraction and OCR to process visa documents. A cross-document comparison engine flags inconsistencies with source evidence, while reviewers validate findings and prepare reports or legal drafts.",
-    technologies: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Google Gemini", "OCR"],
-    features: ["Structured document extraction", "Cross-document discrepancy analysis", "Source-linked findings", "Human review and document generation"],
+    description: "A smart document verification platform engineered for student visa applications. It automates structured extraction from PSA birth certificates, academic transcripts, and diplomas, employing a cross-document comparison engine to detect timeline, name, and record discrepancies. Features automated findings generation with severity ratings and legal draft preparation such as Affidavits of Discrepancy.",
+    longDescription: "Architected an enterprise-grade document verification platform using Next.js and Supabase tailored for high-stakes student visa applications. Integrates Google Gemini structured extraction and OCR to ingest PSA birth certificates, academic transcripts, and diplomas. A cross-document comparison engine systematically cross-references dates, personal identifiers, and academic records to flag inconsistencies with source citations, while automated workflows generate legally formatted Affidavits of Discrepancy, Explanation Letters, and audit-ready verification packages.",
+    technologies: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Google Gemini", "OCR", "Zod", "Tailwind CSS"],
+    features: [
+      "Cross-Document Comparison Engine across multi-source records",
+      "Structured Extraction for PSA Birth Certificates, Transcripts & Diplomas",
+      "Automated Discrepancy Detection with severity levels & source citations",
+      "Automated Legal Draft Generation (Affidavits of Discrepancy & Explanation Letters)",
+      "Comprehensive verification reports & exportable package bundles"
+    ],
     liveUrl: "https://veldra-sand.vercel.app/",
     githubUrl: "https://github.com/kurisujon/veldra"
   },
@@ -43,10 +49,16 @@ const projectsData = [
     role: "Full Stack AI Software Developer",
     image: "/studflow_preview.png",
     imageClassName: "object-cover object-top",
-    description: "A document-grounded study system that turns learning materials into interactive study workflows.",
-    longDescription: "Built a Next.js and FastAPI application that processes PDF and DOCX materials asynchronously and generates summaries, flashcards, quizzes, notes, and AI explanations. Gemini embeddings and pgvector power semantic retrieval so responses remain grounded in uploaded source material.",
-    technologies: ["Next.js", "React", "TypeScript", "FastAPI", "PostgreSQL", "pgvector", "Gemini"],
-    features: ["Document-grounded RAG", "Semantic retrieval", "Summaries, flashcards, quizzes, and notes", "Source-backed AI study responses"],
+    description: "An AI-powered study workflow platform that transforms PDF and DOCX learning materials into structured, interactive study sessions. Built with Next.js and a FastAPI backend featuring asynchronous Celery processing, it generates AI summaries, flashcards, and quizzes. Employs document-grounded RAG with pgvector embeddings to provide source-backed explanations, note annotations, and contextual learning videos.",
+    longDescription: "Engineered an asynchronous, document-grounded learning platform structured as a monorepo with Next.js 16 and FastAPI (Python 3.12). Background workers powered by Celery and Redis process uploaded PDF and DOCX documents to generate structured summaries, adaptive flashcards, and comprehensive quizzes. Implements a semantic RAG pipeline using Gemini embeddings and PostgreSQL pgvector cosine similarity search, enabling grounded AI explanations, interactive in-document annotations, study history tracking, and YouTube learning integrations.",
+    technologies: ["Next.js 16", "React 19", "FastAPI", "Python 3.12", "PostgreSQL", "pgvector", "Celery", "Redis", "Google Gemini", "Clerk"],
+    features: [
+      "Document-Grounded RAG via Gemini embeddings & pgvector cosine retrieval",
+      "Asynchronous background processing pipeline with Celery & Redis",
+      "Automated generation of structured summaries, flashcards & quizzes",
+      "Interactive study workspace with highlights, notes & explain-with-AI tools",
+      "Contextual YouTube learning video suggestions & persistent AI study history"
+    ],
     liveUrl: "https://studflow.webcris.dev/",
     githubUrl: "https://github.com/kurisujon/studflow"
   },
@@ -56,10 +68,16 @@ const projectsData = [
     role: "Full Stack Developer",
     image: "/images/projects/chodams-web/chodams-portfolio-cover-v2.png",
     imageClassName: "object-cover object-top bg-white",
-    description: "A city housing data platform for relocation management, automated eligibility scoring, and geospatial analytics.",
-    longDescription: "Built a responsive web administration and validation platform for city housing operations. It centralizes census and beneficiary records, applies a weighted scoring algorithm for eligibility, and supports project sites, assignments, revocations, dashboards, and geospatial analysis.",
-    technologies: ["Laravel", "PHP", "MariaDB", "JavaScript", "Tailwind CSS", "GeoJSON"],
-    features: ["Weighted eligibility scoring", "Housing-data management", "Responsive administration workflows", "Interactive geospatial analytics"],
+    description: "A multi-layered city housing data and relocation management platform powered by PHP and MariaDB. Features a custom Weighted Scoring Algorithm that automates applicant eligibility calculations based on socio-economic, demographic, and hazard zone metrics. Integrates real-time geospatial mapping using KML/GeoJSON polygons to manage project site boundaries, lot allocations, HOA records, and post-relocation monitoring.",
+    longDescription: "Developed a centralized administrative and decision-support web platform for city housing and relocation operations. Implements an automated Weighted Scoring Algorithm to objectively evaluate beneficiary eligibility across socio-economic indicators, living conditions, and hazard vulnerability. Incorporates interactive geospatial visualization via KML/GeoJSON boundaries to track city relocation zones, HOA structures, lot assignments, and policy revocations, supported by dynamic analytics dashboards filtering intricate demographic data.",
+    technologies: ["PHP", "MariaDB", "RESTful API", "JavaScript", "Tailwind CSS", "GeoJSON / KML"],
+    features: [
+      "Custom Weighted Scoring Algorithm for automated eligibility computation",
+      "Interactive geospatial mapping using KML & GeoJSON polygon boundaries",
+      "Beneficiary evaluation, lot assignment & post-relocation compliance tracking",
+      "Dynamic socio-economic analytics dashboards with demographic filtering",
+      "HOA officer management & policy revocation administration"
+    ],
     liveUrl: "#",
     githubUrl: "https://github.com/kurisujon/chodams_web"
   },
@@ -69,10 +87,16 @@ const projectsData = [
     role: "Full Stack Developer",
     image: "/images/projects/chodams-mobile/cover-dashboard-gps.png",
     imageClassName: "object-cover object-center",
-    description: "An offline-first field census app with digital surveys, GPS geo-tagging, and reliable data synchronization.",
-    longDescription: "Built a Flutter field application for disconnected census operations. It stores surveys in SQLite, captures photos, GPS coordinates, and e-signatures, then synchronizes records through PHP REST APIs to the central MariaDB-backed CHoDaMS platform when connectivity returns.",
-    technologies: ["Flutter", "Dart", "SQLite", "PHP REST APIs", "MariaDB", "Android"],
-    features: ["Offline survey collection", "Bidirectional data synchronization", "GPS, photo, and e-signature capture", "Excel export for offline backup"],
+    description: "An offline-first Android field census application developed with Flutter and SQLite for disconnected survey operations. Employs a custom bi-directional synchronization algorithm to reliably buffer field data and sync with the central MariaDB backend when online. Integrates hardware sensors for high-accuracy GPS geo-tagging, camera capture for household verification, digital e-signatures, and Excel backup export.",
+    longDescription: "Engineered an offline-first mobile field application in Dart/Flutter designed for zero-connectivity municipal census operations. Built with a local SQLite architecture guaranteeing data preservation in remote areas, paired with a custom bi-directional synchronization algorithm that resolves state and securely transmits buffered survey payloads, photo evidence, and digital e-signatures to the central web platform. Deeply integrates device hardware for meter-accurate GPS geo-tagging and provides local Excel exports for redundant field data safety.",
+    technologies: ["Flutter", "Dart", "SQLite", "PHP REST API", "MariaDB", "Android SDK"],
+    features: [
+      "Offline-first survey collection guaranteeing zero data loss in remote areas",
+      "Custom bi-directional state-managed synchronization algorithm",
+      "Hardware-integrated high-precision GPS geo-tagging & camera verification",
+      "Interactive digital e-signature capture for respondent authentication",
+      "Local Excel dataset export for physical & offline backup redundancy"
+    ],
     liveUrl: "#",
     githubUrl: "https://github.com/kurisujon/chodams_mobile"
   }
