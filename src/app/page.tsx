@@ -46,12 +46,6 @@ export default function Home() {
         <Container className="w-full my-auto flex flex-col justify-center items-center relative z-10 pointer-events-auto">
           <ContactSection />
         </Container>
-
-        <div className="w-full border-t border-white/5 py-6 mt-auto flex justify-center items-center shrink-0 relative z-10">
-          <p className="text-sm text-zinc-500 dark:text-zinc-400">
-            © {new Date().getFullYear()} Cris John Labiaga. All rights reserved.
-          </p>
-        </div>
       </footer>
     </div>
   )

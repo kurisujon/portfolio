@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import Image from 'next/image'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 const milestoneItems = [
   {
@@ -56,6 +58,31 @@ export function AboutSection() {
     return () => window.removeEventListener('mousemove', handleMouseMove)
   }, [mouseX, mouseY])
 
+  // GSAP ScrollTrigger stagger entrance for milestone rows
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger)
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        '.milestone-row',
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          stagger: 0.1,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.milestone-row',
+            start: 'top 85%',
+          },
+        }
+      )
+    })
+
+    return () => ctx.revert()
+  }, [])
+
   return (
     <section
       id="about"
@@ -101,19 +128,19 @@ export function AboutSection() {
               key={item.title}
               onMouseEnter={() => setHoveredMilestone(item.image)}
               onMouseLeave={() => setHoveredMilestone(null)}
-              className="flex justify-between items-center w-full py-8 border-t border-white/10 hover:bg-white/5 transition-colors cursor-pointer group px-4 -mx-4 rounded-sm"
+              className="milestone-row flex justify-between items-center w-full py-8 border-t border-white/10 hover:bg-white/5 transition-colors cursor-pointer group px-4 -mx-4 rounded-sm"
             >
-              <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 group-hover:pl-4 transition-all duration-300">
-                <span className="text-xl sm:text-2xl font-normal text-white">
+              <div className="flex flex-col gap-1 sm:gap-2 group-hover:pl-4 transition-all duration-300">
+                <span className="text-4xl md:text-5xl font-medium tracking-tight text-white">
                   {item.title}
                 </span>
                 {item.subtitle && (
-                  <span className="text-xs sm:text-sm text-white/40 font-normal">
+                  <span className="text-sm sm:text-base text-white/50 font-normal">
                     {item.subtitle}
                   </span>
                 )}
               </div>
-              <span className="text-sm text-white/50 font-mono shrink-0 ml-4">
+              <span className="text-sm sm:text-base text-white/50 font-mono shrink-0 ml-4">
                 {item.year}
               </span>
             </div>
@@ -152,6 +179,11 @@ export function AboutSection() {
                 className="object-cover"
               />
             )}
+            <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+              <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center text-white font-medium text-lg shadow-lg">
+                View
+              </div>
+            </div>
           </motion.div>,
           document.body
         )}

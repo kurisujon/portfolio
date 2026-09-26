@@ -101,7 +101,7 @@ export function HeroSection() {
 
         {/* Right side (Globe) */}
         <div className="bg-white/20 p-3 rounded-full flex items-center justify-center">
-          <Globe className="w-6 h-6 text-white animate-[spin_4s_linear_infinite]" />
+          <Globe className="w-6 h-6 text-white animate-spin-3d" />
         </div>
       </motion.div>
 
