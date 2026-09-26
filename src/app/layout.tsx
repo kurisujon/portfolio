@@ -33,7 +33,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} font-sans dark`} suppressHydrationWarning>
-      <body className="text-zinc-100 antialiased min-h-screen cursor-none">
+      <body className={`${inter.className} text-zinc-100 antialiased min-h-screen cursor-none tracking-tight`}>
         <CustomCursor />
         <Preloader />
         <SmoothScroll>

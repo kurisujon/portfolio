@@ -20,6 +20,11 @@
   }
 }
 
+.font-snellenberg {
+  font-family: 'Inter', sans-serif;
+  letter-spacing: -0.02em;
+}
+
 @keyframes spin {
   from {
     transform: rotate(0deg);
