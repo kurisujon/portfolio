@@ -36,7 +36,7 @@ export function HeroSection() {
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[140px] pointer-events-none -z-10" 
       />
 
-      {/* Step 3: Marquee Text Layer strictly at z-0, behind subject, stomach level, no mix-blend-mode */}
+      {/* Marquee Text Layer at z-20 (In front of portrait, stomach level) */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -45,13 +45,13 @@ export function HeroSection() {
           duration: 1.2,
           ease: [0.21, 1, 0.36, 1],
         }}
-        className="absolute top-[65%] -translate-y-1/2 left-0 w-full z-0 pointer-events-none select-none overflow-hidden"
+        className="absolute top-[65%] -translate-y-1/2 left-0 w-full z-20 pointer-events-none select-none overflow-hidden"
       >
         <div
           ref={marqueeRef}
           className="flex whitespace-nowrap w-max will-change-transform"
         >
-          {/* Step 2: Title case without uppercase class */}
+          {/* Title case without uppercase class */}
           <h1 className="text-[10vw] md:text-[12vw] font-bold text-white/20 pr-10 leading-none tracking-tighter select-none font-snellenberg">
             Cris John Labiaga —{' '}
           </h1>
@@ -61,7 +61,7 @@ export function HeroSection() {
         </div>
       </motion.div>
 
-      {/* Step 3: Photo Layer at z-10 relative so it blocks the text sliding behind it */}
+      {/* Photo Layer at z-10 (Behind text at z-20) */}
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
@@ -82,7 +82,7 @@ export function HeroSection() {
         />
       </motion.div>
 
-      {/* Step 1 & 2: Scaled Up Location Pill with Cobe 3D Globe */}
+      {/* Location Badge (Reference sizing: compact padding, text-sm, z-30) */}
       <motion.div
         initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
@@ -91,10 +91,10 @@ export function HeroSection() {
           duration: 0.8,
           ease: [0.21, 1, 0.36, 1],
         }}
-        className="absolute left-0 top-[60%] -translate-y-1/2 bg-[#1c1c1c] rounded-r-full py-6 pl-12 pr-6 flex items-center gap-8 z-20 pointer-events-auto shadow-2xl"
+        className="absolute left-0 top-[60%] -translate-y-1/2 inline-flex items-center gap-3 bg-black/90 rounded-r-full py-2 pl-5 pr-2 z-30 pointer-events-auto shadow-2xl"
       >
         {/* Left side (Text) */}
-        <div className="flex flex-col text-xl md:text-2xl font-medium leading-snug text-white font-snellenberg">
+        <div className="flex flex-col text-sm font-medium leading-snug text-white font-snellenberg">
           <span>Located</span>
           <span>in the</span>
           <span>Philippines</span>
@@ -104,7 +104,7 @@ export function HeroSection() {
         <GlobeCanvas />
       </motion.div>
 
-      {/* Foreground Right Side: Role Text */}
+      {/* Foreground Right Side: Role Text at z-30 */}
       <motion.div
         initial={{ opacity: 0, x: 30 }}
         animate={{ opacity: 1, x: 0 }}
@@ -113,7 +113,7 @@ export function HeroSection() {
           duration: 0.8,
           ease: [0.21, 1, 0.36, 1],
         }}
-        className="absolute right-6 md:right-16 top-[60%] -translate-y-1/2 z-20 pointer-events-auto"
+        className="absolute right-6 md:right-16 top-[60%] -translate-y-1/2 z-30 pointer-events-auto"
       >
         <h2 className="text-2xl md:text-4xl text-white font-medium leading-tight text-left font-snellenberg">
           Full Stack <br />
