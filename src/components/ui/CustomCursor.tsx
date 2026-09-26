@@ -10,8 +10,8 @@ export function CustomCursor() {
   const mouseX = useMotionValue(-100)
   const mouseY = useMotionValue(-100)
 
-  // Buttery-smooth spring motion for Dennis Snellenberg cursor physics
-  const springConfig = { damping: 28, stiffness: 350, mass: 0.1 }
+  // Step 1: Tight, highly responsive spring motion to eliminate delay while keeping buttery smooth physics
+  const springConfig = { stiffness: 1000, damping: 40, mass: 0.1 }
   const cursorX = useSpring(mouseX, springConfig)
   const cursorY = useSpring(mouseY, springConfig)
 
@@ -20,15 +20,41 @@ export function CustomCursor() {
     const hasFinePointer = window.matchMedia('(pointer: fine)').matches
     if (!hasFinePointer) return
 
+    // Step 2: Global cursor enlargement helper for text and interactive elements
+    const checkHoverState = (element: Element | null): boolean => {
+      if (!element) return false
+
+      // Check for interactive elements
+      const isInteractive = !!element.closest('a, button, input, textarea, select, [role="button"]')
+      if (isInteractive) return true
+
+      // Check for common text elements
+      const textTags = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'LI']
+      const isText = textTags.includes(element.tagName.toUpperCase()) || !!element.closest('h1, h2, h3, h4, h5, h6, p, span, li')
+      return isText
+    }
+
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX)
       mouseY.set(e.clientY)
-      if (!isVisible) setIsVisible(true)
+      setIsVisible(true)
 
-      // Check if hovering interactive element
-      const target = e.target as HTMLElement | null
-      const interactive = target?.closest('a, button, input, textarea, select, [role="button"]')
-      setIsHovered(!!interactive)
+      const target = e.target as Element | null
+      setIsHovered(checkHoverState(target))
+    }
+
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as Element | null
+      if (checkHoverState(target)) {
+        setIsHovered(true)
+      }
+    }
+
+    const handleMouseOut = (e: MouseEvent) => {
+      const related = e.relatedTarget as Element | null
+      if (!checkHoverState(related)) {
+        setIsHovered(false)
+      }
     }
 
     const handleMouseLeave = () => {
@@ -40,15 +66,19 @@ export function CustomCursor() {
     }
 
     window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mouseover', handleMouseOver)
+    window.addEventListener('mouseout', handleMouseOut)
     document.addEventListener('mouseleave', handleMouseLeave)
     document.addEventListener('mouseenter', handleMouseEnter)
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mouseover', handleMouseOver)
+      window.removeEventListener('mouseout', handleMouseOut)
       document.removeEventListener('mouseleave', handleMouseLeave)
       document.removeEventListener('mouseenter', handleMouseEnter)
     }
-  }, [isVisible, mouseX, mouseY])
+  }, [])
 
   if (!isVisible) return null
 

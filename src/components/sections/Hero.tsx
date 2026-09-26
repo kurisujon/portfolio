@@ -1,10 +1,12 @@
 "use client"
 import { motion } from 'framer-motion'
+import { useLenis } from '@studio-freight/react-lenis'
 import { NameReveal } from '@/components/ui/NameReveal'
 import { TextMaskReveal } from '@/components/animations/TextMaskReveal'
 import { Magnetic } from '@/components/ui/MagneticButton'
 
 export function HeroSection() {
+  const lenis = useLenis()
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -81,6 +83,13 @@ export function HeroSection() {
           <Magnetic className="w-full sm:w-auto">
             <motion.a 
               href="#projects"
+              onClick={(e) => {
+                e.preventDefault()
+                lenis?.scrollTo('#projects', {
+                  duration: 1.2,
+                  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                })
+              }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className="w-full sm:w-auto inline-flex items-center justify-center bg-[#3b82f6] hover:bg-white hover:text-black text-white px-8 py-3.5 rounded-md font-medium text-sm transition-all duration-300 shadow-md shadow-blue-500/15 cursor-pointer"
@@ -91,6 +100,13 @@ export function HeroSection() {
           <Magnetic className="w-full sm:w-auto">
             <motion.a 
               href="#contact"
+              onClick={(e) => {
+                e.preventDefault()
+                lenis?.scrollTo('#contact', {
+                  duration: 1.2,
+                  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                })
+              }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className="w-full sm:w-auto inline-flex items-center justify-center border border-[#3b82f6]/40 hover:border-white hover:bg-white hover:text-black text-[#3b82f6] px-8 py-3.5 rounded-md font-medium text-sm transition-all duration-300 cursor-pointer"

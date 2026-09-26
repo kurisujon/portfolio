@@ -1,6 +1,7 @@
 "use client"
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { useLenis } from '@studio-freight/react-lenis'
 
 const navLinks = [
   { name: 'About', href: '#about' },
@@ -12,6 +13,7 @@ const navLinks = [
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
+  const lenis = useLenis()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,7 +32,17 @@ export function Navbar() {
         }`}
     >
       <div className="w-full max-w-7xl mx-auto px-6 md:px-10 flex justify-between items-center">
-        <Link href="/" className="flex items-center">
+        <Link 
+          href="/" 
+          onClick={(e) => {
+            e.preventDefault()
+            lenis?.scrollTo(0, {
+              duration: 1.2,
+              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            })
+          }}
+          className="flex items-center cursor-pointer"
+        >
           <img 
             src="/cj_outlined_logo_clean.png" 
             alt="Logo" 
@@ -43,15 +55,24 @@ export function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                className="relative hover:text-white transition-colors py-1 group"
+                onClick={(e) => {
+                  e.preventDefault()
+                  lenis?.scrollTo(link.href, {
+                    duration: 1.2,
+                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                  })
+                }}
+                className="relative hover:text-white transition-colors py-1 group cursor-pointer"
               >
                 {link.name}
                 <span className="absolute bottom-0 left-0 w-full h-[1px] bg-white transform origin-left scale-x-0 transition-transform duration-300 ease-out group-hover:scale-x-100" />
               </Link>
             ))}
+          </div>
         </div>
       </div>
-    </div>
     </nav>
   )
 }
+
+export default Navbar
