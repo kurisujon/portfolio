@@ -4,7 +4,7 @@ import { useRef, useEffect } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import gsap from 'gsap'
-import { Globe } from 'lucide-react'
+import { GlobeCanvas } from '@/components/ui/GlobeCanvas'
 
 export function HeroSection() {
   const marqueeRef = useRef<HTMLDivElement>(null)
@@ -36,59 +36,53 @@ export function HeroSection() {
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[140px] pointer-events-none -z-10" 
       />
 
-      {/* Shared relative container for Photo (z-1) and Blend-mode Name Text (z-2) */}
-      <div className="relative w-full h-full overflow-hidden">
-        {/* Photo Layer: position: absolute; inset: 0; z-index: 1; */}
-        <motion.div
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            delay: 1.1,
-            duration: 1.1,
-            ease: [0.21, 1, 0.36, 1],
-          }}
-          style={{ zIndex: 1 }}
-          className="absolute inset-0 z-[1] flex items-end justify-center pointer-events-none select-none"
+      {/* Step 3: Marquee Text Layer strictly at z-0, behind subject, stomach level, no mix-blend-mode */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{
+          delay: 1.0,
+          duration: 1.2,
+          ease: [0.21, 1, 0.36, 1],
+        }}
+        className="absolute top-[65%] -translate-y-1/2 left-0 w-full z-0 pointer-events-none select-none overflow-hidden"
+      >
+        <div
+          ref={marqueeRef}
+          className="flex whitespace-nowrap w-max will-change-transform"
         >
-          <div className="relative w-full h-full max-w-[900px] flex items-end justify-center">
-            <Image
-              src="/profile-cutout.png"
-              alt="Cris John Labiaga"
-              fill
-              priority
-              sizes="(max-width: 1024px) 100vw, 900px"
-              className="object-contain object-bottom drop-shadow-2xl pointer-events-none"
-            />
-          </div>
-        </motion.div>
+          {/* Step 2: Title case without uppercase class */}
+          <h1 className="text-[10vw] md:text-[12vw] font-bold text-white/20 pr-10 leading-none tracking-tighter select-none font-snellenberg">
+            Cris John Labiaga —{' '}
+          </h1>
+          <h1 className="text-[10vw] md:text-[12vw] font-bold text-white/20 pr-10 leading-none tracking-tighter select-none font-snellenberg">
+            Cris John Labiaga —{' '}
+          </h1>
+        </div>
+      </motion.div>
 
-        {/* Step 3: Marquee Name Layer at stomach level with reduced font size [10vw]/md:[12vw] */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{
-            delay: 1.0,
-            duration: 1.2,
-            ease: [0.21, 1, 0.36, 1],
-          }}
-          style={{ zIndex: 2, mixBlendMode: 'difference' }}
-          className="absolute top-[65%] left-0 w-full z-[2] pointer-events-none select-none overflow-hidden mix-blend-difference"
-        >
-          <div
-            ref={marqueeRef}
-            className="flex whitespace-nowrap w-max will-change-transform"
-          >
-            <h1 className="text-[10vw] md:text-[12vw] font-bold text-white pr-10 leading-none tracking-tighter uppercase select-none font-snellenberg">
-              CRIS JOHN LABIAGA —{' '}
-            </h1>
-            <h1 className="text-[10vw] md:text-[12vw] font-bold text-white pr-10 leading-none tracking-tighter uppercase select-none font-snellenberg">
-              CRIS JOHN LABIAGA —{' '}
-            </h1>
-          </div>
-        </motion.div>
-      </div>
+      {/* Step 3: Photo Layer at z-10 relative so it blocks the text sliding behind it */}
+      <motion.div
+        initial={{ opacity: 0, y: 100 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          delay: 1.1,
+          duration: 1.1,
+          ease: [0.21, 1, 0.36, 1],
+        }}
+        className="z-10 relative h-[80vh] sm:h-[88vh] md:h-[92vh] lg:h-[96vh] w-full max-w-[900px] flex items-end justify-center pointer-events-none select-none"
+      >
+        <Image
+          src="/profile-cutout.png"
+          alt="Cris John Labiaga"
+          fill
+          priority
+          sizes="(max-width: 1024px) 100vw, 900px"
+          className="object-contain object-bottom drop-shadow-2xl pointer-events-none"
+        />
+      </motion.div>
 
-      {/* Step 2: Scaled Up Location Pill (Edge-anchored on left) */}
+      {/* Step 1 & 2: Scaled Up Location Pill with Cobe 3D Globe */}
       <motion.div
         initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
@@ -106,10 +100,8 @@ export function HeroSection() {
           <span>Philippines</span>
         </div>
 
-        {/* Right side (Globe Icon scaled up) */}
-        <div className="bg-white/20 p-5 rounded-full flex items-center justify-center">
-          <Globe className="w-10 h-10 text-white animate-spin-3d" />
-        </div>
+        {/* Right side (Cobe 3D Globe with locked aspect ratio) */}
+        <GlobeCanvas />
       </motion.div>
 
       {/* Foreground Right Side: Role Text */}

@@ -13,11 +13,11 @@ export function GlobeCanvas() {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    // Initialize Cobe 3D Globe with retina sharpness (devicePixelRatio: 2)
+    // Explicitly calculate based on wrapper size (48px) multiplied by devicePixelRatio (2)
     const globe = createGlobe(canvas, {
       devicePixelRatio: 2,
-      width: 56 * 2,
-      height: 56 * 2,
+      width: 48 * 2,
+      height: 48 * 2,
       phi: 0,
       theta: 0.3,
       dark: 1,
@@ -65,24 +65,10 @@ export function GlobeCanvas() {
   }, [])
 
   return (
-    <div
-      style={{
-        width: 56,
-        height: 56,
-        borderRadius: '50%',
-        overflow: 'hidden',
-      }}
-      className="w-[56px] h-[56px] rounded-full overflow-hidden flex items-center justify-center shrink-0 bg-[#1c1c1c]"
-    >
+    <div className="relative w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
       <canvas
         ref={canvasRef}
-        style={{
-          width: 56,
-          height: 56,
-          borderRadius: '50%',
-          overflow: 'hidden',
-        }}
-        className="w-[56px] h-[56px] rounded-full overflow-hidden block"
+        style={{ width: '100%', height: '100%', objectFit: 'contain' }}
       />
     </div>
   )
