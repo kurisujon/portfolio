@@ -78,15 +78,15 @@ export function HeroSection() {
           duration: 1.1,
           ease: [0.21, 1, 0.36, 1],
         }}
-        className="relative z-10 flex items-end justify-center pointer-events-none select-none max-h-[90vh]"
+        className="z-10 relative h-[70vh] w-full max-w-[600px] flex items-end justify-center pointer-events-none select-none"
       >
         <Image
-          src="/profile.png"
+          src="/profile-cutout.png"
           alt="Cris John Labiaga"
-          width={1200}
-          height={1800}
+          fill
           priority
-          className="h-[68vh] sm:h-[76vh] md:h-[82vh] lg:h-[88vh] w-auto max-w-none object-contain object-bottom drop-shadow-[0_20px_50px_rgba(0,0,0,0.85)] filter contrast-[1.03] brightness-[1.02]"
+          sizes="(max-width: 768px) 100vw, 600px"
+          className="object-contain object-bottom drop-shadow-2xl pointer-events-none"
         />
       </motion.div>
 
