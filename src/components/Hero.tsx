@@ -10,7 +10,7 @@ import { Magnetic } from '@/components/ui/MagneticButton'
 
 export function HeroSection() {
   const containerRef = useRef<HTMLElement>(null)
-  const textRef = useRef<HTMLHeadingElement>(null)
+  const textRef = useRef<HTMLDivElement>(null)
   const lenis = useLenis()
 
   // GSAP ScrollTrigger for horizontal text scrub animation
@@ -50,7 +50,7 @@ export function HeroSection() {
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[140px] pointer-events-none -z-10" 
       />
 
-      {/* Layer 1 (Background): Massive Overflowing Typography at top-[20%] left-0 */}
+      {/* Layer 1: Text Layer (Marquee Ticker at z-10, pointer-events-none) */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -59,17 +59,19 @@ export function HeroSection() {
           duration: 1.2,
           ease: [0.21, 1, 0.36, 1],
         }}
-        className="absolute inset-0 z-0 pointer-events-none select-none overflow-hidden"
+        className="absolute inset-0 z-10 pointer-events-none select-none overflow-hidden"
       >
-        <h1
-          ref={textRef}
-          className="absolute left-0 top-[20%] whitespace-nowrap text-[15vw] font-bold leading-none tracking-tighter uppercase text-white/[0.12] will-change-transform select-none"
-        >
-          CRIS JOHN LABIAGA
-        </h1>
+        <div ref={textRef} className="absolute left-0 top-[20%] flex whitespace-nowrap w-max will-change-transform">
+          <h1 className="text-[15vw] font-bold text-white/20 pr-10 leading-none tracking-tighter uppercase select-none">
+            CRIS JOHN LABIAGA —
+          </h1>
+          <h1 className="text-[15vw] font-bold text-white/20 pr-10 leading-none tracking-tighter uppercase select-none">
+            CRIS JOHN LABIAGA —
+          </h1>
+        </div>
       </motion.div>
 
-      {/* Layer 2 (Middle): Cutout Profile Image Anchored to bottom-0 */}
+      {/* Layer 2: Cutout Profile Image Anchored to bottom-0 (at z-0 in very back) */}
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
@@ -78,7 +80,7 @@ export function HeroSection() {
           duration: 1.1,
           ease: [0.21, 1, 0.36, 1],
         }}
-        className="z-10 absolute bottom-0 left-1/2 -translate-x-1/2 h-[80vh] sm:h-[88vh] md:h-[92vh] lg:h-[96vh] w-full max-w-[900px] flex items-end justify-center pointer-events-none select-none"
+        className="z-0 absolute bottom-0 left-1/2 -translate-x-1/2 h-[80vh] sm:h-[88vh] md:h-[92vh] lg:h-[96vh] w-full max-w-[900px] flex items-end justify-center pointer-events-none select-none"
       >
         <Image
           src="/profile-cutout.png"
