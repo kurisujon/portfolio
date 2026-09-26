@@ -36,7 +36,7 @@ export function HeroSection() {
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[140px] pointer-events-none -z-10" 
       />
 
-      {/* Marquee Text Layer at z-20 (In front of portrait, stomach level) */}
+      {/* Marquee Text Layer at z-20 (In front of portrait, bottom-anchored) */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -45,17 +45,17 @@ export function HeroSection() {
           duration: 1.2,
           ease: [0.21, 1, 0.36, 1],
         }}
-        className="absolute top-[65%] -translate-y-1/2 left-0 w-full z-20 pointer-events-none select-none overflow-hidden"
+        className="absolute bottom-0 left-0 w-full z-20 pointer-events-none select-none overflow-hidden"
       >
         <div
           ref={marqueeRef}
           className="flex whitespace-nowrap w-max will-change-transform"
         >
-          {/* Title case without uppercase class */}
-          <h1 className="text-[10vw] md:text-[12vw] font-bold text-white/20 pr-10 leading-none tracking-tighter select-none font-snellenberg">
+          {/* Title case without uppercase class, solid white display text */}
+          <h1 className="text-[13vw] md:text-[9vw] font-bold text-white tracking-tight leading-none pr-10 select-none font-snellenberg">
             Cris John Labiaga —{' '}
           </h1>
-          <h1 className="text-[10vw] md:text-[12vw] font-bold text-white/20 pr-10 leading-none tracking-tighter select-none font-snellenberg">
+          <h1 className="text-[13vw] md:text-[9vw] font-bold text-white tracking-tight leading-none pr-10 select-none font-snellenberg">
             Cris John Labiaga —{' '}
           </h1>
         </div>
@@ -82,7 +82,7 @@ export function HeroSection() {
         />
       </motion.div>
 
-      {/* Location Badge (Reference sizing: compact padding, text-sm, z-30) */}
+      {/* Location Badge (Reference sizing: compact padding, text-sm, rounded-full pill, z-30) */}
       <motion.div
         initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
@@ -91,7 +91,7 @@ export function HeroSection() {
           duration: 0.8,
           ease: [0.21, 1, 0.36, 1],
         }}
-        className="absolute left-0 top-[60%] -translate-y-1/2 inline-flex items-center gap-3 bg-black/90 rounded-r-full py-2 pl-5 pr-2 z-30 pointer-events-auto shadow-2xl"
+        className="absolute left-6 md:left-12 top-[60%] -translate-y-1/2 inline-flex items-center gap-3 bg-black/90 rounded-full py-2 pl-5 pr-2 z-30 pointer-events-auto shadow-2xl border border-white/10"
       >
         {/* Left side (Text) */}
         <div className="flex flex-col text-sm font-medium leading-snug text-white font-snellenberg">
