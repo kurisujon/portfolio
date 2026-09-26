@@ -83,7 +83,7 @@ export function HeroSection() {
               href="#projects"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full sm:w-auto inline-flex items-center justify-center bg-[#3b82f6] hover:bg-[#2563eb] text-white px-8 py-3.5 rounded-md font-medium text-sm transition-all shadow-md shadow-blue-500/15"
+              className="w-full sm:w-auto inline-flex items-center justify-center bg-[#3b82f6] hover:bg-white hover:text-black text-white px-8 py-3.5 rounded-md font-medium text-sm transition-all duration-300 shadow-md shadow-blue-500/15 cursor-pointer"
             >
               View Projects
             </motion.a>
@@ -91,9 +91,9 @@ export function HeroSection() {
           <Magnetic className="w-full sm:w-auto">
             <motion.a 
               href="#contact"
-              whileHover={{ scale: 1.02, backgroundColor: "rgba(59,130,246,0.08)" }}
+              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full sm:w-auto inline-flex items-center justify-center border border-[#3b82f6]/40 hover:border-[#3b82f6] text-[#3b82f6] hover:text-white px-8 py-3.5 rounded-md font-medium text-sm transition-all"
+              className="w-full sm:w-auto inline-flex items-center justify-center border border-[#3b82f6]/40 hover:border-white hover:bg-white hover:text-black text-[#3b82f6] px-8 py-3.5 rounded-md font-medium text-sm transition-all duration-300 cursor-pointer"
             >
               Get in Touch
             </motion.a>
@@ -103,3 +103,5 @@ export function HeroSection() {
     </section>
   )
 }
+
+export default HeroSection

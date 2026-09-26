@@ -41,13 +41,13 @@ export default function Home() {
 
       {/* Curtain Reveal Footer / Contact Section */}
       <footer 
-        className="sticky bottom-0 -z-[1] w-full min-h-screen bg-[#0a0a0a] flex flex-col justify-center items-center py-8 md:py-12 px-6"
+        className="sticky bottom-0 z-0 w-full min-h-screen bg-[#0a0a0a] flex flex-col justify-center items-center py-8 md:py-12 px-6 pointer-events-auto"
       >
-        <Container className="w-full my-auto flex flex-col justify-center items-center">
+        <Container className="w-full my-auto flex flex-col justify-center items-center relative z-10 pointer-events-auto">
           <ContactSection />
         </Container>
 
-        <div className="w-full border-t border-white/5 py-6 mt-auto flex justify-center items-center shrink-0">
+        <div className="w-full border-t border-white/5 py-6 mt-auto flex justify-center items-center shrink-0 relative z-10">
           <p className="text-sm text-zinc-500 dark:text-zinc-400">
             © {new Date().getFullYear()} Cris John Labiaga. All rights reserved.
           </p>

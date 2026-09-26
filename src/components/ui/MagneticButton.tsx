@@ -35,8 +35,12 @@ export function Magnetic({
     if (!ref.current) return
     const { clientX, clientY } = e
     const { left, top, width, height } = ref.current.getBoundingClientRect()
-    const centerX = left + width / 2
-    const centerY = top + height / 2
+    
+    // Subtract current spring displacement to calculate untranslated rest center
+    const currentX = springX.get() || 0
+    const currentY = springY.get() || 0
+    const centerX = left - currentX + width / 2
+    const centerY = top - currentY + height / 2
 
     const distanceX = clientX - centerX
     const distanceY = clientY - centerY
