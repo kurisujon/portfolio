@@ -36,20 +36,20 @@ export function HeroSection() {
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[140px] pointer-events-none -z-10" 
       />
 
-      {/* Layer 1: Text Layer (Marquee Ticker at z-0, behind image) */}
+      {/* Layer 1: Text Layer (Infinite Marquee Ticker at z-0, stomach level) */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{
-          delay: 2.0,
+          delay: 1.0,
           duration: 1.2,
           ease: [0.21, 1, 0.36, 1],
         }}
-        className="absolute inset-0 z-0 pointer-events-none select-none overflow-hidden"
+        className="absolute top-[65%] left-0 w-full z-0 pointer-events-none select-none overflow-hidden"
       >
         <div
           ref={marqueeRef}
-          className="absolute left-0 top-[20%] flex whitespace-nowrap w-max will-change-transform"
+          className="flex whitespace-nowrap w-max will-change-transform"
         >
           <h1 className="text-[15vw] font-bold text-white/20 pr-10 leading-none tracking-tighter uppercase select-none">
             CRIS JOHN LABIAGA —{' '}
@@ -65,7 +65,7 @@ export function HeroSection() {
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{
-          delay: 2.2,
+          delay: 1.1,
           duration: 1.1,
           ease: [0.21, 1, 0.36, 1],
         }}
@@ -81,47 +81,46 @@ export function HeroSection() {
         />
       </motion.div>
 
-      {/* Layer 3: Foreground Info (Location & Role centered vertically across the screen) */}
-      <div className="absolute inset-0 w-full h-full z-20 pointer-events-none flex justify-between items-center px-[5%] md:px-16">
-        {/* Left Side (Location Pill) */}
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{
-            delay: 2.4,
-            duration: 0.8,
-            ease: [0.21, 1, 0.36, 1],
-          }}
-          className="pointer-events-auto bg-[#1a1a1a] text-white rounded-full flex items-center gap-4 p-2 pr-6 shadow-xl border border-white/5"
-        >
-          <div className="w-10 h-10 rounded-full bg-[#262626] flex items-center justify-center shrink-0">
-            <Globe className="w-5 h-5 text-white/80" />
-          </div>
-          <div className="flex flex-col text-left leading-snug">
-            <span className="text-xs text-white/50 font-normal">Located in</span>
-            <span className="text-xs sm:text-sm font-medium text-white whitespace-nowrap">
-              Kiblawan, Philippines
-            </span>
-          </div>
-        </motion.div>
+      {/* Step 3: Match Reference Location Pill (Edge-anchored on left) */}
+      <motion.div
+        initial={{ opacity: 0, x: -30 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{
+          delay: 1.3,
+          duration: 0.8,
+          ease: [0.21, 1, 0.36, 1],
+        }}
+        className="absolute left-0 top-[60%] -translate-y-1/2 bg-[#1c1c1c] rounded-r-full py-3 pl-8 pr-3 flex items-center gap-6 z-20 pointer-events-auto shadow-2xl"
+      >
+        {/* Left side (Text) */}
+        <div className="flex flex-col text-[15px] font-medium leading-tight text-white">
+          <span>Located</span>
+          <span>in the</span>
+          <span>Philippines</span>
+        </div>
 
-        {/* Right Side (Role Text) */}
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{
-            delay: 2.4,
-            duration: 0.8,
-            ease: [0.21, 1, 0.36, 1],
-          }}
-          className="pointer-events-auto"
-        >
-          <p className="text-2xl md:text-4xl text-white font-medium leading-tight text-left">
-            Full Stack <br />
-            AI Software Developer
-          </p>
-        </motion.div>
-      </div>
+        {/* Right side (Globe) */}
+        <div className="bg-white/20 p-3 rounded-full flex items-center justify-center">
+          <Globe className="w-6 h-6 text-white animate-[spin_4s_linear_infinite]" />
+        </div>
+      </motion.div>
+
+      {/* Right Side: Role Text (Vertically aligned with location pill) */}
+      <motion.div
+        initial={{ opacity: 0, x: 30 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{
+          delay: 1.3,
+          duration: 0.8,
+          ease: [0.21, 1, 0.36, 1],
+        }}
+        className="absolute right-6 md:right-16 top-[60%] -translate-y-1/2 z-20 pointer-events-auto"
+      >
+        <p className="text-2xl md:text-4xl text-white font-medium leading-tight text-left">
+          Full Stack <br />
+          AI Software Developer
+        </p>
+      </motion.div>
     </section>
   )
 }

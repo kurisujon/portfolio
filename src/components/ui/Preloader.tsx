@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const words = ['Hello', 'Kumusta', 'System Initializing', 'Cris John']
+const words = ["你好", "Привет", "Hello", "Hallo", "Grüezi", "Bonjour", "こんにちは", "Hola"]
 
 export function Preloader({ onComplete }: { onComplete?: () => void }) {
   const [index, setIndex] = useState(0)
@@ -20,16 +20,16 @@ export function Preloader({ onComplete }: { onComplete?: () => void }) {
           return prev + 1
         } else {
           clearInterval(interval)
-          // Sequence reached the end ("Cris John")
+          // Sequence reached the end ("Hola")
           setTimeout(() => {
             setIsFinished(true)
             document.body.style.overflow = ''
             onComplete?.()
-          }, 400)
+          }, 180)
           return prev
         }
       })
-    }, 400)
+    }, 180)
 
     return () => {
       clearInterval(interval)
@@ -61,10 +61,10 @@ export function Preloader({ onComplete }: { onComplete?: () => void }) {
         <AnimatePresence mode="wait">
           <motion.p
             key={words[index]}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.1, ease: 'easeOut' }}
             className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white font-sans text-center"
           >
             {words[index]}
