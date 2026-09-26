@@ -102,10 +102,21 @@ export function HeroSection() {
               href="#contact"
               onClick={(e) => {
                 e.preventDefault()
-                lenis?.scrollTo('#contact', {
-                  duration: 1.2,
-                  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-                })
+                lenis?.resize()
+                if (lenis) {
+                  lenis.scrollTo('bottom', {
+                    duration: 1.5,
+                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                  })
+                } else {
+                  window.scrollTo({
+                    top: document.documentElement.scrollHeight,
+                    behavior: 'smooth',
+                  })
+                }
+                if (typeof window !== 'undefined' && window.history?.pushState) {
+                  window.history.pushState(null, '', '#contact')
+                }
               }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}

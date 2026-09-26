@@ -24,6 +24,51 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault()
+
+    // Refresh scroll bounds in case GSAP horizontal scroll spacers or assets shifted layout
+    lenis?.resize()
+
+    // The Contact section is inside a sticky curtain footer at the end of the page.
+    // Target 'bottom' so Lenis scrolls to the absolute end of the document, completely revealing the footer.
+    const target = href === '#contact' ? 'bottom' : href
+
+    if (lenis) {
+      lenis.scrollTo(target, {
+        duration: href === '#contact' ? 1.5 : 1.2,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      })
+    } else {
+      if (href === '#contact') {
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: 'smooth',
+        })
+      } else {
+        const el = document.querySelector(href)
+        el?.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+
+    if (typeof window !== 'undefined' && window.history?.pushState) {
+      window.history.pushState(null, '', href)
+    }
+  }
+
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    lenis?.resize()
+    if (lenis) {
+      lenis.scrollTo(0, {
+        duration: 1.2,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      })
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
+
   return (
     <nav
       className={`fixed top-0 w-full z-50 left-0 right-0 backdrop-blur-md transition-all duration-300 ease-in-out ${isScrolled
@@ -34,13 +79,7 @@ export function Navbar() {
       <div className="w-full max-w-7xl mx-auto px-6 md:px-10 flex justify-between items-center">
         <Link 
           href="/" 
-          onClick={(e) => {
-            e.preventDefault()
-            lenis?.scrollTo(0, {
-              duration: 1.2,
-              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            })
-          }}
+          onClick={handleLogoClick}
           className="flex items-center cursor-pointer"
         >
           <img 
@@ -55,13 +94,7 @@ export function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                onClick={(e) => {
-                  e.preventDefault()
-                  lenis?.scrollTo(link.href, {
-                    duration: 1.2,
-                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-                  })
-                }}
+                onClick={(e) => handleNavClick(e, link.href)}
                 className="relative hover:text-white transition-colors py-1 group cursor-pointer"
               >
                 {link.name}
