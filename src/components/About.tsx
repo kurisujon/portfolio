@@ -4,28 +4,30 @@ import { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import Image from 'next/image'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
-import { Typography } from '@/components/ui/Typography'
-import { Card } from '@/components/ui/Card'
-import { BookOpen, Award } from 'lucide-react'
-import { TextMaskReveal } from '@/components/animations/TextMaskReveal'
 
-const milestones = [
+const milestoneItems = [
+  {
+    title: 'Bachelor of Science in Information Technology',
+    subtitle: 'University of Mindanao - Digos College',
+    year: '2026',
+    image: '/images/milestones/certificate-3.jpg',
+  },
   {
     title: 'Ideation Bootcamp Champion',
-    year: '2025',
     subtitle: 'SalinKaalaman (Language Barrier Solution)',
+    year: '2025',
     image: '/images/milestones/certificate-1.jpg',
   },
   {
     title: 'SIA Top 5 Best Project',
-    year: '2025',
     subtitle: 'CHoDaMS - City Housing Data System',
+    year: '2025',
     image: '/chodams_web_preview.png',
   },
   {
     title: 'CODECRAFT Top 5 Mobile',
-    year: '2023',
     subtitle: 'Eathink About It Mobile',
+    year: '2023',
     image: '/delta_preview.jpg',
   },
 ]
@@ -57,109 +59,70 @@ export function AboutSection() {
   return (
     <section
       id="about"
-      className="py-24 flex flex-col gap-16 relative"
+      className="py-16 md:py-28 flex flex-col gap-16 md:gap-24 relative bg-[#0a0a0a] text-white"
     >
-      <h2 className="text-sm font-bold tracking-[0.2em] text-zinc-500 uppercase">
-        Overview
-      </h2>
+      {/* Section Header */}
+      <div className="flex flex-col gap-2">
+        <span className="text-xs font-mono font-bold tracking-[0.25em] text-[#3b82f6] uppercase">
+          Overview
+        </span>
+      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+      {/* Step 2: Typography Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
+        {/* Large Headline spanning 8 columns */}
+        <h2 className="col-span-1 md:col-span-8 text-3xl sm:text-4xl md:text-[3.5vw] lg:text-[4vw] leading-tight font-medium text-white tracking-tight">
+          Full Stack AI Software Developer building end-to-end applications across frontend, backend, APIs, databases, and AI integrations.
+        </h2>
 
-        {/* Main Bio */}
-        <div className="lg:col-span-7 flex flex-col justify-center gap-8">
-          <Typography variant="h2" className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-zinc-900 dark:text-primary transition-colors tracking-tight">
-            Full Stack AI Software Developer building end-to-end applications across frontend, backend, APIs, databases, and AI integrations.
-          </Typography>
-          
-          <div className="flex flex-col gap-6 border-l-2 border-[#3b82f6] pl-6 mt-4">
-            <TextMaskReveal 
-              text="I build complete web systems from frontend interfaces to backend services, REST APIs, relational databases, authentication, and third-party integrations."
-              as="p"
-              className="text-lg md:text-xl leading-relaxed text-zinc-600 dark:text-secondary"
-              start="top 80%"
-              stagger={0.03}
-            />
-            <TextMaskReveal 
-              text="I integrate practical AI capabilities such as RAG, embeddings, semantic retrieval, LLM-powered workflows, and automation when they solve real application requirements."
-              as="p"
-              className="text-base md:text-lg leading-relaxed text-zinc-500 dark:text-zinc-400"
-              start="top 80%"
-              stagger={0.03}
-            />
-            <TextMaskReveal 
-              text="I use AI coding agents for research, implementation, debugging, testing, refactoring, and documentation. I review generated changes, validate architecture and integrations, and remain responsible for final code quality."
-              as="p"
-              className="text-base md:text-lg leading-relaxed text-zinc-500 dark:text-zinc-400"
-              start="top 80%"
-              stagger={0.03}
-            />
-          </div>
-        </div>
-
-        {/* Right Column Grid for Education & Achievements */}
-        <div className="lg:col-span-5 flex flex-col gap-6">
-          
-          {/* Education Card */}
-          <Card className="flex flex-col gap-6 p-8 bg-zinc-50 dark:bg-surface border border-zinc-200/50 dark:border-white/5 hover:border-zinc-300 dark:hover:border-white/10 transition-all duration-500 ease-out rounded-2xl">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-[#3b82f6]/10 flex items-center justify-center">
-                <BookOpen className="w-5 h-5 text-[#3b82f6]" />
-              </div>
-              <span className="text-xs font-bold tracking-widest text-zinc-500 uppercase">Education</span>
-            </div>
-            
-            <div className="flex flex-col gap-2">
-              <h4 className="text-xl font-bold text-zinc-900 dark:text-primary leading-snug">Bachelor of Science in Information Technology</h4>
-              <p className="text-zinc-600 dark:text-secondary text-sm leading-relaxed">
-                University of Mindanao - Digos College
-              </p>
-              <p className="text-[#3b82f6] font-mono text-xs font-bold uppercase tracking-wider">
-                Graduated: June 2026
-              </p>
-            </div>
-          </Card>
-
-          {/* Achievements Card */}
-          <Card className="flex flex-col gap-6 p-8 bg-zinc-50 dark:bg-surface border border-zinc-200/50 dark:border-white/5 hover:border-zinc-300 dark:hover:border-white/10 transition-all duration-500 ease-out rounded-2xl">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-[#3b82f6]/10 flex items-center justify-center">
-                <Award className="w-5 h-5 text-[#3b82f6]" />
-              </div>
-              <span className="text-xs font-bold tracking-widest text-zinc-500 uppercase">Milestones</span>
-            </div>
-
-            <div className="flex flex-col gap-2">
-              {milestones.map((item, index) => (
-                <div key={item.title}>
-                  <div
-                    onMouseEnter={() => setHoveredMilestone(item.image)}
-                    onMouseLeave={() => setHoveredMilestone(null)}
-                    className="group flex flex-col gap-1 cursor-pointer py-3 px-3 -mx-3 rounded-lg hover:bg-white/[0.04] transition-all duration-200"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="text-zinc-800 dark:text-primary font-bold group-hover:text-white transition-colors">
-                        {item.title}
-                      </span>
-                      <span className="text-[#3b82f6] font-bold font-mono text-xs">
-                        {item.year}
-                      </span>
-                    </div>
-                    <span className="text-zinc-500 text-sm group-hover:text-zinc-400 transition-colors">
-                      {item.subtitle}
-                    </span>
-                  </div>
-                  {index < milestones.length - 1 && (
-                    <div className="w-full h-px bg-zinc-200 dark:bg-white/5 my-1" />
-                  )}
-                </div>
-              ))}
-            </div>
-          </Card>
-
+        {/* Descriptive Paragraphs in the remaining columns */}
+        <div className="col-span-1 md:col-span-4 flex flex-col gap-6 text-white/70 text-base md:text-lg leading-relaxed">
+          <p>
+            I build complete web systems from frontend interfaces to backend services, REST APIs, relational databases, authentication, and third-party integrations.
+          </p>
+          <p>
+            I integrate practical AI capabilities such as RAG, embeddings, semantic retrieval, LLM-powered workflows, and automation when they solve real application requirements.
+          </p>
+          <p>
+            I use AI coding agents for research, implementation, debugging, testing, refactoring, and documentation. I review generated changes, validate architecture and integrations, and remain responsible for final code quality.
+          </p>
         </div>
       </div>
 
-      {/* Floating Hover Reveal for Milestones Tethered to Mouse Cursor */}
+      {/* Step 3: Row-Based Milestones & Education */}
+      <div className="flex flex-col gap-6 pt-8 md:pt-12">
+        <span className="text-xs font-mono font-bold tracking-[0.25em] text-zinc-500 uppercase">
+          Milestones &amp; Education
+        </span>
+
+        <div className="w-full flex flex-col">
+          {milestoneItems.map((item) => (
+            <div
+              key={item.title}
+              onMouseEnter={() => setHoveredMilestone(item.image)}
+              onMouseLeave={() => setHoveredMilestone(null)}
+              className="flex justify-between items-center w-full py-8 border-t border-white/10 hover:bg-white/5 transition-colors cursor-pointer group px-4 -mx-4 rounded-sm"
+            >
+              <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 group-hover:pl-4 transition-all duration-300">
+                <span className="text-xl sm:text-2xl font-normal text-white">
+                  {item.title}
+                </span>
+                {item.subtitle && (
+                  <span className="text-xs sm:text-sm text-white/40 font-normal">
+                    {item.subtitle}
+                  </span>
+                )}
+              </div>
+              <span className="text-sm text-white/50 font-mono shrink-0 ml-4">
+                {item.year}
+              </span>
+            </div>
+          ))}
+          <div className="w-full border-t border-white/10" />
+        </div>
+      </div>
+
+      {/* Step 4: Floating Hover Reveal for Milestones Tethered to Mouse Cursor */}
       {mounted &&
         createPortal(
           <motion.div
@@ -175,7 +138,7 @@ export function AboutSection() {
               scale: hoveredMilestone ? 1 : 0.8,
             }}
             transition={{
-              duration: 0.2,
+              duration: 0.25,
               ease: 'easeOut',
             }}
             className="fixed top-0 left-0 pointer-events-none z-50 w-[300px] h-[200px] overflow-hidden rounded-xl shadow-2xl border border-white/10 bg-[#171717]"
