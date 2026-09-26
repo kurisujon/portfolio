@@ -4,44 +4,30 @@ import { useRef, useEffect } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useLenis } from '@studio-freight/react-lenis'
-import { Magnetic } from '@/components/ui/MagneticButton'
+import { Globe } from 'lucide-react'
 
 export function HeroSection() {
-  const containerRef = useRef<HTMLElement>(null)
-  const textRef = useRef<HTMLDivElement>(null)
-  const lenis = useLenis()
+  const marqueeRef = useRef<HTMLDivElement>(null)
 
-  // GSAP ScrollTrigger for horizontal text scrub animation
+  // Infinite "News Ticker" continuous marquee tween
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger)
+    if (!marqueeRef.current) return
 
-    const container = containerRef.current
-    const bigText = textRef.current
-    if (!container || !bigText) return
+    const tween = gsap.to(marqueeRef.current, {
+      xPercent: -50,
+      repeat: -1,
+      duration: 15,
+      ease: 'linear',
+    })
 
-    const ctx = gsap.context(() => {
-      gsap.to(bigText, {
-        x: '-20vw',
-        ease: 'none',
-        scrollTrigger: {
-          trigger: container,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-          invalidateOnRefresh: true,
-        },
-      })
-    }, container)
-
-    return () => ctx.revert()
+    return () => {
+      tween.kill()
+    }
   }, [])
 
   return (
     <section
       id="hero"
-      ref={containerRef}
       className="relative h-screen w-full overflow-hidden flex items-end justify-center bg-[#0a0a0a]"
     >
       {/* Subtle Ambient Glow */}
@@ -50,7 +36,7 @@ export function HeroSection() {
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[140px] pointer-events-none -z-10" 
       />
 
-      {/* Layer 1: Text Layer (Marquee Ticker at z-10, pointer-events-none) */}
+      {/* Layer 1: Text Layer (Marquee Ticker at z-0, behind image) */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -59,19 +45,22 @@ export function HeroSection() {
           duration: 1.2,
           ease: [0.21, 1, 0.36, 1],
         }}
-        className="absolute inset-0 z-10 pointer-events-none select-none overflow-hidden"
+        className="absolute inset-0 z-0 pointer-events-none select-none overflow-hidden"
       >
-        <div ref={textRef} className="absolute left-0 top-[20%] flex whitespace-nowrap w-max will-change-transform">
+        <div
+          ref={marqueeRef}
+          className="absolute left-0 top-[20%] flex whitespace-nowrap w-max will-change-transform"
+        >
           <h1 className="text-[15vw] font-bold text-white/20 pr-10 leading-none tracking-tighter uppercase select-none">
-            CRIS JOHN LABIAGA —
+            CRIS JOHN LABIAGA —{' '}
           </h1>
           <h1 className="text-[15vw] font-bold text-white/20 pr-10 leading-none tracking-tighter uppercase select-none">
-            CRIS JOHN LABIAGA —
+            CRIS JOHN LABIAGA —{' '}
           </h1>
         </div>
       </motion.div>
 
-      {/* Layer 2: Cutout Profile Image Anchored to bottom-0 (at z-0 in very back) */}
+      {/* Layer 2: Cutout Profile Image Anchored to bottom-0 (at z-10 so text slides behind head and body) */}
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
@@ -80,7 +69,7 @@ export function HeroSection() {
           duration: 1.1,
           ease: [0.21, 1, 0.36, 1],
         }}
-        className="z-0 absolute bottom-0 left-1/2 -translate-x-1/2 h-[80vh] sm:h-[88vh] md:h-[92vh] lg:h-[96vh] w-full max-w-[900px] flex items-end justify-center pointer-events-none select-none"
+        className="z-10 absolute bottom-0 left-1/2 -translate-x-1/2 h-[80vh] sm:h-[88vh] md:h-[92vh] lg:h-[96vh] w-full max-w-[900px] flex items-end justify-center pointer-events-none select-none"
       >
         <Image
           src="/profile-cutout.png"
@@ -92,90 +81,47 @@ export function HeroSection() {
         />
       </motion.div>
 
-      {/* Layer 3 (Foreground - Left): Role Pill & Interactive CTAs */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          delay: 2.5,
-          duration: 0.8,
-          ease: [0.21, 1, 0.36, 1],
-        }}
-        className="absolute left-6 md:left-12 lg:left-16 bottom-10 sm:bottom-14 md:bottom-20 z-20 flex flex-col gap-3 max-w-xs pointer-events-auto"
-      >
-        <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#171717]/80 border border-white/10 backdrop-blur-md text-white text-xs sm:text-sm font-medium shadow-xl w-fit">
-          <span className="w-2 h-2 rounded-full bg-[#3b82f6] animate-pulse" />
-          <span>Full Stack Developer</span>
-        </div>
+      {/* Layer 3: Foreground Info (Location & Role centered vertically across the screen) */}
+      <div className="absolute inset-0 w-full h-full z-20 pointer-events-none flex justify-between items-center px-[5%] md:px-16">
+        {/* Left Side (Location Pill) */}
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{
+            delay: 2.4,
+            duration: 0.8,
+            ease: [0.21, 1, 0.36, 1],
+          }}
+          className="pointer-events-auto bg-[#1a1a1a] text-white rounded-full flex items-center gap-4 p-2 pr-6 shadow-xl border border-white/5"
+        >
+          <div className="w-10 h-10 rounded-full bg-[#262626] flex items-center justify-center shrink-0">
+            <Globe className="w-5 h-5 text-white/80" />
+          </div>
+          <div className="flex flex-col text-left leading-snug">
+            <span className="text-xs text-white/50 font-normal">Located in</span>
+            <span className="text-xs sm:text-sm font-medium text-white whitespace-nowrap">
+              Kiblawan, Philippines
+            </span>
+          </div>
+        </motion.div>
 
-        <p className="text-zinc-400 text-xs sm:text-sm font-normal leading-relaxed hidden sm:block">
-          Designing &amp; building modern web systems, scalable APIs, and practical AI workflows.
-        </p>
-
-        <div className="flex items-center gap-3 pt-1">
-          <Magnetic>
-            <a
-              href="#projects"
-              onClick={(e) => {
-                e.preventDefault()
-                lenis?.scrollTo('#projects', {
-                  duration: 1.2,
-                  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-                })
-              }}
-              className="inline-flex items-center justify-center bg-white text-black hover:bg-zinc-200 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 shadow-md cursor-pointer"
-            >
-              View Projects
-            </a>
-          </Magnetic>
-          <Magnetic>
-            <a
-              href="#contact"
-              onClick={(e) => {
-                e.preventDefault()
-                lenis?.resize()
-                if (lenis) {
-                  lenis.scrollTo('bottom', {
-                    duration: 1.5,
-                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-                  })
-                } else {
-                  window.scrollTo({
-                    top: document.documentElement.scrollHeight,
-                    behavior: 'smooth',
-                  })
-                }
-                if (typeof window !== 'undefined' && window.history?.pushState) {
-                  window.history.pushState(null, '', '#contact')
-                }
-              }}
-              className="inline-flex items-center justify-center border border-white/15 bg-white/5 hover:bg-white hover:text-black text-white px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 backdrop-blur-sm cursor-pointer"
-            >
-              Get in Touch
-            </a>
-          </Magnetic>
-        </div>
-      </motion.div>
-
-      {/* Layer 3 (Foreground - Right): Location Pill & Availability Status */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          delay: 2.6,
-          duration: 0.8,
-          ease: [0.21, 1, 0.36, 1],
-        }}
-        className="absolute top-24 sm:top-auto sm:bottom-14 md:bottom-20 right-6 md:right-12 lg:right-16 z-20 flex flex-col items-end gap-2 text-right pointer-events-auto"
-      >
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#171717]/80 border border-white/10 backdrop-blur-md text-white text-xs sm:text-sm font-medium shadow-xl">
-          <span className="text-xs sm:text-sm">📍</span>
-          <span>Davao City, Philippines</span>
-        </div>
-        <span className="text-zinc-500 text-xs font-mono tracking-wider uppercase hidden sm:block">
-          Available for opportunities
-        </span>
-      </motion.div>
+        {/* Right Side (Role Text) */}
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{
+            delay: 2.4,
+            duration: 0.8,
+            ease: [0.21, 1, 0.36, 1],
+          }}
+          className="pointer-events-auto"
+        >
+          <p className="text-2xl md:text-4xl text-white font-medium leading-tight text-left">
+            Full Stack <br />
+            AI Software Developer
+          </p>
+        </motion.div>
+      </div>
     </section>
   )
 }
