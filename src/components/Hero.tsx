@@ -50,26 +50,26 @@ export function HeroSection() {
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[140px] pointer-events-none -z-10" 
       />
 
-      {/* Layer 1 (Background): Massive Overflowing Typography */}
+      {/* Layer 1 (Background): Massive Overflowing Typography at top-[20%] left-0 */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.96 }}
-        animate={{ opacity: 1, scale: 1 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         transition={{
           delay: 2.0,
           duration: 1.2,
           ease: [0.21, 1, 0.36, 1],
         }}
-        className="absolute top-1/2 -translate-y-1/2 w-full z-0 pointer-events-none select-none flex items-center justify-center overflow-visible"
+        className="absolute inset-0 z-0 pointer-events-none select-none overflow-hidden"
       >
         <h1
           ref={textRef}
-          className="whitespace-nowrap text-[15vw] font-bold leading-none tracking-tighter uppercase text-white/[0.12] will-change-transform select-none"
+          className="absolute left-0 top-[20%] whitespace-nowrap text-[15vw] font-bold leading-none tracking-tighter uppercase text-white/[0.12] will-change-transform select-none"
         >
           CRIS JOHN LABIAGA
         </h1>
       </motion.div>
 
-      {/* Layer 2 (Middle): Cutout Profile Image Anchored to Bottom Center */}
+      {/* Layer 2 (Middle): Cutout Profile Image Anchored to bottom-0 */}
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
@@ -78,14 +78,14 @@ export function HeroSection() {
           duration: 1.1,
           ease: [0.21, 1, 0.36, 1],
         }}
-        className="z-10 relative h-[70vh] w-full max-w-[600px] flex items-end justify-center pointer-events-none select-none"
+        className="z-10 absolute bottom-0 left-1/2 -translate-x-1/2 h-[80vh] sm:h-[88vh] md:h-[92vh] lg:h-[96vh] w-full max-w-[900px] flex items-end justify-center pointer-events-none select-none"
       >
         <Image
           src="/profile-cutout.png"
           alt="Cris John Labiaga"
           fill
           priority
-          sizes="(max-width: 768px) 100vw, 600px"
+          sizes="(max-width: 1024px) 100vw, 900px"
           className="object-contain object-bottom drop-shadow-2xl pointer-events-none"
         />
       </motion.div>
