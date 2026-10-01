@@ -91,7 +91,7 @@ export function HeroSection() {
           duration: 0.8,
           ease: [0.21, 1, 0.36, 1],
         }}
-        className="absolute left-6 md:left-12 top-[60%] -translate-y-1/2 inline-flex items-center gap-3 bg-black/90 rounded-full py-2 pl-5 pr-2 z-30 pointer-events-auto shadow-2xl border border-white/10"
+        className="absolute left-0 top-[60%] -translate-y-1/2 flex items-center gap-6 bg-[#1c1c1c] rounded-full py-2.5 pl-8 pr-2.5 z-20 pointer-events-auto"
       >
         {/* Left side (Text) */}
         <div className="flex flex-col text-sm font-medium leading-snug text-white font-snellenberg">
