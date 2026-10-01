@@ -86,34 +86,57 @@ export function AboutSection() {
   return (
     <section
       id="about"
-      className="relative bg-[#0a0a0a] text-white flex flex-col"
+      className="relative w-full bg-[#0a0a0a] text-white flex flex-col"
     >
-      {/* Massive Statement Headline */}
+      {/* Step 1: Spacious Headline Statement */}
       <div className="w-full max-w-[1200px] mx-auto px-[5%] md:px-16 pt-32 pb-20">
-        <h2 className="text-[5vw] leading-[1.1] font-medium text-white tracking-tight">
-          Helping brands thrive in the digital world. I help companies with tailor-made web solutions.
+        <h2 className="text-4xl sm:text-5xl md:text-[6vw] font-normal text-white leading-[1.05] tracking-tighter font-snellenberg">
+          Full Stack AI Software Developer building end-to-end applications across frontend, backend, APIs, databases, and AI integrations.
         </h2>
       </div>
 
-      {/* Minimal Two-Column Services Layout */}
-      <div className="w-full max-w-[1200px] mx-auto px-[5%] md:px-16 pb-32 flex flex-col gap-16">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 border-t border-white/10 pt-8 mt-10">
-          <div className="col-span-1 md:col-span-4 text-xl text-white font-medium">Development</div>
-          <div className="col-span-1 md:col-span-8 text-lg text-white/70 max-w-2xl leading-relaxed">
-            I build scalable full-stack applications from scratch. My focus is on modern frontend interfaces, reliable backend APIs, and seamless integrations using Next.js and relational databases.
+      {/* Step 2: Refactoring Body Paragraphs into Spacious Rows */}
+      <div className="w-full max-w-[1200px] mx-auto px-[5%] md:px-16 flex flex-col">
+        {/* Row 1: The Build */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 py-16 border-t border-white/10 hover:bg-white/5 transition-colors cursor-pointer group">
+          <div className="col-span-1 md:col-span-4">
+            <p className="text-xl font-medium text-white">The Build</p>
+          </div>
+          <div className="col-span-1 md:col-span-8">
+            <p className="text-lg md:text-xl text-white/70 max-w-3xl leading-relaxed">
+              I build complete web systems from frontend interfaces to backend services, REST APIs, relational databases, authentication, and third-party integrations.
+            </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 border-t border-white/10 pt-8">
-          <div className="col-span-1 md:col-span-4 text-xl text-white font-medium">AI Integration</div>
-          <div className="col-span-1 md:col-span-8 text-lg text-white/70 max-w-2xl leading-relaxed">
-            I integrate practical AI capabilities such as RAG, embeddings, and semantic retrieval to automate complex workflows and turn data into reliable software tools.
+        {/* Row 2: AI Automation */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 py-16 border-t border-white/10 hover:bg-white/5 transition-colors cursor-pointer group">
+          <div className="col-span-1 md:col-span-4">
+            <p className="text-xl font-medium text-white">AI Automation</p>
+          </div>
+          <div className="col-span-1 md:col-span-8">
+            <p className="text-lg md:text-xl text-white/70 max-w-3xl leading-relaxed">
+              I integrate practical AI capabilities such as RAG, embeddings, semantic retrieval, LLM-powered workflows, and automation when they solve real application requirements.
+            </p>
           </div>
         </div>
+
+        {/* Row 3: Workflow & Agentics */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 py-16 border-t border-white/10 hover:bg-white/5 transition-colors cursor-pointer group">
+          <div className="col-span-1 md:col-span-4">
+            <p className="text-xl font-medium text-white">Workflow &amp; Agentics</p>
+          </div>
+          <div className="col-span-1 md:col-span-8">
+            <p className="text-lg md:text-xl text-white/70 max-w-3xl leading-relaxed">
+              I use AI coding agents for research, implementation, debugging, testing, refactoring, and documentation. I review generated changes, validate architecture and integrations, and remain responsible for final code quality.
+            </p>
+          </div>
+        </div>
+        <div className="w-full border-t border-white/10" />
       </div>
 
       {/* Row-Based Milestones & Education */}
-      <div className="w-full max-w-[1200px] mx-auto px-[5%] md:px-16 pb-32 flex flex-col gap-6 pt-8 md:pt-12">
+      <div className="w-full max-w-[1200px] mx-auto px-[5%] md:px-16 pb-32 flex flex-col gap-6 pt-16">
         <span className="text-xs font-mono font-bold tracking-[0.25em] text-zinc-500 uppercase">
           Milestones &amp; Education
         </span>
