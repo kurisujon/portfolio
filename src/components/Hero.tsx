@@ -52,10 +52,10 @@ export function HeroSection() {
           className="flex whitespace-nowrap w-max will-change-transform"
         >
           {/* Title case without uppercase class, solid white display text */}
-          <h1 className="text-[13vw] md:text-[9vw] font-bold text-white tracking-tight leading-none pr-10 select-none font-snellenberg">
+          <h1 className="text-[13vw] md:text-[9vw] text-white tracking-tight leading-none pr-10 select-none font-snellenberg">
             Cris John Labiaga —{' '}
           </h1>
-          <h1 className="text-[13vw] md:text-[9vw] font-bold text-white tracking-tight leading-none pr-10 select-none font-snellenberg">
+          <h1 className="text-[13vw] md:text-[9vw] text-white tracking-tight leading-none pr-10 select-none font-snellenberg">
             Cris John Labiaga —{' '}
           </h1>
         </div>

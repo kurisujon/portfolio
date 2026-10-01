@@ -86,38 +86,34 @@ export function AboutSection() {
   return (
     <section
       id="about"
-      className="py-16 md:py-28 flex flex-col gap-16 md:gap-24 relative bg-[#0a0a0a] text-white"
+      className="relative bg-[#0a0a0a] text-white flex flex-col"
     >
-      {/* Section Header */}
-      <div className="flex flex-col gap-2">
-        <span className="text-xs font-mono font-bold tracking-[0.25em] text-[#3b82f6] uppercase">
-          Overview
-        </span>
+      {/* Massive Statement Headline */}
+      <div className="w-full max-w-[1200px] mx-auto px-[5%] md:px-16 pt-32 pb-20">
+        <h2 className="text-[5vw] leading-[1.1] font-medium text-white tracking-tight">
+          Helping brands thrive in the digital world. I help companies with tailor-made web solutions.
+        </h2>
       </div>
 
-      {/* Step 2: Typography Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
-        {/* Large Headline spanning 8 columns */}
-        <h2 className="col-span-1 md:col-span-8 text-3xl sm:text-4xl md:text-[3.5vw] lg:text-[4vw] leading-tight font-medium text-white tracking-tight">
-          Full Stack AI Software Developer building end-to-end applications across frontend, backend, APIs, databases, and AI integrations.
-        </h2>
+      {/* Minimal Two-Column Services Layout */}
+      <div className="w-full max-w-[1200px] mx-auto px-[5%] md:px-16 pb-32 flex flex-col gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 border-t border-white/10 pt-8 mt-10">
+          <div className="col-span-1 md:col-span-4 text-xl text-white font-medium">Development</div>
+          <div className="col-span-1 md:col-span-8 text-lg text-white/70 max-w-2xl leading-relaxed">
+            I build scalable full-stack applications from scratch. My focus is on modern frontend interfaces, reliable backend APIs, and seamless integrations using Next.js and relational databases.
+          </div>
+        </div>
 
-        {/* Descriptive Paragraphs in the remaining columns */}
-        <div className="col-span-1 md:col-span-4 flex flex-col gap-6 text-white/70 text-base md:text-lg leading-relaxed">
-          <p>
-            I build complete web systems from frontend interfaces to backend services, REST APIs, relational databases, authentication, and third-party integrations.
-          </p>
-          <p>
-            I integrate practical AI capabilities such as RAG, embeddings, semantic retrieval, LLM-powered workflows, and automation when they solve real application requirements.
-          </p>
-          <p>
-            I use AI coding agents for research, implementation, debugging, testing, refactoring, and documentation. I review generated changes, validate architecture and integrations, and remain responsible for final code quality.
-          </p>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 border-t border-white/10 pt-8">
+          <div className="col-span-1 md:col-span-4 text-xl text-white font-medium">AI Integration</div>
+          <div className="col-span-1 md:col-span-8 text-lg text-white/70 max-w-2xl leading-relaxed">
+            I integrate practical AI capabilities such as RAG, embeddings, and semantic retrieval to automate complex workflows and turn data into reliable software tools.
+          </div>
         </div>
       </div>
 
-      {/* Step 3: Row-Based Milestones & Education */}
-      <div className="flex flex-col gap-6 pt-8 md:pt-12">
+      {/* Row-Based Milestones & Education */}
+      <div className="w-full max-w-[1200px] mx-auto px-[5%] md:px-16 pb-32 flex flex-col gap-6 pt-8 md:pt-12">
         <span className="text-xs font-mono font-bold tracking-[0.25em] text-zinc-500 uppercase">
           Milestones &amp; Education
         </span>
