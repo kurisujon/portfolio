@@ -1,51 +1,27 @@
 import { Navbar } from '@/components/layout/Navbar'
-import { HeroSection } from '@/components/sections/Hero'
-import { Container } from '@/components/layout/Container'
-import { AboutSection } from '@/components/sections/About'
+import { HeroSection } from '@/components/Hero'
+import { AboutSection } from '@/components/About'
 import { TechStackSection } from '@/components/sections/TechStack'
 import { ExperienceSection } from '@/components/sections/Experience'
 import { ProjectsSection } from '@/components/sections/Projects'
-import { ContactSection } from '@/components/sections/Contact'
-import { ScrollReveal } from '@/components/animations/ScrollReveal'
+import { ContactSection } from '@/components/Contact'
 
 export default function Home() {
   return (
-    <div className="relative w-full">
-      {/* Main content wrapper with solid black background and higher z-index */}
-      <main className="relative z-10 bg-[#0a0a0a] min-h-screen shadow-[0_40px_80px_rgba(0,0,0,0.9)] pb-12 sm:pb-16 md:pb-24">
+    <div className="relative w-full bg-primary">
+      {/* Main content wrapper with solid black background and higher z-index to cover footer */}
+      <main className="relative z-10 bg-primary min-h-screen shadow-[0_40px_80px_rgba(0,0,0,0.9)]">
         <Navbar />
-        
         <HeroSection />
-        
-        <div>
-          <Container>
-            <div className="pb-24 flex flex-col gap-12 md:gap-24">
-              <ScrollReveal delay={0.1}>
-                <AboutSection />
-              </ScrollReveal>
-              
-              <ScrollReveal delay={0.1} staggerChildren={0.15}>
-                <TechStackSection />
-              </ScrollReveal>
-              
-              <ScrollReveal delay={0.1} staggerChildren={0.2}>
-                <ExperienceSection />
-              </ScrollReveal>
-            </div>
-          </Container>
-        </div>
-
-        {/* Pinned Horizontal Projects Gallery */}
+        <AboutSection />
+        <TechStackSection />
+        <ExperienceSection />
         <ProjectsSection />
       </main>
 
       {/* Curtain Reveal Footer / Contact Section */}
-      <footer 
-        className="sticky bottom-0 z-0 w-full min-h-screen bg-[#0a0a0a] flex flex-col justify-center items-center py-8 md:py-12 px-6 pointer-events-auto"
-      >
-        <Container className="w-full my-auto flex flex-col justify-center items-center relative z-10 pointer-events-auto">
-          <ContactSection />
-        </Container>
+      <footer className="sticky bottom-0 z-0 w-full min-h-screen bg-primary pointer-events-auto">
+        <ContactSection />
       </footer>
     </div>
   )

@@ -1,211 +1,140 @@
-"use client"
+'use client'
 
-import { useState, useEffect } from 'react'
-import { createPortal } from 'react-dom'
-import Image from 'next/image'
-import { motion, useMotionValue, useSpring } from 'framer-motion'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useRef, useEffect } from 'react'
+import { gsap, ScrollTrigger } from '@/lib/motion'
 
 const milestoneItems = [
   {
     title: 'Bachelor of Science in Information Technology',
     subtitle: 'University of Mindanao - Digos College',
     year: '2026',
-    image: '/images/milestones/certificate-3.jpg',
   },
   {
     title: 'Ideation Bootcamp Champion',
     subtitle: 'SalinKaalaman (Language Barrier Solution)',
     year: '2025',
-    image: '/images/milestones/certificate-1.jpg',
   },
   {
     title: 'SIA Top 5 Best Project',
     subtitle: 'CHoDaMS - City Housing Data System',
     year: '2025',
-    image: '/chodams_web_preview.png',
   },
   {
     title: 'CODECRAFT Top 5 Mobile',
     subtitle: 'Eathink About It Mobile',
     year: '2023',
-    image: '/delta_preview.jpg',
   },
 ]
 
 export function AboutSection() {
-  const [hoveredMilestone, setHoveredMilestone] = useState<string | null>(null)
-  const [mounted, setMounted] = useState(false)
-
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
-
-  // Smooth spring motion tracking mouse cursor coordinates
-  const springConfig = { stiffness: 350, damping: 25, mass: 0.1 }
-  const smoothX = useSpring(mouseX, springConfig)
-  const smoothY = useSpring(mouseY, springConfig)
-
+  const containerRef = useRef<HTMLElement>(null)
+  const statementRef = useRef<HTMLDivElement>(null)
+  
   useEffect(() => {
-    setMounted(true)
-
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX)
-      mouseY.set(e.clientY)
-    }
-
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [mouseX, mouseY])
-
-  // GSAP ScrollTrigger stagger entrance for milestone rows
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger)
-
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.milestone-row',
-        { y: 50, opacity: 0 },
+    const container = containerRef.current;
+    // 1. Large Typography Word Reveal (Phase 5)
+    if (statementRef.current) {
+      const words = statementRef.current.querySelectorAll('.word-reveal')
+      
+      gsap.fromTo(words, 
+        { opacity: 0, y: 40 },
         {
-          y: 0,
           opacity: 1,
-          stagger: 0.1,
-          duration: 0.8,
+          y: 0,
+          duration: 1,
+          stagger: 0.05,
           ease: 'power3.out',
           scrollTrigger: {
-            trigger: '.milestone-row',
+            trigger: statementRef.current,
             start: 'top 85%',
-          },
+            once: true
+          }
         }
       )
-    })
+    }
 
-    return () => ctx.revert()
+    // 2. Milestones Reveal (Phase 6)
+    if (containerRef.current) {
+      const rows = containerRef.current.querySelectorAll('.milestone-row')
+      
+      rows.forEach((row) => {
+        const year = row.querySelector('.milestone-year')
+        const line = row.querySelector('.milestone-line')
+        const content = row.querySelector('.milestone-content')
+        
+        gsap.set(year, { opacity: 0, x: -20 })
+        gsap.set(line, { scaleX: 0 })
+        gsap.set(content, { opacity: 0, y: 20 })
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: row,
+            start: 'top 85%',
+            once: true
+          }
+        })
+        
+        tl.to(year, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' })
+          .to(line, { scaleX: 1, duration: 0.8, ease: 'power3.inOut' }, "-=0.4")
+          .to(content, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, "-=0.4")
+      })
+    }
+
+    return () => {
+      ScrollTrigger.getAll().forEach(t => t.trigger && container?.contains(t.trigger as Node) && t.kill())
+    }
   }, [])
 
   return (
-    <section
-      id="about"
-      className="relative w-full bg-[#0a0a0a] text-white flex flex-col"
-    >
-      {/* Step 1: Spacious Headline Statement */}
-      <div className="w-full max-w-[1200px] mx-auto px-[5%] md:px-16 pt-32 pb-20">
-        <h2 className="text-4xl sm:text-5xl md:text-[6vw] font-normal text-white leading-[1.05] tracking-tighter font-snellenberg">
-          Full Stack AI Software Developer building end-to-end applications across frontend, backend, APIs, databases, and AI integrations.
-        </h2>
+    <section id="about" ref={containerRef} className="relative w-full bg-primary flex flex-col py-32 z-10">
+      
+      {/* PHASE 5: OVERVIEW */}
+      <div className="w-full max-w-[1200px] mx-auto px-6 md:px-12 flex flex-col gap-24">
+        
+        <div ref={statementRef} className="text-4xl md:text-5xl lg:text-[4vw] font-snellenberg font-medium leading-[1.2] text-white tracking-tight">
+          {/* We manually split words so we can animate them easily without a heavy library */}
+          {"I build full-stack software from interface to infrastructure, then integrate AI where it actually improves the product.".split(" ").map((word, i) => (
+            <span key={i} className="inline-block overflow-hidden mr-[0.25em] align-top">
+              <span className="word-reveal inline-block will-change-transform">{word}</span>
+            </span>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 border-t border-default pt-16">
+          <div className="md:col-span-4">
+            <span className="text-xs font-mono tracking-[0.2em] uppercase text-secondary">Expertise</span>
+          </div>
+          <div className="md:col-span-8 flex flex-col gap-8 text-lg md:text-xl text-secondary leading-relaxed font-snellenberg">
+            <p>
+              My focus is on creating robust architectures—handling relational databases, secure authentication, external APIs, and resilient backends alongside premium, interactive frontend experiences.
+            </p>
+            <p>
+              I leverage agentic workflows and AI capabilities (RAG pipelines, embeddings, document processing) to solve complex automation problems, rather than just building wrappers.
+            </p>
+          </div>
+        </div>
       </div>
 
-      {/* Step 2: Refactoring Body Paragraphs into Spacious Rows */}
-      <div className="w-full max-w-[1200px] mx-auto px-[5%] md:px-16 flex flex-col">
-        {/* Row 1: The Build */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 py-16 border-t border-white/10 hover:bg-white/5 transition-colors cursor-pointer group">
-          <div className="col-span-1 md:col-span-4">
-            <p className="text-xl font-medium text-white">The Build</p>
-          </div>
-          <div className="col-span-1 md:col-span-8">
-            <p className="text-lg md:text-xl text-white/70 max-w-3xl leading-relaxed">
-              I build complete web systems from frontend interfaces to backend services, REST APIs, relational databases, authentication, and third-party integrations.
-            </p>
-          </div>
-        </div>
+      {/* PHASE 6: MILESTONES */}
+      <div className="w-full max-w-[1200px] mx-auto px-6 md:px-12 mt-48 flex flex-col">
+        <span className="text-xs font-mono tracking-[0.2em] uppercase text-secondary mb-16">Milestones & Education</span>
 
-        {/* Row 2: AI Automation */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 py-16 border-t border-white/10 hover:bg-white/5 transition-colors cursor-pointer group">
-          <div className="col-span-1 md:col-span-4">
-            <p className="text-xl font-medium text-white">AI Automation</p>
-          </div>
-          <div className="col-span-1 md:col-span-8">
-            <p className="text-lg md:text-xl text-white/70 max-w-3xl leading-relaxed">
-              I integrate practical AI capabilities such as RAG, embeddings, semantic retrieval, LLM-powered workflows, and automation when they solve real application requirements.
-            </p>
-          </div>
-        </div>
-
-        {/* Row 3: Workflow & Agentics */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 py-16 border-t border-white/10 hover:bg-white/5 transition-colors cursor-pointer group">
-          <div className="col-span-1 md:col-span-4">
-            <p className="text-xl font-medium text-white">Workflow &amp; Agentics</p>
-          </div>
-          <div className="col-span-1 md:col-span-8">
-            <p className="text-lg md:text-xl text-white/70 max-w-3xl leading-relaxed">
-              I use AI coding agents for research, implementation, debugging, testing, refactoring, and documentation. I review generated changes, validate architecture and integrations, and remain responsible for final code quality.
-            </p>
-          </div>
-        </div>
-        <div className="w-full border-t border-white/10" />
-      </div>
-
-      {/* Row-Based Milestones & Education */}
-      <div className="w-full max-w-[1200px] mx-auto px-[5%] md:px-16 pb-32 flex flex-col gap-6 pt-16">
-        <span className="text-xs font-mono font-bold tracking-[0.25em] text-zinc-500 uppercase">
-          Milestones &amp; Education
-        </span>
-
-        <div className="w-full flex flex-col">
-          {milestoneItems.map((item) => (
-            <div
-              key={item.title}
-              onMouseEnter={() => setHoveredMilestone(item.image)}
-              onMouseLeave={() => setHoveredMilestone(null)}
-              className="milestone-row flex justify-between items-center w-full py-8 border-t border-white/10 hover:bg-white/5 transition-colors cursor-pointer group px-4 -mx-4 rounded-sm"
-            >
-              <div className="flex flex-col gap-1 sm:gap-2 group-hover:pl-4 transition-all duration-300">
-                <span className="text-4xl md:text-5xl font-medium tracking-tight text-white">
-                  {item.title}
-                </span>
-                {item.subtitle && (
-                  <span className="text-sm sm:text-base text-white/50 font-normal">
-                    {item.subtitle}
-                  </span>
-                )}
+        <div className="flex flex-col">
+          {milestoneItems.map((item, index) => (
+            <div key={index} className="milestone-row flex flex-col gap-4 mb-16 last:mb-0 group cursor-default">
+              <div className="flex items-center gap-6">
+                <span className="milestone-year text-lg font-mono text-white/50">{item.year}</span>
+                <div className="milestone-line flex-grow h-[1px] bg-default origin-left" />
               </div>
-              <span className="text-sm sm:text-base text-white/50 font-mono shrink-0 ml-4">
-                {item.year}
-              </span>
+              <div className="milestone-content flex flex-col gap-1 md:pl-24 transition-transform duration-500 group-hover:translate-x-2">
+                <h3 className="text-2xl md:text-4xl text-white font-medium tracking-tight font-snellenberg">{item.title}</h3>
+                <span className="text-base md:text-lg text-secondary font-snellenberg">{item.subtitle}</span>
+              </div>
             </div>
           ))}
-          <div className="w-full border-t border-white/10" />
         </div>
       </div>
 
-      {/* Step 4: Floating Hover Reveal for Milestones Tethered to Mouse Cursor */}
-      {mounted &&
-        createPortal(
-          <motion.div
-            style={{
-              x: smoothX,
-              y: smoothY,
-              translateX: '-50%',
-              translateY: '-50%',
-            }}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{
-              opacity: hoveredMilestone ? 1 : 0,
-              scale: hoveredMilestone ? 1 : 0.8,
-            }}
-            transition={{
-              duration: 0.25,
-              ease: 'easeOut',
-            }}
-            className="fixed top-0 left-0 pointer-events-none z-50 w-[300px] h-[200px] overflow-hidden rounded-xl shadow-2xl border border-white/10 bg-[#171717]"
-          >
-            {hoveredMilestone && (
-              <Image
-                src={hoveredMilestone}
-                alt="Milestone preview"
-                fill
-                sizes="300px"
-                className="object-cover"
-              />
-            )}
-            <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
-              <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center text-white font-medium text-lg shadow-lg">
-                View
-              </div>
-            </div>
-          </motion.div>,
-          document.body
-        )}
     </section>
   )
 }

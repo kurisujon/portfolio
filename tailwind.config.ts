@@ -9,6 +9,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        snellenberg: ['var(--font-inter)', 'sans-serif'],
+      },
       backgroundColor: {
         primary: '#0a0a0a',
         surface: '#171717',

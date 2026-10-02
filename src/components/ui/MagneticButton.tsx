@@ -1,111 +1,70 @@
 'use client'
 
-import React, { useRef } from 'react'
-import { motion, useMotionValue, useSpring, type HTMLMotionProps } from 'framer-motion'
+import React, { useEffect, useRef } from 'react'
+import { gsap } from '@/lib/motion'
 
-interface MagneticProps extends Omit<HTMLMotionProps<'div'>, 'children'> {
+interface MagneticProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
+  strength?: number
+  textStrength?: number
   className?: string
-  distanceLimit?: number
-  href?: string
-  target?: string
-  rel?: string
 }
 
-export function Magnetic({
-  children,
-  className = '',
-  distanceLimit = 20,
-  onClick,
-  href,
-  target,
-  rel,
-  ...props
-}: MagneticProps) {
-  const ref = useRef<HTMLDivElement>(null)
+export function Magnetic({ children, strength = 0.3, textStrength = 0.15, className = '', ...props }: MagneticProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const childRef = useRef<HTMLDivElement>(null)
 
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
+  useEffect(() => {
+    const isDesktop = window.matchMedia('(pointer: fine)').matches
+    if (!isDesktop || !containerRef.current || !childRef.current) return
 
-  const springConfig = { damping: 15, stiffness: 150, mass: 0.1 }
-  const springX = useSpring(x, springConfig)
-  const springY = useSpring(y, springConfig)
+    const container = containerRef.current
+    const child = childRef.current
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!ref.current) return
-    const { clientX, clientY } = e
-    const { left, top, width, height } = ref.current.getBoundingClientRect()
+    const xToContainer = gsap.quickTo(container, "x", { duration: 1, ease: "elastic.out(1, 0.3)" })
+    const yToContainer = gsap.quickTo(container, "y", { duration: 1, ease: "elastic.out(1, 0.3)" })
     
-    // Subtract current spring displacement to calculate untranslated rest center
-    const currentX = springX.get() || 0
-    const currentY = springY.get() || 0
-    const centerX = left - currentX + width / 2
-    const centerY = top - currentY + height / 2
+    const xToChild = gsap.quickTo(child, "x", { duration: 1, ease: "elastic.out(1, 0.3)" })
+    const yToChild = gsap.quickTo(child, "y", { duration: 1, ease: "elastic.out(1, 0.3)" })
 
-    const distanceX = clientX - centerX
-    const distanceY = clientY - centerY
-
-    // Smoothly pull up to distanceLimit (20px) toward the cursor
-    const pullX = Math.max(-distanceLimit, Math.min(distanceLimit, distanceX * 0.35))
-    const pullY = Math.max(-distanceLimit, Math.min(distanceLimit, distanceY * 0.35))
-
-    x.set(pullX)
-    y.set(pullY)
-  }
-
-  const handleMouseLeave = () => {
-    x.set(0)
-    y.set(0)
-  }
-
-  // Forward props and ensure child has pointer-events-auto and merged handlers
-  let content = children
-  if (React.isValidElement(children)) {
-    const child = children as React.ReactElement<any>
-    const childProps = child.props || {}
-    const hasClick = typeof childProps.onClick === 'function' || typeof onClick === 'function'
-
-    const mergedProps: Record<string, any> = {
-      ...childProps,
-      href: childProps.href || href,
-      target: childProps.target || target,
-      rel: childProps.rel || rel,
-      className: `${childProps.className || ''} pointer-events-auto cursor-pointer relative z-50`.trim(),
+    const handleMouseMove = (e: MouseEvent) => {
+      const { clientX, clientY } = e
+      const { height, width, left, top } = container.getBoundingClientRect()
+      
+      const x = clientX - (left + width / 2)
+      const y = clientY - (top + height / 2)
+      
+      xToContainer(x * strength)
+      yToContainer(y * strength)
+      
+      xToChild(x * textStrength)
+      yToChild(y * textStrength)
     }
 
-    if (hasClick) {
-      mergedProps.onClick = (e: React.MouseEvent) => {
-        if (typeof childProps.onClick === 'function') {
-          childProps.onClick(e)
-        }
-        if (typeof onClick === 'function') {
-          onClick(e as any)
-        }
-      }
+    const handleMouseLeave = () => {
+      xToContainer(0)
+      yToContainer(0)
+      xToChild(0)
+      yToChild(0)
     }
 
-    content = React.cloneElement(child, mergedProps)
-  }
+    container.addEventListener("mousemove", handleMouseMove)
+    container.addEventListener("mouseleave", handleMouseLeave)
 
-  const handleWrapperClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === ref.current && ref.current?.firstElementChild) {
-      (ref.current.firstElementChild as HTMLElement).click?.()
+    return () => {
+      container.removeEventListener("mousemove", handleMouseMove)
+      container.removeEventListener("mouseleave", handleMouseLeave)
     }
-  }
+  }, [strength, textStrength])
 
   return (
-    <motion.div
-      ref={ref}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      onClick={handleWrapperClick}
-      style={{ x: springX, y: springY }}
-      className={`inline-block relative z-50 pointer-events-auto cursor-pointer ${className}`}
-      {...props}
-    >
-      {content}
-    </motion.div>
+    <div ref={containerRef} className={`relative inline-flex ${className}`} {...props}>
+      <div ref={childRef} className="relative flex items-center justify-center w-full h-full">
+        {children}
+      </div>
+    </div>
   )
 }
 
-export default Magnetic
+// Fallback for older imports
+export const MagneticButton = Magnetic

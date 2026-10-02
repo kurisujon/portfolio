@@ -4,7 +4,7 @@ import { Background } from '@/components/layout/Background'
 import { ScrollProgressCircle } from '@/components/ui/ScrollProgressCircle'
 import { Preloader } from '@/components/ui/Preloader'
 import { CustomCursor } from '@/components/ui/CustomCursor'
-import SmoothScroll from '@/components/SmoothScroll'
+import SmoothScroll from '@/components/motion/SmoothScroll'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })

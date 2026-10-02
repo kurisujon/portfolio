@@ -1,84 +1,107 @@
-"use client"
-import { motion, type Variants } from 'framer-motion'
-import { Typography } from '@/components/ui/Typography'
+'use client'
+
+import { useRef, useEffect } from 'react'
+import { gsap, ScrollTrigger } from '@/lib/motion'
 
 const techCategories = [
   {
+    id: '01',
     category: "Languages",
     items: ["JavaScript", "TypeScript", "Python", "PHP", "SQL", "Dart"]
   },
   {
+    id: '02',
     category: "Frontend",
     items: ["React", "Next.js", "Tailwind CSS"]
   },
   {
-    category: "Backend & APIs",
-    items: ["Node.js", "Laravel", "FastAPI", "REST APIs"]
+    id: '03',
+    category: "Backend",
+    items: ["Node.js", "Laravel", "FastAPI"]
   },
   {
-    category: "Databases & Data",
-    items: ["PostgreSQL", "MySQL / MariaDB", "SQLite", "Supabase", "pgvector"]
+    id: '04',
+    category: "Data",
+    items: ["PostgreSQL", "Supabase"]
   },
   {
-    category: "AI & Automation",
-    items: ["Google Gemini", "RAG", "LLM Integration", "Embeddings", "LangChain", "Qdrant", "n8n", "Agent-Assisted Development"]
+    id: '05',
+    category: "AI & Systems",
+    items: ["RAG", "Embeddings", "LangChain", "Qdrant", "Document Processing"]
   },
   {
-    category: "Development & DevOps",
-    items: ["Git", "GitHub", "Docker", "GitHub Actions", "CI/CD"]
+    id: '06',
+    category: "Infrastructure",
+    items: ["Docker", "Git", "Vercel"]
   }
 ]
 
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      ease: [0.21, 0.47, 0.32, 0.98] as [number, number, number, number]
-    }
-  }
-}
-
 export function TechStackSection() {
+  const containerRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!containerRef.current) return
+
+    const rows = containerRef.current.querySelectorAll('.tech-row')
+
+    rows.forEach((row) => {
+      const header = row.querySelector('.tech-header')
+      const line = row.querySelector('.tech-line')
+      const items = row.querySelectorAll('.tech-item')
+
+      gsap.set(header, { opacity: 0, y: 10 })
+      gsap.set(line, { scaleX: 0 })
+      gsap.set(items, { opacity: 0, y: 10 })
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: row,
+          start: 'top 90%',
+          once: true
+        }
+      })
+
+      tl.to(header, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' })
+        .to(line, { scaleX: 1, duration: 0.6, ease: 'power3.inOut' }, "-=0.2")
+        .to(items, { opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: 'power2.out' }, "-=0.3")
+    })
+
+    return () => {
+      ScrollTrigger.getAll().forEach(t => t.trigger && container?.contains(t.trigger as Node) && t.kill())
+    }
+  }, [])
+
   return (
-    <section
-      id="skills"
-      className="py-24 flex flex-col gap-16 md:gap-24"
-    >
-      <div className="flex flex-col gap-2">
-        <h2 className="text-sm font-bold tracking-[0.2em] text-zinc-500 uppercase">
-          Tech Stack
-        </h2>
-      </div>
-
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
-        {techCategories.map((group, idx) => (
-          <motion.div 
-            key={idx} 
-            variants={itemVariants}
-            className="flex flex-col gap-5"
-          >
-            <Typography variant="small" className="uppercase tracking-widest text-zinc-400 dark:text-zinc-600 font-bold text-xs transition-colors">
-              {group.category}
-            </Typography>
-            <div className="flex flex-wrap gap-3">
-              {group.items.map((tech) => (
-                <div
-                  key={tech}
-                  className="px-4 py-2 rounded-full bg-zinc-100 dark:bg-white/[0.03] border border-zinc-200 dark:border-white/10 hover:border-[#3b82f6] dark:hover:border-[#3b82f6] hover:bg-zinc-200 dark:hover:bg-white/5 transition-all duration-300 ease-out cursor-default"
-                >
-                  <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300 transition-colors duration-300">
+    <section id="skills" ref={containerRef} className="relative w-full bg-primary flex flex-col pt-24 pb-32 z-10">
+      <div className="w-full max-w-[1200px] mx-auto px-6 md:px-12">
+        <span className="text-xs font-mono tracking-[0.2em] uppercase text-secondary mb-24 block">Engineering Stack</span>
+        
+        <div className="flex flex-col gap-12 md:gap-16">
+          {techCategories.map((group) => (
+            <div key={group.id} className="tech-row flex flex-col gap-6">
+              
+              <div className="tech-header flex flex-col md:flex-row md:items-baseline gap-4 md:gap-8">
+                <span className="text-sm font-mono text-secondary">{group.id}</span>
+                <span className="text-xl md:text-2xl font-mono tracking-wide text-primary uppercase">{group.category}</span>
+              </div>
+              
+              <div className="tech-line w-full h-[1px] bg-default origin-left" />
+              
+              <div className="flex flex-col gap-2 md:pl-[4.5rem]">
+                {group.items.map((tech, i) => (
+                  <span key={i} className="tech-item text-lg md:text-xl text-secondary font-snellenberg hover:text-white transition-colors cursor-default w-fit">
                     {tech}
                   </span>
-                </div>
-              ))}
+                ))}
+              </div>
+              
             </div>
-          </motion.div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   )
 }
+
+export default TechStackSection

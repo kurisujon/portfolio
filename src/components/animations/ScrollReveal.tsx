@@ -1,25 +1,15 @@
 'use client'
-import { motion, HTMLMotionProps } from 'framer-motion'
-import { ReactNode } from 'react'
 
-interface ScrollRevealProps extends HTMLMotionProps<'div'> {
+import { ReactNode, useEffect, useRef } from 'react'
+import { gsap, ScrollTrigger } from '@/lib/motion'
+
+interface ScrollRevealProps {
   children: ReactNode
   delay?: number
   duration?: number
   y?: number
   staggerChildren?: number
-}
-
-export const revealItemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: { 
-      duration: 0.5,
-      ease: [0.21, 0.47, 0.32, 0.98] as [number, number, number, number]
-    }
-  }
+  className?: string
 }
 
 export function ScrollReveal({ 
@@ -28,32 +18,48 @@ export function ScrollReveal({
   duration = 0.6,
   y = 20,
   staggerChildren,
-  ...props 
+  className = ''
 }: ScrollRevealProps) {
-  const containerVariants = {
-    hidden: { opacity: 0, y },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { 
-        duration, 
-        delay, 
-        ease: [0.21, 0.47, 0.32, 0.98] as [number, number, number, number],
-        staggerChildren: staggerChildren || 0,
-        delayChildren: delay
-      }
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    
+    // Check for reduced motion
+    const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (isReducedMotion) {
+      gsap.set(el, { opacity: 1, y: 0 })
+      return
     }
-  }
+
+    gsap.set(el, { opacity: 0, y })
+
+    ScrollTrigger.create({
+      trigger: el,
+      start: 'top 85%',
+      once: true,
+      onEnter: () => {
+        gsap.to(el, {
+          opacity: 1,
+          y: 0,
+          duration,
+          delay,
+          ease: 'power3.out',
+        })
+      }
+    })
+
+    return () => {
+      ScrollTrigger.getAll().forEach(t => {
+        if (t.trigger === el) t.kill()
+      })
+    }
+  }, [delay, duration, y])
 
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-100px" }}
-      {...props}
-    >
+    <div ref={containerRef} className={className}>
       {children}
-    </motion.div>
+    </div>
   )
 }

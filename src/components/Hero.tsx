@@ -2,124 +2,152 @@
 
 import { useRef, useEffect } from 'react'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
-import gsap from 'gsap'
+import { gsap, ScrollTrigger } from '@/lib/motion'
 import { GlobeCanvas } from '@/components/ui/GlobeCanvas'
 
 export function HeroSection() {
-  const marqueeRef = useRef<HTMLDivElement>(null)
+  const heroRef = useRef<HTMLDivElement>(null)
+  const nameRef = useRef<HTMLHeadingElement>(null)
+  const photoRef = useRef<HTMLDivElement>(null)
+  const locationRef = useRef<HTMLDivElement>(null)
+  const roleRef = useRef<HTMLDivElement>(null)
+  const descRef = useRef<HTMLParagraphElement>(null)
+  const scrollIndicatorRef = useRef<HTMLDivElement>(null)
+  const scrollLineRef = useRef<HTMLDivElement>(null)
 
-  // Infinite "News Ticker" continuous marquee tween
   useEffect(() => {
-    if (!marqueeRef.current) return
+    const hero = heroRef.current;
+    const tl = gsap.timeline({ delay: 1.5 }) 
+    
+    gsap.set(nameRef.current?.children || [], { y: '101%' })
+    gsap.set(photoRef.current, { opacity: 0, scale: 0.95, y: 50 })
+    gsap.set([roleRef.current, descRef.current], { opacity: 0, y: 20 })
+    gsap.set(locationRef.current, { opacity: 0, x: -20 })
+    gsap.set(scrollIndicatorRef.current, { opacity: 0 })
 
-    const tween = gsap.to(marqueeRef.current, {
-      xPercent: -50,
+    tl.to(nameRef.current?.children || [], {
+      y: '0%',
+      duration: 1.2,
+      stagger: 0.1,
+      ease: 'power4.out',
+    })
+    .to(photoRef.current, {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      duration: 1.2,
+      ease: 'power3.out',
+    }, "-=0.8")
+    .to([roleRef.current, descRef.current], {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      stagger: 0.15,
+      ease: 'power3.out',
+    }, "-=0.8")
+    .to(locationRef.current, {
+      opacity: 1,
+      x: 0,
+      duration: 0.8,
+      ease: 'power3.out',
+    }, "-=0.6")
+    .to(scrollIndicatorRef.current, {
+      opacity: 1,
+      duration: 1,
+      ease: 'power2.out',
+    }, "-=0.2")
+
+    // Scroll line continuous animation
+    gsap.to(scrollLineRef.current, {
+      scaleX: 0,
+      transformOrigin: 'right',
+      duration: 1.5,
       repeat: -1,
-      duration: 15,
-      ease: 'linear',
+      yoyo: true,
+      ease: 'power2.inOut'
     })
 
-    return () => {
-      tween.kill()
+    if (photoRef.current && heroRef.current) {
+      ScrollTrigger.create({
+        trigger: heroRef.current,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true,
+        animation: gsap.to(photoRef.current, {
+          y: 150,
+          ease: 'none',
+        })
+      })
+    }
+
+    return () => { 
+      tl.kill() 
+      ScrollTrigger.getAll().forEach(t => t.trigger === hero && t.kill())
     }
   }, [])
 
   return (
     <section
       id="hero"
-      className="relative h-screen w-full overflow-hidden flex items-end justify-center bg-[#0a0a0a]"
+      ref={heroRef}
+      className="relative min-h-screen w-full overflow-hidden flex flex-col justify-center bg-primary px-6 md:px-12 pt-32 pb-12"
     >
-      {/* Subtle Ambient Glow */}
       <div 
         aria-hidden="true" 
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[140px] pointer-events-none -z-10" 
+        className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none -z-10" 
       />
 
-      {/* Marquee Text Layer at z-20 (In front of portrait, bottom-anchored) */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{
-          delay: 1.0,
-          duration: 1.2,
-          ease: [0.21, 1, 0.36, 1],
-        }}
-        className="absolute bottom-0 left-0 w-full z-20 pointer-events-none select-none overflow-hidden"
-      >
-        <div
-          ref={marqueeRef}
-          className="flex whitespace-nowrap w-max will-change-transform"
-        >
-          {/* Title case without uppercase class, solid white display text */}
-          <h1 className="text-[13vw] md:text-[9vw] text-white tracking-tight leading-none pr-10 select-none font-snellenberg">
-            Cris John Labiaga —{' '}
+      <div className="w-full max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-center z-10 relative">
+        <div className="md:col-span-7 flex flex-col justify-center z-20">
+          <h1 ref={nameRef} className="text-[12vw] md:text-[7vw] leading-[0.85] font-snellenberg text-white font-medium tracking-tighter uppercase mb-8">
+            <span className="overflow-hidden block"><span className="block will-change-transform">CRIS JOHN</span></span>
+            <span className="overflow-hidden block"><span className="block will-change-transform">LABIAGA</span></span>
           </h1>
-          <h1 className="text-[13vw] md:text-[9vw] text-white tracking-tight leading-none pr-10 select-none font-snellenberg">
-            Cris John Labiaga —{' '}
-          </h1>
-        </div>
-      </motion.div>
 
-      {/* Photo Layer at z-10 (Behind text at z-20) */}
-      <motion.div
-        initial={{ opacity: 0, y: 100 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          delay: 1.1,
-          duration: 1.1,
-          ease: [0.21, 1, 0.36, 1],
-        }}
-        className="z-10 relative h-[80vh] sm:h-[88vh] md:h-[92vh] lg:h-[96vh] w-full max-w-[900px] flex items-end justify-center pointer-events-none select-none"
-      >
-        <Image
-          src="/profile-cutout.png"
-          alt="Cris John Labiaga"
-          fill
-          priority
-          sizes="(max-width: 1024px) 100vw, 900px"
-          className="object-contain object-bottom drop-shadow-2xl pointer-events-none"
-        />
-      </motion.div>
-
-      {/* Location Badge (Reference sizing: compact padding, text-sm, rounded-full pill, z-30) */}
-      <motion.div
-        initial={{ opacity: 0, x: -30 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{
-          delay: 1.3,
-          duration: 0.8,
-          ease: [0.21, 1, 0.36, 1],
-        }}
-        className="absolute left-0 top-[60%] -translate-y-1/2 flex items-center gap-6 bg-[#1c1c1c] rounded-full py-2.5 pl-8 pr-2.5 z-20 pointer-events-auto"
-      >
-        {/* Left side (Text) */}
-        <div className="flex flex-col text-sm font-medium leading-snug text-white font-snellenberg">
-          <span>Located</span>
-          <span>in the</span>
-          <span>Philippines</span>
+          <div className="flex flex-col gap-6 max-w-xl">
+            <div ref={roleRef} className="text-xl md:text-2xl text-white font-medium font-snellenberg">
+              Full Stack AI Software Developer
+            </div>
+            <p ref={descRef} className="text-base md:text-lg text-secondary leading-relaxed font-snellenberg">
+              I build resilient full-stack systems across frontend, backend, databases, and APIs—and integrate AI workflows where they deliver real product value.
+            </p>
+          </div>
         </div>
 
-        {/* Right side (Cobe 3D Globe with locked aspect ratio) */}
-        <GlobeCanvas />
-      </motion.div>
+        <div className="md:col-span-5 relative flex flex-col items-center justify-center mt-12 md:mt-0 z-10">
+          <div ref={photoRef} className="relative w-[280px] h-[380px] md:w-[360px] md:h-[480px] will-change-transform">
+            <div className="absolute inset-0 bg-surface rounded-xl border border-default -z-10 shadow-2xl"></div>
+            <Image
+              src="/profile-cutout.png"
+              alt="Cris John Labiaga"
+              fill
+              priority
+              sizes="(max-width: 768px) 280px, 360px"
+              className="object-contain object-bottom drop-shadow-xl"
+            />
+            
+            <div 
+              ref={locationRef}
+              className="absolute -bottom-6 -left-8 md:-left-12 flex items-center gap-4 bg-surface/90 backdrop-blur-md border border-default rounded-full py-2 pl-6 pr-2 shadow-xl"
+            >
+              <div className="flex flex-col text-xs font-medium leading-tight text-primary font-snellenberg uppercase tracking-widest">
+                <span>Located in</span>
+                <span className="text-secondary">Philippines</span>
+              </div>
+              <div className="w-12 h-12">
+                <GlobeCanvas />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      {/* Foreground Right Side: Role Text at z-30 */}
-      <motion.div
-        initial={{ opacity: 0, x: 30 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{
-          delay: 1.3,
-          duration: 0.8,
-          ease: [0.21, 1, 0.36, 1],
-        }}
-        className="absolute right-6 md:right-16 top-[60%] -translate-y-1/2 z-30 pointer-events-auto"
-      >
-        <h2 className="text-2xl md:text-4xl text-white font-medium leading-tight text-left font-snellenberg">
-          Full Stack <br />
-          AI Software Developer
-        </h2>
-      </motion.div>
+      <div ref={scrollIndicatorRef} className="absolute bottom-8 left-6 md:left-12 flex items-center gap-4 opacity-0">
+        <span className="text-xs font-mono uppercase tracking-[0.2em] text-secondary">Scroll</span>
+        <div className="w-12 h-[1px] bg-white/20 overflow-hidden">
+          <div ref={scrollLineRef} className="w-full h-full bg-primary-foreground bg-white origin-left" />
+        </div>
+      </div>
     </section>
   )
 }

@@ -1,8 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { gsap, ScrollTrigger } from '@/lib/motion'
 
 interface TextMaskRevealProps {
   children?: React.ReactNode
@@ -29,7 +28,6 @@ export function TextMaskReveal({
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger)
 
     const ctx = gsap.context(() => {
       const spans = containerRef.current?.querySelectorAll('.mask-span')
