@@ -98,13 +98,13 @@ export const projectData = {
     workflow: [
       { step: '01', title: 'CENSUS', desc: 'Household data collected from the field.' },
       { step: '02', title: 'REGISTRATION', desc: 'Beneficiary information entered into the system.' },
-      { step: '03', title: 'EVALUATION', desc: 'Eligibility scored based on RA 7279 rules.' },
+      { step: '03', title: 'EVALUATION', desc: 'Eligibility scoring based on RA 7279 beneficiary criteria.' },
       { step: '04', title: 'GEOGRAPHIC REVIEW', desc: 'Spatial verification of household locations.' },
       { step: '05', title: 'VALIDATION', desc: 'Review of evaluation points and classification.' },
       { step: '06', title: 'ASSIGNMENT', desc: 'Housing or relocation site allocation.' }
     ],
     systemModules: [
-      { id: '01', title: 'Eligibility Scoring', desc: 'The system utilizes deterministic scoring rules based on RA 7279 compliance (income priority, property ownership, and classification) to provide repeatable, consistent evaluation of household applicants without relying on opaque models.' },
+      { id: '01', title: 'Eligibility Scoring', desc: 'The system utilizes deterministic scoring rules based on RA 7279 beneficiary criteria (income priority, property ownership, and classification) to provide repeatable, consistent evaluation of household applicants without relying on opaque models.' },
       { id: '02', title: 'Geospatial Review', desc: 'Interactive map view allowing administrative users to visualize beneficiary locations, project sites, and assignments.' },
       { id: '03', title: 'Beneficiary Registry', desc: 'Centralized database tracking displaced, homeless, and double-up households across barangays.' },
       { id: '04', title: 'Housing Records', desc: 'Management of project sites, lot allocations, and occupancy tracking.' }
@@ -130,7 +130,7 @@ export const projectData = {
       { id: '04', task: 'Geospatial mapping functionality' },
       { id: '05', task: 'Eligibility scoring logic' }
     ],
-    outcome: 'The system centralizes housing records, reduces repetitive manual computation, standardizes eligibility evaluation under RA 7279, and improves visibility into household information for over 6,100 censused households.',
+    outcome: 'The system centralizes housing records, reduces repetitive manual computation, standardizes eligibility evaluation using RA 7279 criteria, and improves visibility into household information for over 6,100 censused households.',
     recognition: {
       award: 'Top 5',
       category: 'Best Project'
