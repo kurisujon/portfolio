@@ -39,8 +39,8 @@ export function CaseStudyLayout({ project }: { project: any }) {
       const fadeEls = sec.querySelectorAll('.cs-fade')
       const lines = sec.querySelectorAll('.cs-line')
 
-      gsap.set(fadeEls, { opacity: 0, y: 20 })
-      gsap.set(lines, { scaleX: 0, transformOrigin: 'left' })
+      if (fadeEls.length) gsap.set(fadeEls, { opacity: 0, y: 20 })
+      if (lines.length) gsap.set(lines, { scaleX: 0, transformOrigin: 'left' })
 
       const st = gsap.timeline({
         scrollTrigger: {
@@ -50,8 +50,8 @@ export function CaseStudyLayout({ project }: { project: any }) {
         }
       })
 
-      st.to(lines, { scaleX: 1, duration: 1.2, ease: 'power3.out' })
-        .to(fadeEls, { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out' }, "-=0.8")
+      if (lines.length) st.to(lines, { scaleX: 1, duration: 1.2, ease: 'power3.out' })
+      if (fadeEls.length) st.to(fadeEls, { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out' }, lines.length ? "-=0.8" : 0)
     })
 
     return () => {
