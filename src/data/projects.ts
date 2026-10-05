@@ -90,12 +90,51 @@ export const projectData = {
     title: 'CHoDaMS Web',
     subtitle: 'City Housing Data Management System',
     role: 'Full Stack Developer',
-    type: 'Government Data Platform',
+    type: 'Housing Data Management System',
     year: '2024',
     heroImage: '/images/projects/chodams-web/chodams-portfolio-cover-v2.png',
-    overview: 'An award-winning platform for local government housing operations, featuring automated eligibility scoring and geospatial analytics.',
-    problem: 'Manual housing beneficiary evaluation lacks standardization and geospatial context.',
-    technologies: ['React', 'Geospatial Analytics', 'SQL', 'PHP', 'Laravel'],
+    overview: 'CHoDaMS is a housing data system designed to organize household and beneficiary information, apply consistent eligibility rules, and provide housing personnel with a clearer view of applicant data, locations, and evaluation results.',
+    problem: 'Beneficiary information is often spread across manual records, making household conditions difficult to evaluate consistently. Field data needs centralized review, and location information is critically important to housing decisions, but relocation records are traditionally difficult to manage without a centralized system.',
+    workflow: [
+      { step: '01', title: 'CENSUS', desc: 'Household data collected from the field.' },
+      { step: '02', title: 'REGISTRATION', desc: 'Beneficiary information entered into the system.' },
+      { step: '03', title: 'EVALUATION', desc: 'Eligibility scored based on RA 7279 rules.' },
+      { step: '04', title: 'GEOGRAPHIC REVIEW', desc: 'Spatial verification of household locations.' },
+      { step: '05', title: 'VALIDATION', desc: 'Review of evaluation points and classification.' },
+      { step: '06', title: 'ASSIGNMENT', desc: 'Housing or relocation site allocation.' }
+    ],
+    systemModules: [
+      { id: '01', title: 'Eligibility Scoring', desc: 'The system utilizes deterministic scoring rules based on RA 7279 compliance (income priority, property ownership, and classification) to provide repeatable, consistent evaluation of household applicants without relying on opaque models.' },
+      { id: '02', title: 'Geospatial Review', desc: 'Interactive map view allowing administrative users to visualize beneficiary locations, project sites, and assignments.' },
+      { id: '03', title: 'Beneficiary Registry', desc: 'Centralized database tracking displaced, homeless, and double-up households across barangays.' },
+      { id: '04', title: 'Housing Records', desc: 'Management of project sites, lot allocations, and occupancy tracking.' }
+    ],
+    systemRelationship: {
+      title: 'Web & Mobile Integration',
+      desc: 'The CHoDaMS ecosystem relies on two integrated systems: Field Collection (CHoDaMS Mobile) captures household and census information offline in low-connectivity areas. This data synchronizes to the Data Layer, which powers the Office Review (CHoDaMS Web) where administrators handle evaluation, scoring, mapping, and management.'
+    },
+    screens: [
+      { type: 'full', src: '/images/projects/chodams-web/chodams-portfolio-cover-v2.png', caption: 'CITY HOUSING DATA MANAGEMENT DASHBOARD' },
+      { type: 'inset', src: '/chodams_web_preview.png', caption: 'ELIGIBILITY CRITERIA & ACCOMPLISHMENTS' }
+    ],
+    techGroups: [
+      { group: 'FRONTEND', items: ['React', 'JavaScript', 'CSS'] },
+      { group: 'BACKEND', items: ['PHP', 'Laravel'] },
+      { group: 'DATABASE', items: ['SQL'] },
+      { group: 'GEOSPATIAL', items: ['Geospatial Analytics'] }
+    ],
+    responsibilities: [
+      { id: '01', task: 'Frontend dashboard development' },
+      { id: '02', task: 'Backend PHP/Laravel architecture' },
+      { id: '03', task: 'Database design for census data' },
+      { id: '04', task: 'Geospatial mapping functionality' },
+      { id: '05', task: 'Eligibility scoring logic' }
+    ],
+    outcome: 'The system centralizes housing records, reduces repetitive manual computation, standardizes eligibility evaluation under RA 7279, and improves visibility into household information for over 6,100 censused households.',
+    recognition: {
+      award: 'Top 5',
+      category: 'Best Project'
+    },
     nextProject: 'chodams-mobile',
     nextTitle: 'CHoDaMS Mobile'
   },

@@ -7,7 +7,7 @@ import { gsap, ScrollTrigger } from '@/lib/motion'
 
 export function CaseStudyLayout({ project }: { project: any }) {
   const heroRef = useRef<HTMLDivElement>(null)
-  
+
   useEffect(() => {
     // Basic GSAP reveals
     const hero = heroRef.current;
@@ -19,7 +19,7 @@ export function CaseStudyLayout({ project }: { project: any }) {
     const image = hero.querySelector('.hero-image')
 
     const tl = gsap.timeline({ delay: 0.2 })
-    
+
     gsap.set(titleInner, { yPercent: 110 })
     gsap.set(subtitle, { opacity: 0, y: 20 })
     if (imageContainer) gsap.set(imageContainer, { clipPath: 'inset(10% 10% 10% 10%)' })
@@ -27,7 +27,7 @@ export function CaseStudyLayout({ project }: { project: any }) {
 
     tl.to(titleInner, { yPercent: 0, duration: 1.2, ease: 'power4.out' })
       .to(subtitle, { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, "-=0.8")
-    
+
     if (imageContainer && image) {
       tl.to(imageContainer, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.5, ease: 'power4.inOut' }, "-=0.8")
         .to(image, { scale: 1, duration: 1.5, ease: 'power4.inOut' }, "-=1.5")
@@ -38,7 +38,7 @@ export function CaseStudyLayout({ project }: { project: any }) {
     sections.forEach((sec) => {
       const fadeEls = sec.querySelectorAll('.cs-fade')
       const lines = sec.querySelectorAll('.cs-line')
-      
+
       gsap.set(fadeEls, { opacity: 0, y: 20 })
       gsap.set(lines, { scaleX: 0, transformOrigin: 'left' })
 
@@ -62,7 +62,7 @@ export function CaseStudyLayout({ project }: { project: any }) {
 
   return (
     <div className="relative w-full bg-[#f5f5f3] text-[#1c1d20] min-h-screen">
-      
+
       {/* 01 HERO */}
       <section ref={heroRef} className="relative w-full pt-[120px] md:pt-[160px] pb-[80px] md:pb-[120px] px-[24px] md:px-[5vw] max-w-[1440px] mx-auto">
         <Link href="/#projects" className="inline-flex items-center gap-2 text-[#1c1d20]/60 hover:text-[#1c1d20] font-mono text-[13px] uppercase tracking-widest transition-colors mb-[60px] md:mb-[100px]">
@@ -71,7 +71,7 @@ export function CaseStudyLayout({ project }: { project: any }) {
 
         <div className="flex flex-col mb-[60px] md:mb-[80px]">
           <div className="overflow-hidden mb-[20px] md:mb-[30px]">
-            <h1 
+            <h1
               className="hero-title-inner font-snellenberg text-[#1c1d20] font-normal leading-[0.9] tracking-[-0.055em] will-change-transform"
               style={{ fontSize: 'clamp(3.8rem, 18vw, 12rem)' }}
             >
@@ -85,10 +85,10 @@ export function CaseStudyLayout({ project }: { project: any }) {
 
         {project.heroImage && (
           <div className="hero-image-container relative w-full aspect-[4/3] md:aspect-[16/9] overflow-hidden rounded-[8px] bg-[#e0e0de]">
-            <Image 
-              src={project.heroImage} 
-              alt={project.title} 
-              fill 
+            <Image
+              src={project.heroImage}
+              alt={project.title}
+              fill
               priority
               className="hero-image object-cover"
             />
@@ -99,7 +99,7 @@ export function CaseStudyLayout({ project }: { project: any }) {
       {/* 02 META */}
       <section className="cs-section w-full px-[24px] md:px-[5vw] max-w-[1440px] mx-auto mb-[120px] md:mb-[180px]">
         <div className="cs-line w-full h-[1px] bg-[rgba(28,29,32,0.15)] mb-[40px] md:mb-[60px]" />
-        
+
         <div className="grid grid-cols-2 md:grid-cols-4 gap-y-10 gap-x-8">
           {project.role && (
             <div className="cs-fade flex flex-col gap-3">
@@ -132,7 +132,7 @@ export function CaseStudyLayout({ project }: { project: any }) {
             </div>
           )}
         </div>
-        
+
         <div className="cs-line w-full h-[1px] bg-[rgba(28,29,32,0.15)] mt-[40px] md:mt-[60px]" />
       </section>
 
@@ -174,13 +174,13 @@ export function CaseStudyLayout({ project }: { project: any }) {
           <h3 className="cs-fade text-[12px] md:text-[14px] font-snellenberg uppercase tracking-[0.04em] text-[#1c1d20]/50 mb-[60px] md:mb-[80px]">
             System Workflow
           </h3>
-          
+
           <div className="flex flex-col md:flex-row gap-[60px] md:gap-0 justify-between">
             {project.workflow.map((step: any, i: number) => (
               <div key={i} className="cs-fade flex flex-col relative md:flex-1 md:pr-[20px]">
                 <span className="font-mono text-[#1c1d20]/40 text-[14px] mb-[24px]">{step.step}</span>
                 <div className="cs-line absolute top-[10px] left-[30px] md:left-[35px] right-[-30px] md:right-[-10px] h-[1px] bg-[rgba(28,29,32,0.15)] hidden md:block" />
-                
+
                 <h4 className="font-snellenberg font-medium text-[1.2rem] md:text-[1.1rem] lg:text-[1.3rem] text-[#1c1d20] leading-[1.2] mb-[12px]">
                   {step.title}
                 </h4>
@@ -200,7 +200,7 @@ export function CaseStudyLayout({ project }: { project: any }) {
             Key Engineering Areas
           </h3>
           <div className="cs-line w-full h-[1px] bg-[rgba(28,29,32,0.15)]" />
-          
+
           <div className="flex flex-col">
             {project.engineering.map((area: any, i: number) => (
               <div key={i} className="cs-fade group flex flex-col md:flex-row py-[40px] md:py-[60px]">
@@ -218,6 +218,54 @@ export function CaseStudyLayout({ project }: { project: any }) {
               </div>
             ))}
             <div className="cs-line w-full h-[1px] bg-[rgba(28,29,32,0.15)]" />
+          </div>
+        </section>
+      )}
+
+
+      {/* SYSTEM MODULES */}
+      {project.systemModules && (
+        <section className="cs-section w-full px-[24px] md:px-[5vw] max-w-[1440px] mx-auto mb-[120px] md:mb-[180px]">
+          <h3 className="cs-fade text-[12px] md:text-[14px] font-snellenberg uppercase tracking-[0.04em] text-[#1c1d20]/50 mb-[24px]">
+            System Modules
+          </h3>
+          <div className="cs-line w-full h-[1px] bg-[rgba(28,29,32,0.15)]" />
+
+          <div className="flex flex-col">
+            {project.systemModules.map((mod: any, i: number) => (
+              <div key={i} className="cs-fade group flex flex-col md:flex-row py-[40px] md:py-[60px]">
+                <div className="w-[15%] hidden md:block pt-1">
+                  <span className="font-mono text-[#1c1d20]/40 text-[13px]">{mod.id}</span>
+                </div>
+                <div className="w-full md:w-[35%] mb-[16px] md:mb-0">
+                  <h4 className="font-snellenberg text-[1.6rem] md:text-[2rem] text-[#1c1d20] leading-[1.2] tracking-tight">{mod.title}</h4>
+                </div>
+                <div className="w-full md:w-[50%] md:pl-[5%]">
+                  <p className="font-snellenberg text-[16px] md:text-[1.2rem] text-[#1c1d20]/70 leading-[1.5] max-w-[500px]">
+                    {mod.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+            <div className="cs-line w-full h-[1px] bg-[rgba(28,29,32,0.15)]" />
+          </div>
+        </section>
+      )}
+
+      {/* SYSTEM RELATIONSHIP */}
+      {project.systemRelationship && (
+        <section className="cs-section w-full px-[24px] md:px-[5vw] max-w-[1440px] mx-auto mb-[120px] md:mb-[180px]">
+          <div className="flex flex-col md:flex-row gap-12 md:gap-24 p-[40px] md:p-[80px] bg-[#e8e8e6] rounded-[8px]">
+            <div className="w-full md:w-[40%]">
+              <h3 className="cs-fade font-snellenberg text-[2rem] md:text-[2.6rem] text-[#1c1d20] leading-[1.1] tracking-tight">
+                {project.systemRelationship.title}
+              </h3>
+            </div>
+            <div className="w-full md:w-[60%] flex flex-col justify-center">
+              <p className="cs-fade text-[16px] md:text-[1.2rem] font-snellenberg leading-[1.6] text-[#1c1d20]/80">
+                {project.systemRelationship.desc}
+              </p>
+            </div>
           </div>
         </section>
       )}
@@ -263,7 +311,7 @@ export function CaseStudyLayout({ project }: { project: any }) {
       {/* 08 TECH & 09 ROLE */}
       <section className="cs-section w-full px-[24px] md:px-[5vw] max-w-[1440px] mx-auto mb-[120px] md:mb-[180px]">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-[80px] md:gap-[10vw]">
-          
+
           {/* Tech Stack */}
           {project.technologies && (
             <div className="flex flex-col">
@@ -337,12 +385,32 @@ export function CaseStudyLayout({ project }: { project: any }) {
         </section>
       )}
 
+
+      {/* 11 RECOGNITION */}
+      {project.recognition && (
+        <section className="cs-section w-full px-[24px] md:px-[5vw] max-w-[1440px] mx-auto mb-[120px] md:mb-[180px]">
+          <div className="w-full text-center flex flex-col items-center">
+            <h3 className="cs-fade text-[12px] md:text-[14px] font-snellenberg uppercase tracking-[0.04em] text-[#1c1d20]/50 mb-[40px]">
+              Recognition
+            </h3>
+            <div className="cs-fade flex flex-col items-center">
+               <span className="font-snellenberg text-[3rem] md:text-[5rem] leading-[1] text-[#1c1d20] tracking-tight mb-[16px]">
+                 {project.recognition.award}
+               </span>
+               <span className="font-snellenberg text-[1.4rem] md:text-[2rem] text-[#1c1d20]/70">
+                 {project.recognition.category}
+               </span>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* 11 NEXT PROJECT */}
       {project.nextProject && (
         <section className="w-full border-t border-[rgba(28,29,32,0.15)] mt-[80px]">
           <Link href={`/work/${project.nextProject}`} className="block w-full group py-[100px] md:py-[160px] bg-[#f5f5f3] hover:bg-[#e8e8e6] transition-colors duration-500 text-center">
             <span className="text-[12px] font-mono tracking-[0.2em] uppercase text-[#1c1d20]/50 mb-[24px] block">Next Project</span>
-            <h2 
+            <h2
               className="font-snellenberg text-[#1c1d20] font-normal tracking-[-0.04em] group-hover:scale-[1.03] transition-transform duration-700 ease-out"
               style={{ fontSize: 'clamp(4rem, 10vw, 10rem)' }}
             >
