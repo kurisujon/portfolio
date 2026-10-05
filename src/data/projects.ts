@@ -140,14 +140,43 @@ export const projectData = {
   },
   'chodams-mobile': {
     title: 'CHoDaMS Mobile',
-    subtitle: 'Offline-first field census collection',
+    subtitle: 'Offline-First Field Census Collection',
     role: 'Mobile Developer',
     type: 'Mobile App',
     year: '2024',
     heroImage: '/images/projects/chodams-mobile/cover-dashboard-gps.png',
-    overview: 'Companion mobile app for CHoDaMS designed to collect reliable field information in low-connectivity areas.',
-    problem: 'Field census workers often lose internet connectivity, breaking standard data collection tools.',
-    technologies: ['Dart', 'Flutter', 'Local DB', 'REST APIs'],
+    overview: 'Companion mobile app for CHoDaMS designed to reliably collect field census information, including photos and precise GPS coordinates, in low-connectivity environments.',
+    problem: 'Field workers operating in remote or informal settlements frequently lose internet connectivity. Standard web-based collection tools fail or lose data under these conditions, breaking the housing evaluation workflow and causing redundant fieldwork.',
+    workflow: [
+      { step: '01', title: 'OFFLINE CAPTURE', desc: 'Workers record household information without a network connection.' },
+      { step: '02', title: 'GPS & MEDIA', desc: 'System attaches exact coordinates and survey photos locally.' },
+      { step: '03', title: 'LOCAL STORAGE', desc: 'Records are held securely on the device as Unsynced Data.' },
+      { step: '04', title: 'CONNECTIVITY', desc: 'Device detects an active, stable network connection.' },
+      { step: '05', title: 'SYNCHRONIZATION', desc: 'The app securely pushes pending surveys to the CHoDaMS Web data layer.' }
+    ],
+    systemModules: [
+      { id: '01', title: 'Field Survey Capture', desc: 'Interface for collecting standardized household information, ensuring required evidence like resident and house photos are captured before saving.' },
+      { id: '02', title: 'Offline Persistence', desc: 'Local database architecture that ensures survey progress is securely stored and never lost when networks drop unexpectedly.' },
+      { id: '03', title: 'GPS Logging', desc: 'Hardware integration that attaches exact geospatial coordinates to every household record for administrative mapping.' },
+      { id: '04', title: 'Synchronization State', desc: 'Dashboard interface managing Synced and Unsynced data states to provide field workers clear visibility into their data transmission progress.' }
+    ],
+    screens: [
+      { type: 'full', src: '/images/projects/chodams-mobile/cover-dashboard-gps.png', caption: 'FIELD CENSUS DASHBOARD & GPS CAPTURE' },
+      { type: 'inset', src: '/images/projects/chodams-mobile/login-cover.png', caption: 'VALIDATOR AUTHENTICATION' }
+    ],
+    techGroups: [
+      { group: 'FRAMEWORK', items: ['Flutter', 'Dart'] },
+      { group: 'STORAGE', items: ['Local DB'] },
+      { group: 'INTEGRATION', items: ['REST APIs'] },
+      { group: 'HARDWARE', items: ['GPS', 'Camera'] }
+    ],
+    responsibilities: [
+      { id: '01', task: 'Mobile application architecture' },
+      { id: '02', task: 'Offline-first data persistence' },
+      { id: '03', task: 'Hardware integration (GPS & Camera)' },
+      { id: '04', task: 'API synchronization logic' }
+    ],
+    outcome: 'Ensures field workers can reliably capture household census data in any environment, completely bridging the gap between disconnected field operations and the centralized CHoDaMS Web platform.',
     nextProject: 'veldra',
     nextTitle: 'Veldra'
   }
