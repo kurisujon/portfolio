@@ -2,6 +2,8 @@
 
 import { useRef, useEffect } from 'react'
 import { gsap, ScrollTrigger } from '@/lib/motion'
+import Link from 'next/link'
+import { Magnetic } from '@/components/ui/MagneticButton'
 
 const milestoneItems = [
   {
@@ -28,55 +30,77 @@ const milestoneItems = [
 
 export function AboutSection() {
   const containerRef = useRef<HTMLElement>(null)
-  const statementRef = useRef<HTMLDivElement>(null)
   
+  // Section 2 refs
+  const primaryTextRef = useRef<HTMLDivElement>(null)
+  const paragraphRef = useRef<HTMLParagraphElement>(null)
+  const ctaRef = useRef<HTMLDivElement>(null)
+  const labelRef = useRef<HTMLSpanElement>(null)
+  const dividerRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     const container = containerRef.current;
-    // 1. Large Typography Word Reveal (Phase 5)
-    if (statementRef.current) {
-      const words = statementRef.current.querySelectorAll('.word-reveal')
-      
-      gsap.fromTo(words, 
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          stagger: 0.05,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: statementRef.current,
-            start: 'top 85%',
-            once: true
-          }
+    
+    // --- INTRO / ABOUT TEASER ENTRANCE ---
+    if (primaryTextRef.current) {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: primaryTextRef.current,
+          start: 'top 75%',
+          once: true
         }
-      )
+      })
+      
+      const lines = primaryTextRef.current.querySelectorAll('.line-reveal-inner')
+      gsap.set(lines, { yPercent: 110 })
+      
+      gsap.set(paragraphRef.current, { y: 30, opacity: 0 })
+      gsap.set(ctaRef.current, { scale: 0.75, opacity: 0, y: 30 })
+      gsap.set(labelRef.current, { opacity: 0 })
+      gsap.set(dividerRef.current, { scaleX: 0, transformOrigin: 'left' })
+
+      tl.to(lines, { yPercent: 0, duration: 1.1, stagger: 0.12, ease: 'power4.out' })
+        .to(paragraphRef.current, { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' }, "-=0.8")
+        .to(ctaRef.current, { scale: 1, opacity: 1, y: 0, duration: 1.2, ease: 'expo.out' }, "-=0.6")
+        .to(labelRef.current, { opacity: 1, duration: 0.8, ease: 'power2.out' }, "-=0.8")
+        .to(dividerRef.current, { scaleX: 1, duration: 1.2, ease: 'power3.out' }, "-=0.8")
     }
 
-    // 2. Milestones Reveal (Phase 6)
-    if (containerRef.current) {
-      const rows = containerRef.current.querySelectorAll('.milestone-row')
+    // --- MILESTONES REVEAL ---
+    if (container) {
+      const milestonesLabel = container.querySelector('.milestones-label')
+      const milestonesTopDivider = container.querySelector('.milestones-top-divider')
       
+      if (milestonesLabel && milestonesTopDivider) {
+        gsap.set(milestonesLabel, { opacity: 0, y: 15 })
+        gsap.set(milestonesTopDivider, { scaleX: 0, transformOrigin: 'left' })
+        
+        gsap.timeline({
+          scrollTrigger: { trigger: milestonesLabel, start: 'top 85%', once: true }
+        })
+        .to(milestonesLabel, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' })
+        .to(milestonesTopDivider, { scaleX: 1, duration: 1.2, ease: 'power3.out' }, "-=0.6")
+      }
+
+      const rows = container.querySelectorAll('.milestone-row')
       rows.forEach((row) => {
         const year = row.querySelector('.milestone-year')
-        const line = row.querySelector('.milestone-line')
-        const content = row.querySelector('.milestone-content')
+        const title = row.querySelector('.milestone-title')
+        const desc = row.querySelector('.milestone-desc')
+        const divider = row.querySelector('.milestone-divider')
         
-        gsap.set(year, { opacity: 0, x: -20 })
-        gsap.set(line, { scaleX: 0 })
-        gsap.set(content, { opacity: 0, y: 20 })
+        gsap.set(year, { opacity: 0, y: 15 })
+        gsap.set([title, desc], { opacity: 0, y: 20 })
+        gsap.set(divider, { scaleX: 0, transformOrigin: 'left' })
 
         const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: row,
-            start: 'top 85%',
-            once: true
-          }
+          scrollTrigger: { trigger: row, start: 'top 90%', once: true }
         })
         
-        tl.to(year, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' })
-          .to(line, { scaleX: 1, duration: 0.8, ease: 'power3.inOut' }, "-=0.4")
-          .to(content, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, "-=0.4")
+        tl.to(divider, { scaleX: 1, duration: 1.2, ease: 'power3.out' })
+          .to(year, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, "-=0.8")
+          .to(title, { opacity: 1, y: 0, duration: 0.8, ease: 'power4.out' }, "-=0.6")
+          .to(desc, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, "-=0.6")
       })
     }
 
@@ -86,50 +110,102 @@ export function AboutSection() {
   }, [])
 
   return (
-    <section id="about" ref={containerRef} className="relative w-full bg-primary flex flex-col py-32 z-10">
+    <section id="about" ref={containerRef} className="relative w-full bg-[#f5f5f3] text-[#1c1d20] flex flex-col z-10 pt-[140px] md:pt-[180px] ">
       
-      {/* PHASE 5: OVERVIEW */}
-      <div className="w-full max-w-[1200px] mx-auto px-6 md:px-12 flex flex-col gap-24">
+      {/* SECTION 2: INTRO / ABOUT TEASER */}
+      <div className="w-full max-w-[1440px] mx-auto px-[24px] md:px-[5vw] relative min-h-[70vh] flex flex-col">
         
-        <div ref={statementRef} className="text-4xl md:text-5xl lg:text-[4vw] font-snellenberg font-medium leading-[1.2] text-white tracking-tight">
-          {/* We manually split words so we can animate them easily without a heavy library */}
-          {"I build full-stack software from interface to infrastructure, then integrate AI where it actually improves the product.".split(" ").map((word, i) => (
-            <span key={i} className="inline-block overflow-hidden mr-[0.25em] align-top">
-              <span className="word-reveal inline-block will-change-transform">{word}</span>
-            </span>
-          ))}
+        <div className="flex flex-col md:flex-row relative w-full mb-[80px] md:mb-[140px]">
+          <div ref={primaryTextRef} className="w-full md:w-[60%] lg:w-[58%] max-w-[900px] mb-[40px] md:mb-0">
+            <h2 
+              className="font-snellenberg font-normal text-[#1c1d20] tracking-[-0.035em] leading-[1.03] md:leading-[1.08] flex flex-col"
+              style={{ fontSize: 'clamp(2.1rem, 4vw, 4.75rem)' }}
+            >
+              <span className="overflow-hidden inline-block"><span className="line-reveal-inner inline-block will-change-transform">I build full-stack systems</span></span>
+              <span className="overflow-hidden inline-block"><span className="line-reveal-inner inline-block will-change-transform">from interface to infrastructure,</span></span>
+              <span className="overflow-hidden inline-block"><span className="line-reveal-inner inline-block will-change-transform">with AI integrated where it</span></span>
+              <span className="overflow-hidden inline-block"><span className="line-reveal-inner inline-block will-change-transform">actually improves the product.</span></span>
+            </h2>
+          </div>
+
+          <div ref={paragraphRef} className="w-full md:w-[35%] lg:w-[30%] md:absolute md:right-[5%] lg:right-[8%] md:top-[1em]">
+            <p className="font-snellenberg text-[#1c1d20] font-normal leading-[1.45] md:leading-[1.6] text-[16px] md:text-[1.05rem] lg:text-[1.1rem] max-w-[320px]">
+              I work across frontend, backend, databases, APIs, document systems, and AI workflows—building products from the interface down to the data layer.
+            </p>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 border-t border-default pt-16">
-          <div className="md:col-span-4">
-            <span className="text-xs font-mono tracking-[0.2em] uppercase text-secondary">Expertise</span>
-          </div>
-          <div className="md:col-span-8 flex flex-col gap-8 text-lg md:text-xl text-secondary leading-relaxed font-snellenberg">
-            <p>
-              My focus is on creating robust architectures—handling relational databases, secure authentication, external APIs, and resilient backends alongside premium, interactive frontend experiences.
-            </p>
-            <p>
-              I leverage agentic workflows and AI capabilities (RAG pipelines, embeddings, document processing) to solve complex automation problems, rather than just building wrappers.
-            </p>
+        <div ref={ctaRef} className="self-start md:self-auto md:absolute md:right-[6vw] md:bottom-[60px] lg:right-[8vw] lg:bottom-[80px] will-change-transform z-20 mt-[20px] md:mt-0 mb-[60px] md:mb-0">
+          <Magnetic strength={0.2} textStrength={0.1}>
+            <Link 
+              href="#about"
+              className="group relative flex items-center justify-center bg-[#1c1d20] text-[#f5f5f3] rounded-full hover:bg-[#2c2d30] transition-colors duration-300 shadow-xl"
+              style={{ width: 'clamp(110px, 12vw, 180px)', aspectRatio: '1/1' }}
+            >
+              <span className="font-snellenberg font-medium text-[14px] md:text-[16px] tracking-wide relative z-10 transition-transform duration-300 group-hover:scale-110">
+                About me
+              </span>
+            </Link>
+          </Magnetic>
+        </div>
+
+        <div className="w-full mt-auto pt-[40px] md:pt-[120px] flex flex-col relative z-10">
+          <span ref={labelRef} className="text-[12px] md:text-[14px] font-snellenberg tracking-[0.04em] text-[#1c1d20]/60 mb-[16px] md:mb-[24px]">
+            ABOUT
+          </span>
+          <div className="w-full h-[1px] bg-[rgba(28,29,32,0.20)] overflow-hidden">
+            <div ref={dividerRef} className="w-full h-full bg-[#1c1d20] origin-left will-change-transform" />
           </div>
         </div>
+
       </div>
 
-      {/* PHASE 6: MILESTONES */}
-      <div className="w-full max-w-[1200px] mx-auto px-6 md:px-12 mt-48 flex flex-col">
-        <span className="text-xs font-mono tracking-[0.2em] uppercase text-secondary mb-16">Milestones & Education</span>
+      {/* MILESTONES / EDUCATION */}
+      <div className="w-full max-w-[1440px] mx-auto px-[24px] md:px-[5vw] mt-[100px] md:mt-[180px] flex flex-col">
+        
+        {/* Section Header */}
+        <div className="flex flex-col mb-0">
+          <span className="milestones-label text-[#1c1d20]/60 text-[12px] md:text-[14px] font-snellenberg uppercase tracking-[0.04em] mb-[24px]">
+            MILESTONES
+          </span>
+          <div className="milestones-top-divider w-full h-[1px] bg-[rgba(28,29,32,0.18)] will-change-transform" />
+        </div>
 
+        {/* Milestone List */}
         <div className="flex flex-col">
           {milestoneItems.map((item, index) => (
-            <div key={index} className="milestone-row flex flex-col gap-4 mb-16 last:mb-0 group cursor-default">
-              <div className="flex items-center gap-6">
-                <span className="milestone-year text-lg font-mono text-white/50">{item.year}</span>
-                <div className="milestone-line flex-grow h-[1px] bg-default origin-left" />
+            <div key={index} className="milestone-row group flex flex-col">
+              
+              {/* Desktop / Tablet Row */}
+              <div className="hidden md:flex flex-row py-[40px] lg:py-[55px]">
+                <div className="w-[25%] lg:w-[20%] shrink-0">
+                  <span className="milestone-year text-[#1c1d20]/60 text-[15px] font-mono tracking-widest">{item.year}</span>
+                </div>
+                <div className="flex flex-col gap-2 md:w-[75%] lg:w-[80%]">
+                  <h3 
+                    className="milestone-title text-[#1c1d20] font-snellenberg font-normal tracking-[-0.03em] leading-[1.05]"
+                    style={{ fontSize: 'clamp(2rem, 3vw, 3.5rem)' }}
+                  >
+                    {item.title}
+                  </h3>
+                  <p className="milestone-desc text-[#1c1d20]/70 font-snellenberg text-[16px] md:text-[1.1rem]">
+                    {item.subtitle}
+                  </p>
+                </div>
               </div>
-              <div className="milestone-content flex flex-col gap-1 md:pl-24 transition-transform duration-500 group-hover:translate-x-2">
-                <h3 className="text-2xl md:text-4xl text-white font-medium tracking-tight font-snellenberg">{item.title}</h3>
-                <span className="text-base md:text-lg text-secondary font-snellenberg">{item.subtitle}</span>
+
+              {/* Mobile Row */}
+              <div className="md:hidden flex flex-col py-[32px]">
+                <span className="milestone-year text-[#1c1d20]/60 text-[14px] font-mono tracking-widest mb-[16px]">{item.year}</span>
+                <h3 className="milestone-title text-[#1c1d20] font-snellenberg font-normal tracking-[-0.02em] leading-[1.1] text-[2.2rem] mb-[8px]">
+                  {item.title}
+                </h3>
+                <p className="milestone-desc text-[#1c1d20]/70 font-snellenberg text-[16px]">
+                  {item.subtitle}
+                </p>
               </div>
+
+              <div className="milestone-divider w-full h-[1px] bg-[rgba(28,29,32,0.18)] will-change-transform" />
             </div>
           ))}
         </div>

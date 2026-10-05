@@ -5,33 +5,34 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { gsap, ScrollTrigger } from '@/lib/motion'
 import { ArrowUpRight } from 'lucide-react'
+import { Magnetic } from '@/components/ui/MagneticButton'
 
 const projects = [
   {
     id: '01',
-    title: 'VELDRA',
-    role: 'Full Stack AI Software Developer',
+    title: 'Veldra',
+    meta: 'Full Stack AI Software Developer',
     image: '/veldra_preview.png',
     href: '/work/veldra',
   },
   {
     id: '02',
-    title: 'STUDFLOW',
-    role: 'Full Stack AI Developer',
+    title: 'StudFlow',
+    meta: 'Full Stack AI Developer',
     image: '/studflow_preview.png',
     href: '/work/studflow',
   },
   {
     id: '03',
-    title: 'CHoDaMS WEB',
-    role: 'Full Stack Developer',
+    title: 'CHoDaMS Web',
+    meta: 'Full Stack Developer',
     image: '/images/projects/chodams-web/chodams-portfolio-cover-v2.png',
     href: '/work/chodams-web',
   },
   {
     id: '04',
-    title: 'CHoDaMS MOBILE',
-    role: 'Mobile Developer',
+    title: 'CHoDaMS Mobile',
+    meta: 'Mobile Developer',
     image: '/images/projects/chodams-mobile/cover-dashboard-gps.png',
     href: '/work/chodams-mobile',
   },
@@ -40,152 +41,210 @@ const projects = [
 export function ProjectsSection() {
   const containerRef = useRef<HTMLElement>(null)
   const cursorRef = useRef<HTMLDivElement>(null)
-  const cursorImageRef = useRef<HTMLDivElement>(null)
   const [activeProject, setActiveProject] = useState<number | null>(null)
 
   useEffect(() => {
     const container = containerRef.current;
-    // Scroll reveal for rows
-    if (containerRef.current) {
-      const rows = containerRef.current.querySelectorAll('.project-row')
-      rows.forEach((row) => {
-        gsap.fromTo(row,
-          { opacity: 0, y: 30 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: row,
-              start: 'top 90%',
-              once: true
-            }
-          }
-        )
-      })
-    }
+    if (!container) return;
 
-    // Cursor Follower Logic (Desktop Only)
-    const isDesktop = window.matchMedia('(pointer: fine)').matches
-    if (!isDesktop || !cursorRef.current || !cursorImageRef.current) return
-
-    // GSAP quickTo for highly performant tracking
-    const xTo = gsap.quickTo(cursorRef.current, "x", { duration: 0.5, ease: "power3" })
-    const yTo = gsap.quickTo(cursorRef.current, "y", { duration: 0.5, ease: "power3" })
+    // SCROLL REVEAL ANIMATIONS
+    const rows = container.querySelectorAll('.project-row')
     
-    // Animate image inside container for parallax
-    const imgXTo = gsap.quickTo(cursorImageRef.current, "x", { duration: 0.6, ease: "power3" })
-    const imgYTo = gsap.quickTo(cursorImageRef.current, "y", { duration: 0.6, ease: "power3" })
+    // Top divider and label
+    const topDivider = container.querySelector('.top-divider')
+    const sectionLabel = container.querySelector('.section-label')
+    const countLabel = container.querySelector('.count-label')
 
-    const isHovering = false
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: container,
+        start: 'top 80%',
+        once: true
+      }
+    })
+
+    gsap.set(topDivider, { scaleX: 0, transformOrigin: 'left' })
+    gsap.set([sectionLabel, countLabel], { opacity: 0, y: 15 })
+    
+    tl.to([sectionLabel, countLabel], { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' })
+      .to(topDivider, { scaleX: 1, duration: 1.2, ease: 'power3.out' }, "-=0.6")
+
+    rows.forEach((row, index) => {
+      const titleInner = row.querySelectorAll('.title-inner')
+      const divider = row.querySelector('.row-divider')
+      const fadeElements = row.querySelectorAll('.fade-el')
+      const imgMobile = row.querySelector('.img-mobile')
+
+      gsap.set(titleInner, { yPercent: 105 })
+      gsap.set(divider, { scaleX: 0, transformOrigin: 'left' })
+      gsap.set(fadeElements, { opacity: 0, y: 15 })
+      if(imgMobile) gsap.set(imgMobile, { opacity: 0, y: 20 })
+
+      const rowTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: row,
+          start: 'top 90%',
+          once: true
+        }
+      })
+
+      rowTl.to(divider, { scaleX: 1, duration: 1.2, ease: 'power3.out' })
+           .to(titleInner, { yPercent: 0, duration: 0.9, ease: 'power4.out', stagger: 0.05 }, "-=0.9")
+           .to(fadeElements, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, "-=0.7")
+      
+      if(imgMobile) {
+        rowTl.to(imgMobile, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, "-=0.9")
+      }
+    })
+
+    // CURSOR FOLLOWER LOGIC (Desktop Only)
+    const isDesktop = window.matchMedia('(pointer: fine)').matches
+    if (!isDesktop || !cursorRef.current) return
+
+    const xTo = gsap.quickTo(cursorRef.current, "x", { duration: 0.5, ease: "power3.out" })
+    const yTo = gsap.quickTo(cursorRef.current, "y", { duration: 0.5, ease: "power3.out" })
 
     const handleMouseMove = (e: MouseEvent) => {
-      // Center the cursor container on the mouse pointer
-      xTo(e.clientX)
-      yTo(e.clientY)
-      
-      if (isHovering) {
-        // Calculate movement relative to center of screen for opposite parallax
-        const xPos = (e.clientX / window.innerWidth - 0.5) * 40
-        const yPos = (e.clientY / window.innerHeight - 0.5) * 40
-        imgXTo(-xPos)
-        imgYTo(-yPos)
-      }
+      // Offset by half of preview width/height (360x270 -> 180, 135)
+      xTo(e.clientX - 180)
+      yTo(e.clientY - 135)
     }
 
     window.addEventListener('mousemove', handleMouseMove)
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
-      ScrollTrigger.getAll().forEach(t => t.trigger && container?.contains(t.trigger as Node) && t.kill())
+      ScrollTrigger.getAll().forEach(t => t.trigger && container.contains(t.trigger as Node) && t.kill())
     }
   }, [])
 
-  // Handle active state animation
+  // Handle active state animation for cursor preview
   useEffect(() => {
     if (!cursorRef.current) return
     if (activeProject !== null) {
       gsap.to(cursorRef.current, { scale: 1, opacity: 1, duration: 0.4, ease: 'power3.out' })
     } else {
-      gsap.to(cursorRef.current, { scale: 0.5, opacity: 0, duration: 0.4, ease: 'power3.in' })
+      gsap.to(cursorRef.current, { scale: 0.95, opacity: 0, duration: 0.3, ease: 'power3.in' })
     }
   }, [activeProject])
 
   return (
-    <section id="projects" ref={containerRef} className="relative w-full bg-primary flex flex-col py-32 z-20">
+    <section id="projects" ref={containerRef} className="relative w-full bg-[#f5f5f3] text-[#1c1d20] flex flex-col  pb-32 z-20">
       
-      <div className="w-full max-w-[1400px] mx-auto px-6 md:px-12">
-        <span className="text-xs font-mono tracking-[0.2em] uppercase text-secondary mb-24 block">Selected Works</span>
+      <div className="w-full max-w-[1440px] mx-auto px-[24px] md:px-[5vw]">
+        
+        {/* Section Header */}
+        <div className="flex justify-between items-center mb-8">
+          <span className="section-label text-[#1c1d20]/60 text-[12px] md:text-[14px] font-snellenberg uppercase tracking-[0.04em]">
+            SELECTED WORK
+          </span>
+          <span className="count-label text-[#1c1d20]/60 text-[12px] md:text-[14px] font-snellenberg">
+            (04)
+          </span>
+        </div>
 
-        <div className="flex flex-col border-t border-default">
+        <div className="top-divider w-full h-[1px] bg-[rgba(28,29,32,0.20)] will-change-transform" />
+
+        {/* Project List */}
+        <div className="flex flex-col">
           {projects.map((project, index) => (
             <Link 
               key={project.id}
               href={project.href}
-              className="project-row group relative block w-full py-12 md:py-16 border-b border-default hover:border-white transition-colors duration-300"
+              className="project-row group block w-full relative cursor-pointer"
               onMouseEnter={() => setActiveProject(index)}
               onMouseLeave={() => setActiveProject(null)}
             >
-              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-0">
-                <div className="flex items-start md:items-center gap-6 md:gap-12">
-                  <span className="text-sm md:text-base font-mono text-secondary group-hover:text-white transition-colors">{project.id}</span>
-                  <h3 className="text-4xl md:text-6xl lg:text-[5vw] font-snellenberg font-medium text-white tracking-tighter uppercase leading-none group-hover:pl-4 transition-all duration-300">
+              
+              {/* --- DESKTOP VIEW --- */}
+              <div className="hidden md:flex items-center justify-between py-[45px] lg:py-[55px]">
+                <span className="fade-el text-[#1c1d20] text-[0.85rem] font-mono w-[60px] lg:w-[80px] group-hover:opacity-50 transition-opacity duration-500">
+                  {project.id}
+                </span>
+                
+                <div className="flex-1 overflow-hidden">
+                  <h3 className="font-snellenberg text-[clamp(3rem,5vw,5.5rem)] text-[#1c1d20] leading-none tracking-[-0.04em] font-normal group-hover:translate-x-[20px] transition-transform duration-500 ease-out will-change-transform inline-block">
+                    <span className="title-inner inline-block overflow-hidden pb-1">{project.title}</span>
+                  </h3>
+                </div>
+                
+                <span className="fade-el text-[#1c1d20] text-[0.95rem] font-snellenberg w-[280px] text-right group-hover:-translate-x-[5px] transition-transform duration-500 ease-out">
+                  {project.meta}
+                </span>
+              </div>
+
+              {/* --- MOBILE VIEW --- */}
+              <div className="md:hidden flex flex-col py-[40px]">
+                <span className="fade-el text-[#1c1d20]/70 text-[0.8rem] font-mono mb-[16px]">{project.id}</span>
+                
+                <div className="img-mobile w-full relative rounded-[4px] overflow-hidden bg-[#e0e0de] mb-[24px]" style={{ aspectRatio: '4/3' }}>
+                  <Image src={project.image} alt={project.title} fill className="object-cover" />
+                </div>
+                
+                <div className="overflow-hidden mb-[8px]">
+                  <h3 className="title-inner font-snellenberg text-[clamp(2.4rem,11vw,3.6rem)] text-[#1c1d20] leading-[1] tracking-[-0.02em] font-normal will-change-transform">
                     {project.title}
                   </h3>
                 </div>
-
-                <div className="flex items-center gap-8 justify-between w-full md:w-auto mt-4 md:mt-0">
-                  <span className="text-sm md:text-base font-mono text-secondary group-hover:text-white transition-colors">
-                    {project.role}
-                  </span>
-                  
-                  {/* Arrow hidden on mobile, scales in on hover for desktop */}
-                  <div className="hidden md:flex w-12 h-12 rounded-full border border-white/20 items-center justify-center scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300 bg-white text-black">
-                    <ArrowUpRight className="w-6 h-6" />
-                  </div>
+                
+                <span className="fade-el text-[#1c1d20]/80 text-[0.95rem] font-snellenberg mb-[16px]">
+                  {project.meta}
+                </span>
+                
+                <div className="fade-el flex items-center gap-[6px] text-[#1c1d20] text-[0.85rem] font-mono uppercase tracking-wider">
+                  <span>View project</span>
+                  <ArrowUpRight className="w-4 h-4" />
                 </div>
               </div>
 
-              {/* Mobile Image Fallback (Hidden on Desktop) */}
-              <div className="md:hidden mt-8 relative w-full h-[60vw] overflow-hidden rounded-md border border-default">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover"
-                />
-              </div>
+              {/* Row Bottom Divider */}
+              <div className="row-divider w-full h-[1px] bg-[rgba(28,29,32,0.20)] will-change-transform" />
             </Link>
           ))}
         </div>
+
+        {/* More Work CTA */}
+        <div className="w-full flex justify-end mt-[60px] md:mt-[80px]">
+          <Magnetic strength={0.2} textStrength={0.1}>
+            <Link 
+              href="#projects"
+              className="group relative flex items-center justify-center bg-[#1c1d20] text-[#f5f5f3] rounded-full hover:bg-[#2c2d30] transition-colors duration-300 shadow-xl"
+              style={{ width: 'clamp(120px, 12vw, 160px)', aspectRatio: '1/1' }}
+            >
+              <span className="font-snellenberg font-medium text-[14px] md:text-[16px] tracking-wide relative z-10 transition-transform duration-300 group-hover:scale-110">
+                View projects
+              </span>
+            </Link>
+          </Magnetic>
+        </div>
+
       </div>
 
       {/* Custom Cursor Image Preview Container (Desktop Only) */}
       <div 
         ref={cursorRef}
-        className="fixed top-0 left-0 w-[400px] h-[300px] pointer-events-none z-[100] overflow-hidden rounded-xl bg-surface border border-white/10 hidden md:block opacity-0 scale-50 -translate-x-1/2 -translate-y-1/2 shadow-2xl"
+        className="fixed top-0 left-0 w-[360px] h-[270px] pointer-events-none z-[100] hidden md:block opacity-0 scale-95 origin-center"
       >
-        <div ref={cursorImageRef} className="absolute inset-[-10%] w-[120%] h-[120%]">
+        <div className="w-full h-full relative overflow-hidden bg-[#e0e0de]">
           {projects.map((project, index) => (
             <div 
               key={project.id} 
-              className={`absolute inset-0 transition-opacity duration-300 ${activeProject === index ? 'opacity-100' : 'opacity-0'}`}
+              className={`absolute inset-0 transition-all duration-400 ease-out will-change-transform ${activeProject === index ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-105 z-0'}`}
             >
               <Image
                 src={project.image}
                 alt={project.title}
                 fill
-                sizes="400px"
+                sizes="360px"
                 className="object-cover"
-                priority
+                priority={index === 0}
               />
             </div>
           ))}
-        </div>
-        {/* Floating View Text inside cursor */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none mix-blend-difference">
-          <div className="text-white font-snellenberg text-xl font-medium tracking-wide">VIEW</div>
+          {/* Floating View Text inside cursor */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none mix-blend-difference z-20">
+            <div className="text-white font-snellenberg text-[1.1rem] font-medium tracking-[0.05em]">VIEW</div>
+          </div>
         </div>
       </div>
 

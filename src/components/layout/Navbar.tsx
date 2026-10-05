@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { useState, useEffect, useRef } from 'react'
 import { useLenis } from 'lenis/react'
 import { gsap } from '@/lib/motion'
@@ -23,9 +22,7 @@ export function Navbar() {
   const overlayRef = useRef<HTMLDivElement>(null)
   const svgPathRef = useRef<SVGPathElement>(null)
   const menuLinksRef = useRef<HTMLDivElement>(null)
-  const logoRef = useRef<HTMLAnchorElement>(null)
 
-  // Handle scroll to show/hide the floating button
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 150)
@@ -34,14 +31,8 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Handle overlay animation
   useEffect(() => {
     if (!overlayRef.current || !svgPathRef.current || !menuLinksRef.current) return
-    
-    // We animate the path to simulate the curved entrance
-    // Start path: flat at top
-    // Curve path: bulging down
-    // End path: flat at bottom (full screen)
     
     const tl = gsap.timeline({ paused: true })
     
@@ -49,11 +40,9 @@ export function Navbar() {
     const curvePath = `M 0 0 L 100 0 L 100 100 Q 50 150 0 100 L 0 0`
     const flatPath  = `M 0 0 L 100 0 L 100 100 Q 50 100 0 100 L 0 0`
     
-    // Reverse paths for closing (curves upwards)
     const curvePathReverse = `M 0 100 L 100 100 L 100 0 Q 50 -50 0 0 L 0 100`
 
     if (isActive) {
-      // Opening
       gsap.set(overlayRef.current, { pointerEvents: 'auto', display: 'flex' })
       tl.to(svgPathRef.current, { attr: { d: curvePath }, duration: 0.4, ease: 'power3.in' })
         .to(svgPathRef.current, { attr: { d: flatPath }, duration: 0.4, ease: 'power3.out' })
@@ -66,7 +55,6 @@ export function Navbar() {
       )
       tl.play()
     } else {
-      // Closing
       tl.to(svgPathRef.current, { attr: { d: curvePathReverse }, duration: 0.4, ease: 'power3.in' })
         .to(svgPathRef.current, { attr: { d: startPath }, duration: 0.4, ease: 'power3.out' })
       
@@ -88,7 +76,6 @@ export function Navbar() {
     
     const target = href === '#contact' ? 'bottom' : href
 
-    // Short delay to let menu close
     setTimeout(() => {
       if (lenis) {
         lenis.scrollTo(target, { duration: 1.5, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
@@ -103,51 +90,19 @@ export function Navbar() {
     }, 600)
   }
 
-  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault()
-    setIsActive(false)
-    lenis?.resize()
-    setTimeout(() => {
-      if (lenis) {
-        lenis.scrollTo(0, { duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
-      } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-      }
-    }, 100) // Immediate for logo
-  }
-
   return (
     <>
-      {/* 1. Standard Top Navbar */}
-      <nav className={`fixed top-0 w-full z-[80] left-0 right-0 py-8 px-6 md:px-12 transition-transform duration-500 ${isScrolled ? '-translate-y-full' : 'translate-y-0'}`}>
-        <div className="w-full max-w-[1400px] mx-auto flex justify-between items-center">
-          <Link href="/" onClick={handleLogoClick} className="flex items-center cursor-pointer mix-blend-difference z-[90]">
-            <Image src="/cj_outlined_logo_clean.png" alt="WebCris" width={100} height={32} className="h-6 md:h-8 w-auto object-contain brightness-200" priority />
-          </Link>
-          <div className="hidden md:flex gap-8 text-sm font-medium text-white mix-blend-difference">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className="relative hover:text-white/70 transition-colors py-1 group cursor-pointer"
-              >
-                {link.name}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </nav>
+      <div className={`fixed top-6 right-6 md:top-8 md:right-12 z-[100] transition-opacity duration-500 ${(!isScrolled && !isActive) ? 'opacity-100 md:opacity-0 md:pointer-events-none' : 'opacity-100'}`}>
+        <Magnetic strength={0.2} textStrength={0.1}>
+          <button 
+            onClick={() => setIsActive(!isActive)}
+            className={`w-20 h-20 bg-[#1c1c1c] text-white rounded-full flex items-center justify-center transition-transform duration-500 hover:scale-110 ${(!isScrolled && !isActive) ? 'scale-100 md:scale-0' : 'scale-100'} cursor-pointer`}
+          >
+            <span className="font-snellenberg text-sm font-medium relative z-10">{isActive ? 'Close' : 'Menu'}</span>
+          </button>
+        </Magnetic>
+      </div>
 
-      {/* 2. Floating Circular Menu Button */}
-      <button 
-        onClick={() => setIsActive(!isActive)}
-        className={`w-20 h-20 bg-[#1c1c1c] text-white rounded-full flex items-center justify-center transition-transform duration-500 hover:scale-110 ${(!isScrolled && !isActive) ? 'scale-0' : 'scale-100'} cursor-pointer`}
-      >
-        <span className="font-snellenberg text-sm font-medium relative z-10">{isActive ? 'Close' : 'Menu'}</span>
-      </button>
-
-      {/* 3. Fullscreen Curved Overlay */}
       <div 
         ref={overlayRef}
         className="fixed inset-0 z-[85] pointer-events-none hidden"
