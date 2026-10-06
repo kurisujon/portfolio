@@ -90,6 +90,7 @@ export function CaseStudyLayout({ project }: { project: any }) {
               alt={project.title}
               fill
               priority
+              sizes="(max-width: 768px) 100vw, 84vw"
               className="hero-image object-cover"
             />
           </div>
@@ -295,7 +296,7 @@ export function CaseStudyLayout({ project }: { project: any }) {
             {project.screens.map((screen: any, i: number) => (
               <div key={i} className={`cs-fade w-full ${screen.type === 'full' ? 'px-[24px] md:px-[5vw]' : 'px-[24px] md:px-[15vw]'}`}>
                 <div className="relative w-full aspect-[4/3] md:aspect-[16/9] overflow-hidden rounded-[8px] bg-[#e0e0de]">
-                  <Image src={screen.src} alt={screen.caption || "Project Screen"} fill className="object-cover" />
+                  <Image src={screen.src} alt={screen.caption || "Project Screen"} fill sizes="(max-width: 768px) 100vw, 90vw" className="object-cover" />
                 </div>
                 {screen.caption && (
                   <p className="mt-[16px] md:mt-[24px] text-center font-mono text-[12px] text-[#1c1d20]/40 uppercase tracking-widest">

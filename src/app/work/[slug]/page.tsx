@@ -33,7 +33,21 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${project.title} — Cris John Labiaga`,
     description: project.overview || project.subtitle || '',
+    alternates: {
+      canonical: `/work/${slug}`,
+    },
     openGraph: {
+      title: `${project.title} — Cris John Labiaga`,
+      description: project.overview || project.subtitle || '',
+      url: `https://www.webcris.dev/work/${slug}`,
+      siteName: 'Cris John Labiaga',
+      images: project.heroImage ? [project.heroImage] : [],
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${project.title} — Cris John Labiaga`,
+      description: project.overview || project.subtitle || '',
       images: project.heroImage ? [project.heroImage] : [],
     }
   }
