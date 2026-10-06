@@ -10,14 +10,12 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 
 export const metadata: Metadata = {
-  alternates: { canonical: '/' },
   metadataBase: new URL('https://www.webcris.dev'),
   title: 'Cris John Labiaga | Full Stack & AI Developer',
   description: 'Full Stack & AI Developer building modern web applications, REST APIs, database-driven systems, RAG workflows, AI integrations, and automation.',
   openGraph: {
     title: 'Cris John Labiaga | Full Stack & AI Developer',
     description: 'Full Stack & AI Developer building modern web applications, REST APIs, database-driven systems, RAG workflows, AI integrations, and automation.',
-    url: 'https://www.webcris.dev',
     siteName: 'Cris John Labiaga',
     images: [
       {
