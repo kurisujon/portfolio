@@ -56,6 +56,16 @@ export function Navbar() {
   }, [])
 
   useEffect(() => {
+    if (isActive) {
+      lenis?.stop()
+      document.body.style.overflow = 'hidden'
+    } else {
+      lenis?.start()
+      document.body.style.overflow = ''
+    }
+  }, [isActive, lenis])
+
+  useEffect(() => {
     if (!drawerRef.current || !svgPathRef.current) return
     
     const ctx = gsap.context(() => {
@@ -67,7 +77,7 @@ export function Navbar() {
       const initialPath = `M 100 0 L 100 0 Q 100 50 100 100 L 100 100 Z`
       const transitPath = `M 100 0 L 100 0 Q -100 50 100 100 L 100 100 Z`
       const settledPath = `M 100 0 L 100 0 Q 100 50 100 100 L 100 100 Z`
-      const transitReverse = `M 100 0 L 100 0 Q 0 50 100 100 L 100 100 Z`
+      const transitReverse = `M 100 0 L 100 0 Q 50 50 100 100 L 100 100 Z`
 
       // Drawer offscreen state
       gsap.set(drawerRef.current, { 
@@ -94,7 +104,7 @@ export function Navbar() {
           xPercent: 0, 
           x: 0, 
           duration: 1.0, 
-          ease: 'power4.out' 
+          ease: 'power4.inOut' 
         }, 0)
         
         // 2. Curve animates with it
@@ -129,20 +139,20 @@ export function Navbar() {
           xPercent: 100, 
           x: isMobile ? 0 : 100, 
           duration: 0.8, 
-          ease: 'power3.inOut' 
+          ease: 'power4.inOut' 
         }, 0)
         
         // Curve animates out
         tl.to(svgPathRef.current, { 
           attr: { d: transitReverse }, 
           duration: 0.4, 
-          ease: 'power3.in' 
+          ease: 'power2.in' 
         }, 0)
         .to(svgPathRef.current, { 
           attr: { d: initialPath }, 
-          duration: 0.35, 
-          ease: 'power3.out' 
-        }, 0.35)
+          duration: 0.4, 
+          ease: 'power2.out' 
+        }, 0.4)
         
         // Internal elements fade quickly
         tl.to([
