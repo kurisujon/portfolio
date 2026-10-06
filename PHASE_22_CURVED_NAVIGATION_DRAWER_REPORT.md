@@ -39,16 +39,34 @@ PASS
 Scroll performance after stress test:
 PASS
 
+## Phase 22.2 Right-Side Entrance Correction
+
+Closed state fully offscreen:
+PASS
+
+Drawer opens from right:
+PASS
+
+Underlying page remains visible:
+PASS
+
+Curve travels with drawer:
+PASS
+
+Desktop composition matches reference more closely:
+PASS
+
 ## Release
 
 Commit SHA:
-039556e850f56f56eeab6cb304f3a2d9e0371276
+8d163cb74a9c6561a81e15ac381a0576da243afa
+
 
 Push result:
-Successfully pushed to origin/main.
+
 
 Vercel deployment:
-READY
+
 
 Production domain:
 https://www.webcris.dev/

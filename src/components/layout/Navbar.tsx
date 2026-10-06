@@ -21,7 +21,7 @@ export function Navbar() {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
   const lenis = useLenis()
   
-  const overlayRef = useRef<HTMLDivElement>(null)
+  const drawerRef = useRef<HTMLDivElement>(null)
   const svgPathRef = useRef<SVGPathElement>(null)
   
   // Refs for animation sequencing
@@ -35,13 +35,11 @@ export function Navbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 150)
       
-      // Determine active item heuristically
       const scrollY = window.scrollY
       const wh = window.innerHeight
       if (scrollY < wh * 0.5) setActiveItem(null)
       else if (scrollY >= document.documentElement.scrollHeight - wh - 100) setActiveItem('#contact')
       else {
-        // very basic intersection logic just for active state demonstration
         const sections = navLinks.map(l => ({ id: l.href, el: document.querySelector(l.href) as HTMLElement }))
         let current = null
         for (const sec of sections) {
@@ -57,21 +55,30 @@ export function Navbar() {
   }, [])
 
   useEffect(() => {
-    if (!overlayRef.current || !svgPathRef.current) return
+    if (!drawerRef.current || !svgPathRef.current) return
     
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ paused: true })
       
-      const startPath = `M 0 0 L 100 0 L 100 0 Q 50 0 0 0 L 0 0`
-      const curvePath = `M 0 0 L 100 0 L 100 100 Q 50 150 0 100 L 0 0`
-      const flatPath  = `M 0 0 L 100 0 L 100 100 Q 50 100 0 100 L 0 0`
-      const curvePathReverse = `M 0 100 L 100 100 L 100 0 Q 50 -50 0 0 L 0 100`
+      const isMobile = window.innerWidth < 768
+      
+      // Paths for the SVG curve
+      const initialPath = `M 100 0 L 100 0 Q 100 50 100 100 L 100 100 Z`
+      const transitPath = `M 100 0 L 0 0 Q -50 50 0 100 L 100 100 Z`
+      const settledPath = `M 100 0 L 0 0 Q 25 50 0 100 L 100 100 Z`
+      const transitReverse = `M 100 0 L 100 0 Q 150 50 100 100 L 100 100 Z`
 
-      // Ensure elements start hidden when closed
+      // Drawer offscreen state
+      gsap.set(drawerRef.current, { 
+        xPercent: 100, 
+        x: isMobile ? 0 : 100 // add extra 100px for SVG curve width on desktop
+      })
+
+      // Hide internal elements
       gsap.set(navLabelRef.current, { opacity: 0, y: 15 })
       gsap.set(navDividerRef.current, { scaleX: 0, transformOrigin: 'left' })
       if (linksContainerRef.current) {
-        gsap.set(linksContainerRef.current.children, { opacity: 0, y: 30 })
+        gsap.set(linksContainerRef.current.children, { opacity: 0, x: 20 })
       }
       gsap.set(socialsLabelRef.current, { opacity: 0, y: 15 })
       if (socialsContainerRef.current) {
@@ -79,32 +86,64 @@ export function Navbar() {
       }
 
       if (isActive) {
-        gsap.set(overlayRef.current, { pointerEvents: 'auto', display: 'flex' })
+        gsap.set(drawerRef.current, { pointerEvents: 'auto', display: 'flex' })
         
-        tl.to(svgPathRef.current, { attr: { d: curvePath }, duration: 0.4, ease: 'power3.in' })
-          .to(svgPathRef.current, { attr: { d: flatPath }, duration: 0.4, ease: 'power3.out' })
+        // 1. Drawer slides in
+        tl.to(drawerRef.current, { 
+          xPercent: 0, 
+          x: 0, 
+          duration: 0.9, 
+          ease: 'power4.out' 
+        }, 0)
         
-        // 3. NAVIGATION label appears
-        tl.to(navLabelRef.current, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }, "-=0.3")
-        // 4. divider expands/reveals
-        tl.to(navDividerRef.current, { scaleX: 1, duration: 0.4, ease: 'power3.out' }, "-=0.2")
-        // 5. navigation links reveal vertically
+        // 2. Curve animates with it
+        tl.to(svgPathRef.current, { 
+          attr: { d: transitPath }, 
+          duration: 0.45, 
+          ease: 'power3.in' 
+        }, 0)
+        .to(svgPathRef.current, { 
+          attr: { d: settledPath }, 
+          duration: 0.45, 
+          ease: 'power3.out' 
+        }, 0.45)
+        
+        // 3. Elements reveal
+        tl.to(navLabelRef.current, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }, 0.4)
+        tl.to(navDividerRef.current, { scaleX: 1, duration: 0.4, ease: 'power3.out' }, 0.5)
+        
         if (linksContainerRef.current) {
-          tl.to(linksContainerRef.current.children, { opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: 'power3.out' }, "-=0.3")
+          tl.to(linksContainerRef.current.children, { opacity: 1, x: 0, duration: 0.5, stagger: 0.06, ease: 'power3.out' }, 0.5)
         }
-        // 7. SOCIALS label appears
-        tl.to(socialsLabelRef.current, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }, "-=0.2")
-        // 8. social links reveal
+        
+        tl.to(socialsLabelRef.current, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }, 0.7)
         if (socialsContainerRef.current) {
-          tl.to(socialsContainerRef.current.children, { opacity: 1, y: 0, duration: 0.3, stagger: 0.05, ease: 'power2.out' }, "-=0.2")
+          tl.to(socialsContainerRef.current.children, { opacity: 1, y: 0, duration: 0.3, stagger: 0.05, ease: 'power2.out' }, 0.7)
         }
         
         tl.play()
       } else {
-        tl.to(svgPathRef.current, { attr: { d: curvePathReverse }, duration: 0.4, ease: 'power3.in' })
-          .to(svgPathRef.current, { attr: { d: startPath }, duration: 0.4, ease: 'power3.out' })
+        // Drawer slides out
+        tl.to(drawerRef.current, { 
+          xPercent: 100, 
+          x: isMobile ? 0 : 100, 
+          duration: 0.7, 
+          ease: 'power3.inOut' 
+        }, 0)
         
-        // Hide elements quickly
+        // Curve animates out
+        tl.to(svgPathRef.current, { 
+          attr: { d: transitReverse }, 
+          duration: 0.35, 
+          ease: 'power3.in' 
+        }, 0)
+        .to(svgPathRef.current, { 
+          attr: { d: initialPath }, 
+          duration: 0.35, 
+          ease: 'power3.out' 
+        }, 0.35)
+        
+        // Internal elements fade quickly
         tl.to([
           navLabelRef.current, 
           navDividerRef.current,
@@ -114,7 +153,7 @@ export function Navbar() {
         ], { opacity: 0, duration: 0.2, ease: 'power2.in' }, 0)
         
         tl.eventCallback("onComplete", () => {
-          gsap.set(overlayRef.current, { pointerEvents: 'none', display: 'none' })
+          gsap.set(drawerRef.current, { pointerEvents: 'none', display: 'none' })
         })
         tl.play()
       }
@@ -146,6 +185,7 @@ export function Navbar() {
 
   return (
     <>
+      {/* Floating Menu Button */}
       <div className={`fixed top-6 right-6 md:top-8 md:right-12 z-[100] transition-opacity duration-500 ${(!isScrolled && !isActive) ? 'opacity-100 md:opacity-0 md:pointer-events-none' : 'opacity-100'}`}>
         <Magnetic strength={0.2} textStrength={0.1}>
           <button 
@@ -157,27 +197,30 @@ export function Navbar() {
         </Magnetic>
       </div>
 
+      {/* Right Side Drawer */}
       <div 
-        ref={overlayRef}
-        className="fixed inset-0 z-[85] pointer-events-none hidden"
+        ref={drawerRef}
+        className="fixed top-0 right-0 w-[100vw] md:w-[clamp(460px,38vw,620px)] h-[100dvh] bg-[#171717] z-[85] pointer-events-none hidden"
       >
+        {/* Curved SVG Boundary (Desktop Only) */}
         <svg 
-          className="absolute top-0 left-0 w-full h-[120vh]"
+          className="absolute top-0 left-[-99px] w-[100px] h-full hidden md:block pointer-events-none"
           viewBox="0 0 100 100" 
           preserveAspectRatio="none"
-          style={{ overflow: 'visible' }}
         >
           <path 
             ref={svgPathRef}
-            d="M 0 0 L 100 0 L 100 0 Q 50 0 0 0 L 0 0"
+            d="M 100 0 L 100 0 Q 100 50 100 100 L 100 100 Z"
             fill="#171717"
             stroke="none"
           />
         </svg>
 
-        <div className="relative w-full h-full flex flex-col justify-center px-[32px] md:px-[8vw] z-10 max-w-[1440px] mx-auto">
+        {/* Drawer Content Wrapper */}
+        <div className="relative w-full h-full flex flex-col justify-center px-[40px] md:px-[64px] z-10">
           
-          <div className="flex flex-col mb-[16px]">
+          {/* Navigation Section */}
+          <div className="flex flex-col mb-[20px]">
             <span ref={navLabelRef} className="text-[12px] font-mono text-[#f5f5f3]/50 uppercase tracking-[0.1em] mb-[16px] will-change-transform">
               Navigation
             </span>
@@ -199,10 +242,10 @@ export function Navbar() {
                   onMouseLeave={() => setHoveredItem(null)}
                   onFocus={() => setHoveredItem(link.href)}
                   onBlur={() => setHoveredItem(null)}
-                  className="group relative flex items-center w-fit text-[4rem] md:text-[6.5rem] lg:text-[8rem] font-snellenberg text-[#f5f5f3] font-normal tracking-tight leading-[1] outline-none"
+                  className="group relative flex items-center w-fit text-[3.5rem] sm:text-[4.5rem] md:text-[5.5rem] lg:text-[7rem] font-snellenberg text-[#f5f5f3] font-normal tracking-tight leading-[1] outline-none py-1"
                 >
                   <div 
-                    className={`absolute left-0 w-[10px] h-[10px] bg-[#f5f5f3] rounded-full transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] ${showDot ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}
+                    className={`absolute left-0 w-[8px] h-[8px] md:w-[10px] md:h-[10px] bg-[#f5f5f3] rounded-full transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] ${showDot ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}
                   />
                   <span className={`transition-transform duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] will-change-transform ${showDot ? 'translate-x-[20px] md:translate-x-[24px]' : 'translate-x-0'} group-hover:text-[#f5f5f3]/80 group-focus-visible:text-[#f5f5f3]/80`}>
                     {link.name}
@@ -212,6 +255,7 @@ export function Navbar() {
             })}
           </nav>
           
+          {/* Socials Section */}
           <div className="flex flex-col mt-[20px]">
             <span ref={socialsLabelRef} className="text-[12px] font-mono text-[#f5f5f3]/50 uppercase tracking-[0.1em] mb-[16px] will-change-transform">
               Socials
@@ -250,7 +294,6 @@ export function Navbar() {
           transform: scaleX(1);
           transform-origin: left;
         }
-        /* Exit animation: if you want right-to-left exit, hover off sets origin to right */
         .social-link:not(:hover):not(:focus-visible) .social-underline {
           transform-origin: right;
         }
