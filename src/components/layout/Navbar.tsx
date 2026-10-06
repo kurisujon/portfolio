@@ -199,12 +199,12 @@ export function Navbar() {
             onClick={() => setIsActive(!isActive)}
             className={`w-[80px] h-[80px] md:w-[90px] md:h-[90px] rounded-full flex items-center justify-center transition-all duration-500 hover:scale-110 ${(!isScrolled && !isActive) ? "scale-100 md:scale-0" : "scale-100"} ${isActive ? "bg-[#455ce9] text-white" : "bg-[#1c1c1c] text-[#f5f5f3]"} cursor-pointer`}
           >
-            <div className="relative w-[30px] h-[20px] flex flex-col justify-between items-center z-10">
+            <div className="relative w-[30px] h-[12px] flex flex-col justify-between items-center z-10">
               <span 
-                className={`block h-[2px] bg-white transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${isActive ? 'w-[24px] rotate-45 translate-y-[9px]' : 'w-full'}`}
+                className={`block h-[2px] bg-white transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${isActive ? 'w-[24px] rotate-45 translate-y-[5px]' : 'w-full'}`}
               />
               <span 
-                className={`block h-[2px] bg-white transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${isActive ? 'w-[24px] -rotate-45 -translate-y-[9px]' : 'w-full'}`}
+                className={`block h-[2px] bg-white transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${isActive ? 'w-[24px] -rotate-45 -translate-y-[5px]' : 'w-full'}`}
               />
             </div>
           </button>
