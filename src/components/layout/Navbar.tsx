@@ -1,16 +1,16 @@
 'use client'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useState, useEffect, useRef } from 'react'
 import { useLenis } from 'lenis/react'
 import { gsap } from '@/lib/motion'
 import { Magnetic } from '@/components/ui/MagneticButton'
 
 const navLinks = [
+  { name: 'Home', href: '/' },
+  { name: 'Work', href: '#projects' },
   { name: 'About', href: '#about' },
-  { name: 'Tech Stack', href: '#skills' },
-  { name: 'Experience', href: '#experience' },
-  { name: 'Projects', href: '#projects' },
   { name: 'Contact', href: '#contact' },
 ]
 
@@ -20,6 +20,7 @@ export function Navbar() {
   const [activeItem, setActiveItem] = useState<string | null>(null)
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
   const lenis = useLenis()
+  const router = useRouter()
   
   const drawerRef = useRef<HTMLDivElement>(null)
   const svgPathRef = useRef<SVGPathElement>(null)
@@ -64,9 +65,9 @@ export function Navbar() {
       
       // Paths for the SVG curve
       const initialPath = `M 100 0 L 100 0 Q 100 50 100 100 L 100 100 Z`
-      const transitPath = `M 100 0 L 0 0 Q -50 50 0 100 L 100 100 Z`
-      const settledPath = `M 100 0 L 0 0 Q 25 50 0 100 L 100 100 Z`
-      const transitReverse = `M 100 0 L 100 0 Q 150 50 100 100 L 100 100 Z`
+      const transitPath = `M 100 0 L 100 0 Q -100 50 100 100 L 100 100 Z`
+      const settledPath = `M 100 0 L 100 0 Q 100 50 100 100 L 100 100 Z`
+      const transitReverse = `M 100 0 L 100 0 Q 0 50 100 100 L 100 100 Z`
 
       // Drawer offscreen state
       gsap.set(drawerRef.current, { 
@@ -92,14 +93,14 @@ export function Navbar() {
         tl.to(drawerRef.current, { 
           xPercent: 0, 
           x: 0, 
-          duration: 0.9, 
+          duration: 1.0, 
           ease: 'power4.out' 
         }, 0)
         
         // 2. Curve animates with it
         tl.to(svgPathRef.current, { 
           attr: { d: transitPath }, 
-          duration: 0.45, 
+          duration: 0.5, 
           ease: 'power3.in' 
         }, 0)
         .to(svgPathRef.current, { 
@@ -127,14 +128,14 @@ export function Navbar() {
         tl.to(drawerRef.current, { 
           xPercent: 100, 
           x: isMobile ? 0 : 100, 
-          duration: 0.7, 
+          duration: 0.8, 
           ease: 'power3.inOut' 
         }, 0)
         
         // Curve animates out
         tl.to(svgPathRef.current, { 
           attr: { d: transitReverse }, 
-          duration: 0.35, 
+          duration: 0.4, 
           ease: 'power3.in' 
         }, 0)
         .to(svgPathRef.current, { 
@@ -167,9 +168,26 @@ export function Navbar() {
     setIsActive(false)
     lenis?.resize()
     
-    const target = href === '#contact' ? 'bottom' : href
-
     setTimeout(() => {
+      // If we are navigating to Home
+      if (href === '/') {
+        if (window.location.pathname === '/') {
+          if (lenis) lenis.scrollTo(0, { duration: 1.5, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
+          else window.scrollTo({ top: 0, behavior: 'smooth' })
+        } else {
+          router.push('/')
+        }
+        return
+      }
+
+      // If we are not on the homepage but trying to click a hash link
+      if (href.startsWith('#') && window.location.pathname !== '/') {
+        router.push('/' + href)
+        return
+      }
+      
+      const target = href === '#contact' ? 'bottom' : href
+
       if (lenis) {
         lenis.scrollTo(target, { duration: 1.5, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
       } else {
@@ -190,9 +208,16 @@ export function Navbar() {
         <Magnetic strength={0.2} textStrength={0.1}>
           <button 
             onClick={() => setIsActive(!isActive)}
-            className={`w-20 h-20 bg-[#1c1c1c] text-[#f5f5f3] rounded-full flex items-center justify-center transition-transform duration-500 hover:scale-110 ${(!isScrolled && !isActive) ? 'scale-100 md:scale-0' : 'scale-100'} cursor-pointer`}
+            className={`w-[80px] h-[80px] md:w-[90px] md:h-[90px] rounded-full flex items-center justify-center transition-all duration-500 hover:scale-110 ${(!isScrolled && !isActive) ? "scale-100 md:scale-0" : "scale-100"} ${isActive ? "bg-[#455ce9] text-white" : "bg-[#1c1c1c] text-[#f5f5f3]"} cursor-pointer`}
           >
-            <span className="font-snellenberg text-sm font-medium relative z-10">{isActive ? 'Close' : 'Menu'}</span>
+            {!isActive ? (
+              <span className="font-snellenberg text-[14px] md:text-[16px] font-medium relative z-10">Menu</span>
+            ) : (
+              <div className="relative w-full h-full flex items-center justify-center">
+                <span className="absolute w-[2px] h-[24px] bg-white rotate-45 transition-transform duration-500"></span>
+                <span className="absolute w-[2px] h-[24px] bg-white -rotate-45 transition-transform duration-500"></span>
+              </div>
+            )}
           </button>
         </Magnetic>
       </div>
@@ -200,7 +225,7 @@ export function Navbar() {
       {/* Right Side Drawer */}
       <div 
         ref={drawerRef}
-        className="fixed top-0 right-0 w-[100vw] md:w-[clamp(460px,38vw,620px)] h-[100dvh] bg-[#171717] z-[85] pointer-events-none hidden"
+        className="fixed top-0 right-0 w-[100vw] md:w-[clamp(440px,37.5vw,620px)] h-[100dvh] bg-[#171717] z-[85] pointer-events-none hidden"
       >
         {/* Curved SVG Boundary (Desktop Only) */}
         <svg 
@@ -217,10 +242,10 @@ export function Navbar() {
         </svg>
 
         {/* Drawer Content Wrapper */}
-        <div className="relative w-full h-full flex flex-col justify-center px-[40px] md:px-[64px] z-10">
+        <div className="relative w-full h-full flex flex-col px-[40px] md:pl-[clamp(60px,7vw,120px)] md:pr-[clamp(30px,4vw,70px)] py-[100px] z-10 min-h-0">
           
           {/* Navigation Section */}
-          <div className="flex flex-col mb-[20px]">
+          <div className="flex flex-col mb-[20px] md:mb-[40px] shrink-0">
             <span ref={navLabelRef} className="text-[12px] font-mono text-[#f5f5f3]/50 uppercase tracking-[0.1em] mb-[16px] will-change-transform">
               Navigation
             </span>
@@ -229,7 +254,7 @@ export function Navbar() {
             </div>
           </div>
 
-          <nav ref={linksContainerRef} className="flex flex-col gap-0 md:gap-[10px] mb-[40px] md:mb-[60px] w-fit">
+          <nav ref={linksContainerRef} className="flex flex-col gap-0 md:gap-[8px] w-fit flex-1 justify-center min-h-[min-content]">
             {navLinks.map((link) => {
               const showDot = hoveredItem === link.href || (!hoveredItem && activeItem === link.href);
               
@@ -242,7 +267,7 @@ export function Navbar() {
                   onMouseLeave={() => setHoveredItem(null)}
                   onFocus={() => setHoveredItem(link.href)}
                   onBlur={() => setHoveredItem(null)}
-                  className="group relative flex items-center w-fit text-[3.5rem] sm:text-[4.5rem] md:text-[5.5rem] lg:text-[7rem] font-snellenberg text-[#f5f5f3] font-normal tracking-tight leading-[1] outline-none py-1"
+                  className="group relative flex items-center w-fit text-[clamp(2.5rem,10vw,3.5rem)] md:text-[clamp(3rem,4.1vw,4.6rem)] font-snellenberg text-[#f5f5f3] font-normal tracking-tight leading-[1.05] outline-none py-1 md:py-2"
                 >
                   <div 
                     className={`absolute left-0 w-[8px] h-[8px] md:w-[10px] md:h-[10px] bg-[#f5f5f3] rounded-full transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] ${showDot ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}
@@ -256,7 +281,7 @@ export function Navbar() {
           </nav>
           
           {/* Socials Section */}
-          <div className="flex flex-col mt-[20px]">
+          <div className="flex flex-col shrink-0 mt-auto pt-[40px]">
             <span ref={socialsLabelRef} className="text-[12px] font-mono text-[#f5f5f3]/50 uppercase tracking-[0.1em] mb-[16px] will-change-transform">
               Socials
             </span>
