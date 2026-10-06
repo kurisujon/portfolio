@@ -7,23 +7,20 @@ import { gsap, ScrollTrigger } from '@/lib/motion'
 function ScrollTriggerSync() {
   const lenis = useLenis()
 
-  // Lenis docs recommend syncing this way, but we don't strictly need to pass it to useLenis here.
-  // Actually, GSAP ScrollTrigger integrates natively with Lenis via `lenis.on('scroll', ScrollTrigger.update)`
   useEffect(() => {
     if (lenis) {
       lenis.on('scroll', ScrollTrigger.update)
       
-      gsap.ticker.add((time) => {
+      const update = (time: number) => {
         lenis.raf(time * 1000)
-      })
+      }
+      
+      gsap.ticker.add(update)
       gsap.ticker.lagSmoothing(0)
-    }
-    return () => {
-      if (lenis) {
+      
+      return () => {
         lenis.off('scroll', ScrollTrigger.update)
-        gsap.ticker.remove((time) => {
-          lenis.raf(time * 1000)
-        })
+        gsap.ticker.remove(update)
       }
     }
   }, [lenis])
@@ -59,6 +56,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
         lerp: 0.05,
         duration: 1.5,
         smoothWheel: true,
+        autoRaf: false
       }}
     >
       <ScrollTriggerSync />

@@ -18,7 +18,8 @@ export function CaseStudyLayout({ project }: { project: any }) {
     const imageContainer = hero.querySelector('.hero-image-container')
     const image = hero.querySelector('.hero-image')
 
-    const tl = gsap.timeline({ delay: 0.2 })
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ delay: 0.2 })
 
     gsap.set(titleInner, { yPercent: 110 })
     gsap.set(subtitle, { opacity: 0, y: 20 })
@@ -54,10 +55,9 @@ export function CaseStudyLayout({ project }: { project: any }) {
       if (fadeEls.length) st.to(fadeEls, { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out' }, lines.length ? "-=0.8" : 0)
     })
 
-    return () => {
-      tl.kill()
-      ScrollTrigger.getAll().forEach(t => t.kill())
-    }
+    })
+
+    return () => ctx.revert()
   }, [])
 
   return (

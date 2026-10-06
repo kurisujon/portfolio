@@ -34,6 +34,9 @@ export function HeroSection() {
 
   useEffect(() => {
     const hero = heroRef.current;
+    if (!hero) return;
+
+    const ctx = gsap.context(() => {
     const tl = gsap.timeline({ delay: 1.5 }) 
     
     gsap.set(photoRef.current, { opacity: 0, scale: 1.04, y: 80 })
@@ -85,10 +88,9 @@ export function HeroSection() {
       })
     }
 
-    return () => { 
-      tl.kill() 
-      ScrollTrigger.getAll().forEach(t => t.trigger === hero && t.kill())
-    }
+    }, hero)
+
+    return () => ctx.revert()
   }, [])
 
   return (

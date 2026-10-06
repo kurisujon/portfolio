@@ -43,6 +43,8 @@ export function TechStackSection() {
     const container = containerRef.current;
     if (!container) return
 
+    const ctx = gsap.context(() => {
+
     const label = container.querySelector('.section-label')
     const topDivider = container.querySelector('.top-divider')
     
@@ -82,9 +84,9 @@ export function TechStackSection() {
         .to(items, { opacity: 1, y: 0, duration: 0.6, stagger: 0.04, ease: 'power3.out' }, "-=0.6")
     })
 
-    return () => {
-      ScrollTrigger.getAll().forEach(t => t.trigger && container?.contains(t.trigger as Node) && t.kill())
-    }
+    }, container)
+
+    return () => ctx.revert()
   }, [])
 
   return (

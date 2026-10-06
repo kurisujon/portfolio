@@ -47,6 +47,8 @@ export function ProjectsSection() {
     const container = containerRef.current;
     if (!container) return;
 
+    const ctx = gsap.context(() => {
+
     // SCROLL REVEAL ANIMATIONS
     const rows = container.querySelectorAll('.project-row')
     
@@ -101,6 +103,8 @@ export function ProjectsSection() {
     const isDesktop = window.matchMedia('(pointer: fine)').matches
     if (!isDesktop || !cursorRef.current) return
 
+    }, container)
+
     const xTo = gsap.quickTo(cursorRef.current, "x", { duration: 0.5, ease: "power3.out" })
     const yTo = gsap.quickTo(cursorRef.current, "y", { duration: 0.5, ease: "power3.out" })
 
@@ -114,7 +118,7 @@ export function ProjectsSection() {
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
-      ScrollTrigger.getAll().forEach(t => t.trigger && container.contains(t.trigger as Node) && t.kill())
+      ctx.revert()
     }
   }, [])
 

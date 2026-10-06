@@ -33,9 +33,10 @@ export function ScrollReveal({
       return
     }
 
-    gsap.set(el, { opacity: 0, y })
+    const ctx = gsap.context(() => {
+      gsap.set(el, { opacity: 0, y })
 
-    ScrollTrigger.create({
+      ScrollTrigger.create({
       trigger: el,
       start: 'top 85%',
       once: true,
@@ -50,11 +51,9 @@ export function ScrollReveal({
       }
     })
 
-    return () => {
-      ScrollTrigger.getAll().forEach(t => {
-        if (t.trigger === el) t.kill()
-      })
-    }
+    })
+
+    return () => ctx.revert()
   }, [delay, duration, y])
 
   return (

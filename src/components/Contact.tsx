@@ -30,6 +30,8 @@ export function ContactSection() {
     if (!containerRef.current || !svgPathRef.current) return
     const container = containerRef.current
 
+    const ctx = gsap.context(() => {
+
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     
     if (prefersReducedMotion) {
@@ -69,9 +71,9 @@ export function ContactSection() {
       .to('.contact-row', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, "-=0.8")
       .to('.meta-row', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, "-=0.6")
 
-    return () => {
-      ScrollTrigger.getAll().forEach(t => t.trigger === container && t.kill())
-    }
+    }, container)
+
+    return () => ctx.revert()
   }, [])
 
   return (

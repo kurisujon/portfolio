@@ -40,7 +40,10 @@ export function AboutSection() {
 
   useEffect(() => {
     const container = containerRef.current;
-    
+    if (!container) return;
+
+    const ctx = gsap.context(() => {
+
     // --- INTRO / ABOUT TEASER ENTRANCE ---
     if (primaryTextRef.current) {
       const tl = gsap.timeline({
@@ -104,9 +107,9 @@ export function AboutSection() {
       })
     }
 
-    return () => {
-      ScrollTrigger.getAll().forEach(t => t.trigger && container?.contains(t.trigger as Node) && t.kill())
-    }
+    }, container)
+
+    return () => ctx.revert()
   }, [])
 
   return (
