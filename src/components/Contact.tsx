@@ -81,7 +81,7 @@ export function ContactSection() {
         <footer 
       id="contact"
       ref={containerRef}
-      className="w-full min-h-[90svh] flex flex-col justify-between pt-12 md:pt-24 pb-8 relative bg-[#1c1d20] text-[#f5f5f3] overflow-hidden"
+      className="w-full min-h-[90svh] flex flex-col justify-between pt-12 md:pt-24 pb-[100px] md:pb-12 relative bg-[#1c1d20] text-[#f5f5f3] overflow-hidden"
     >
       {/* Light-to-Dark Transition Curve */}
       <svg 
@@ -98,7 +98,7 @@ export function ContactSection() {
         />
       </svg>
 
-      <div className="flex flex-col w-full h-full flex-grow pt-[5vh] md:pt-[10vh] px-[24px] md:px-[5vw] max-w-[1440px] mx-auto z-10 relative">
+      <div className="flex flex-col w-full h-full flex-grow pt-[5vh] md:pt-[10vh] px-[24px] md:px-[10vw] max-w-[1600px] mx-auto z-10 relative">
         
         {/* Upper Section */}
         <div className="flex flex-col md:flex-row justify-between items-start w-full relative">
@@ -107,20 +107,20 @@ export function ContactSection() {
           <div className="flex flex-col w-full">
             <h2 
               className="font-snellenberg font-normal tracking-[-0.04em] leading-[1.1] select-none" 
-              style={{ fontSize: 'clamp(3.5rem, 8vw, 7.5rem)' }}
+              style={{ fontSize: 'clamp(3rem, 7vw, 6.5rem)' }}
             >
-              <div className="overflow-hidden w-full flex items-center gap-[2vw]">
-                <span className="line-reveal flex items-center will-change-transform">
-                  <div className="w-[50px] h-[50px] md:w-[90px] md:h-[90px] rounded-full bg-gray-500 shrink-0 mr-4 md:mr-8 overflow-hidden relative">
-                    <Image src="/profile.png" alt="Cris John Labiaga" fill className="object-cover scale-110 translate-y-2" sizes="(max-width: 768px) 50px, 90px" />
+              <div className="overflow-hidden w-full pt-4">
+                <div className="line-reveal flex items-center will-change-transform">
+                  <div className="w-[60px] h-[60px] md:w-[100px] md:h-[100px] rounded-full shrink-0 mr-4 md:mr-6 overflow-hidden relative shadow-lg">
+                    <Image src="/profile.png" alt="Cris John Labiaga" fill className="object-cover" sizes="(max-width: 768px) 60px, 100px" />
                   </div>
                   Let's work
-                </span>
+                </div>
               </div>
               <div className="overflow-hidden w-full">
-                <span className="line-reveal inline-block will-change-transform pb-2">
+                <div className="line-reveal inline-block will-change-transform pb-2">
                   together
-                </span>
+                </div>
               </div>
             </h2>
           </div>
@@ -134,8 +134,8 @@ export function ContactSection() {
         </div>
 
         {/* Divider and Blue Circle */}
-        <div className="relative w-full mt-[40px] md:mt-[80px] h-[140px] md:h-[180px]">
-          <div className="divider-line w-full h-[1px] bg-[rgba(245,245,243,0.18)] will-change-transform absolute top-1/2 left-0 -translate-y-1/2" />
+        <div className="relative w-full mt-[40px] md:mt-[80px]">
+          <div className="divider-line w-full h-[1px] bg-[rgba(245,245,243,0.18)] will-change-transform" />
           
           <div className="cta-wrapper absolute right-[5%] md:right-[15%] top-1/2 -translate-y-1/2 z-20 will-change-transform">
             <Magnetic strength={0.2} textStrength={0.1}>
@@ -153,7 +153,7 @@ export function ContactSection() {
         </div>
 
         {/* Contact Pills */}
-        <div className="contact-row flex flex-col md:flex-row gap-4 pt-[60px] md:pt-[100px] will-change-transform mt-8 md:mt-0">
+        <div className="contact-row flex flex-col md:flex-row gap-4 mt-[40px] md:mt-[60px] will-change-transform">
           <a 
             href="mailto:johncrislabiaga@gmail.com" 
             className="px-6 py-4 rounded-full border border-[rgba(245,245,243,0.3)] hover:bg-white hover:text-[#1c1d20] transition-colors duration-300 font-snellenberg text-[16px] md:text-[18px] w-fit"
@@ -169,7 +169,7 @@ export function ContactSection() {
         </div>
 
         {/* Lower Footer Meta */}
-        <div className="meta-row w-full flex flex-col md:flex-row justify-between items-start md:items-end gap-10 md:gap-6 mt-auto pt-[80px] md:pt-[140px] will-change-transform">
+        <div className="meta-row w-full flex flex-col md:flex-row justify-between items-start md:items-end gap-10 md:gap-6 mt-auto pt-[40px] md:pt-[60px] will-change-transform">
           
           <div className="flex gap-[10vw] md:gap-[15vw]">
             <div className="flex flex-col gap-2">
