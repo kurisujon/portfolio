@@ -16,7 +16,7 @@ export function ScrollProgressCircle() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsVisible(window.scrollY > 150)
+      setIsVisible(window.scrollY > 150 && (window.innerHeight + window.scrollY) < document.body.offsetHeight - 200)
     }
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
