@@ -65,49 +65,52 @@ export function Navbar() {
     }
   }, [isActive, lenis])
 
+  const tlRef = useRef<gsap.core.Timeline | null>(null);
+
   useEffect(() => {
     if (!drawerRef.current || !svgPathRef.current) return
     
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ paused: true })
-      
-      const isMobile = window.innerWidth < 768
-      
-      // Paths for the SVG curve
-      const initialPath = `M 100 0 L 100 0 Q 100 50 100 100 L 100 100 Z`
-      const transitPath = `M 100 0 L 100 0 Q -100 50 100 100 L 100 100 Z`
-      const settledPath = `M 100 0 L 100 0 Q 100 50 100 100 L 100 100 Z`
-      const transitReverse = `M 100 0 L 100 0 Q 50 50 100 100 L 100 100 Z`
-
-      // Drawer offscreen state
-      gsap.set(drawerRef.current, { 
-        xPercent: 100, 
-        x: isMobile ? 0 : 100 // add extra 100px for SVG curve width on desktop
-      })
-
-      // Hide internal elements
-      gsap.set(navLabelRef.current, { opacity: 0, y: 15 })
-      gsap.set(navDividerRef.current, { scaleX: 0, transformOrigin: 'left' })
-      if (linksContainerRef.current) {
-        gsap.set(linksContainerRef.current.children, { opacity: 0, x: 20 })
-      }
-      gsap.set(socialsLabelRef.current, { opacity: 0, y: 15 })
-      if (socialsContainerRef.current) {
-        gsap.set(socialsContainerRef.current.children, { opacity: 0, y: 15 })
-      }
-
-      if (isActive) {
-        gsap.set(drawerRef.current, { pointerEvents: 'auto', display: 'flex' })
+      // Create timeline only on initial creation
+      if (!tlRef.current) {
+        const isMobile = window.innerWidth < 768
         
-        // 1. Drawer slides in
+        const initialPath = `M 100 0 L 100 0 Q 100 50 100 100 L 100 100 Z`
+        const transitPath = `M 100 0 L 100 0 Q -100 50 100 100 L 100 100 Z`
+        const settledPath = `M 100 0 L 100 0 Q 100 50 100 100 L 100 100 Z`
+
+        gsap.set(drawerRef.current, { 
+          xPercent: 100, 
+          x: isMobile ? 0 : 100,
+          display: 'none'
+        })
+
+        gsap.set(navLabelRef.current, { opacity: 0, y: 15 })
+        gsap.set(navDividerRef.current, { scaleX: 0, transformOrigin: 'left' })
+        if (linksContainerRef.current) {
+          gsap.set(linksContainerRef.current.children, { opacity: 0, x: 20 })
+        }
+        gsap.set(socialsLabelRef.current, { opacity: 0, y: 15 })
+        if (socialsContainerRef.current) {
+          gsap.set(socialsContainerRef.current.children, { opacity: 0, y: 15 })
+        }
+
+        const tl = gsap.timeline({ 
+          paused: true,
+          onReverseComplete: () => {
+            gsap.set(drawerRef.current, { pointerEvents: 'none', display: 'none' })
+          }
+        })
+        
         tl.to(drawerRef.current, { 
+          display: 'flex',
+          pointerEvents: 'auto',
           xPercent: 0, 
           x: 0, 
           duration: 1.0, 
           ease: 'power4.inOut' 
         }, 0)
         
-        // 2. Curve animates with it
         tl.to(svgPathRef.current, { 
           attr: { d: transitPath }, 
           duration: 0.5, 
@@ -119,7 +122,6 @@ export function Navbar() {
           ease: 'power3.out' 
         }, 0.45)
         
-        // 3. Elements reveal
         tl.to(navLabelRef.current, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }, 0.4)
         tl.to(navDividerRef.current, { scaleX: 1, duration: 0.4, ease: 'power3.out' }, 0.5)
         
@@ -131,46 +133,23 @@ export function Navbar() {
         if (socialsContainerRef.current) {
           tl.to(socialsContainerRef.current.children, { opacity: 1, y: 0, duration: 0.3, stagger: 0.05, ease: 'power2.out' }, 0.7)
         }
-        
-        tl.play()
-      } else {
-        // Drawer slides out
-        tl.to(drawerRef.current, { 
-          xPercent: 100, 
-          x: isMobile ? 0 : 100, 
-          duration: 0.8, 
-          ease: 'power4.inOut' 
-        }, 0)
-        
-        // Curve animates out
-        tl.to(svgPathRef.current, { 
-          attr: { d: transitReverse }, 
-          duration: 0.4, 
-          ease: 'power2.in' 
-        }, 0)
-        .to(svgPathRef.current, { 
-          attr: { d: initialPath }, 
-          duration: 0.4, 
-          ease: 'power2.out' 
-        }, 0.4)
-        
-        // Internal elements fade quickly
-        tl.to([
-          navLabelRef.current, 
-          navDividerRef.current,
-          ...(linksContainerRef.current ? Array.from(linksContainerRef.current.children) : []),
-          socialsLabelRef.current,
-          ...(socialsContainerRef.current ? Array.from(socialsContainerRef.current.children) : [])
-        ], { opacity: 0, duration: 0.2, ease: 'power2.in' }, 0)
-        
-        tl.eventCallback("onComplete", () => {
-          gsap.set(drawerRef.current, { pointerEvents: 'none', display: 'none' })
-        })
-        tl.play()
+
+        tlRef.current = tl
       }
     })
 
-    return () => ctx.revert()
+    return () => { ctx.revert(); tlRef.current = null; }
+  }, []) // Empty dependency array so it only builds once!
+
+  useEffect(() => {
+    if (tlRef.current) {
+      if (isActive) {
+        gsap.set(drawerRef.current, { display: 'flex' })
+        tlRef.current.timeScale(1).play()
+      } else {
+        tlRef.current.timeScale(1.5).reverse()
+      }
+    }
   }, [isActive])
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -220,14 +199,14 @@ export function Navbar() {
             onClick={() => setIsActive(!isActive)}
             className={`w-[80px] h-[80px] md:w-[90px] md:h-[90px] rounded-full flex items-center justify-center transition-all duration-500 hover:scale-110 ${(!isScrolled && !isActive) ? "scale-100 md:scale-0" : "scale-100"} ${isActive ? "bg-[#455ce9] text-white" : "bg-[#1c1c1c] text-[#f5f5f3]"} cursor-pointer`}
           >
-            {!isActive ? (
-              <span className="font-snellenberg text-[14px] md:text-[16px] font-medium relative z-10">Menu</span>
-            ) : (
-              <div className="relative w-full h-full flex items-center justify-center">
-                <span className="absolute w-[2px] h-[24px] bg-white rotate-45 transition-transform duration-500"></span>
-                <span className="absolute w-[2px] h-[24px] bg-white -rotate-45 transition-transform duration-500"></span>
-              </div>
-            )}
+            <div className="relative w-[30px] h-[20px] flex flex-col justify-between items-center z-10">
+              <span 
+                className={`block h-[2px] bg-white transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${isActive ? 'w-[24px] rotate-45 translate-y-[9px]' : 'w-full'}`}
+              />
+              <span 
+                className={`block h-[2px] bg-white transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${isActive ? 'w-[24px] -rotate-45 -translate-y-[9px]' : 'w-full'}`}
+              />
+            </div>
           </button>
         </Magnetic>
       </div>
