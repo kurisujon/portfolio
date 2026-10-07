@@ -115,14 +115,14 @@ export function HeroSection() {
       {/* Portrait — center anchor */}
       <div 
         ref={photoRef} 
-        className="absolute left-1/2 -translate-x-1/2 bottom-0 h-[60vh] md:h-[85vh] w-[65vw] md:w-[40vw] lg:w-[32vw] z-30 will-change-transform pointer-events-none"
+        className="absolute left-1/2 -translate-x-1/2 bottom-0 h-[70vh] md:h-[95vh] w-[85vw] md:w-[65vw] lg:w-[55vw] z-30 will-change-transform pointer-events-none"
       >
         <Image
           src="/profile-cutout.png"
           alt="Cris John Labiaga"
           fill
           priority
-          sizes="(max-width: 768px) 65vw, (max-width: 1024px) 40vw, 32vw"
+          sizes="(max-width: 768px) 85vw, (max-width: 1024px) 65vw, 55vw"
           className="object-contain object-bottom drop-shadow-2xl"
         />
       </div>
