@@ -197,9 +197,10 @@ export function Navbar() {
         <Magnetic strength={0.2} textStrength={0.1}>
           <button 
             onClick={() => setIsActive(!isActive)}
-            className={`w-[80px] h-[80px] md:w-[90px] md:h-[90px] rounded-full flex items-center justify-center transition-all duration-500 hover:scale-110 ${(!isScrolled && !isActive) ? "scale-100 md:scale-0" : "scale-100"} ${isActive ? "bg-[#455ce9] text-white" : "bg-[#1c1c1c] text-[#f5f5f3]"} cursor-pointer`}
+            className={`group relative overflow-hidden w-[80px] h-[80px] md:w-[90px] md:h-[90px] rounded-full flex items-center justify-center transition-all duration-500 hover:scale-110 ${(!isScrolled && !isActive) ? "scale-100 md:scale-0" : "scale-100"} ${isActive ? "bg-[#455ce9] text-white" : "bg-[#1c1c1c] text-[#f5f5f3]"} cursor-pointer border-none`}
           >
-            <div className="relative w-[30px] h-[12px] flex flex-col justify-between items-center z-10">
+            <span aria-hidden className={`absolute left-[-25%] top-0 w-[150%] h-[150%] bg-[#455ce9] rounded-[50%] transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] z-0 ${isActive ? "translate-y-[-15%]" : "translate-y-[100%] group-hover:translate-y-[-15%]"}`} />
+            <div className="relative w-[30px] h-[12px] flex flex-col justify-between items-center z-10 pointer-events-none">
               <span 
                 className={`block h-[2px] bg-white transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${isActive ? 'w-[24px] rotate-45 translate-y-[5px]' : 'w-full'}`}
               />

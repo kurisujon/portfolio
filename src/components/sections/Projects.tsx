@@ -228,9 +228,10 @@ export function ProjectsSection() {
           <Magnetic strength={0.2} textStrength={0.1}>
             <Link
               href="#projects"
-              className="group relative flex items-center justify-center bg-[#1c1d20] text-[#f5f5f3] rounded-full hover:bg-[#2c2d30] transition-colors duration-300 shadow-xl"
+              className="group relative overflow-hidden flex items-center justify-center bg-[#1c1d20] text-[#f5f5f3] rounded-full shadow-xl"
               style={{ width: 'clamp(120px, 12vw, 160px)', aspectRatio: '1/1' }}
             >
+              <span aria-hidden className="absolute left-[-25%] top-0 w-[150%] h-[150%] bg-[#455ce9] rounded-[50%] translate-y-[100%] transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-y-[-15%] z-0" />
               <span className="font-snellenberg font-medium text-[14px] md:text-[16px] tracking-wide relative z-10 transition-transform duration-300 group-hover:scale-110">
                 View projects
               </span>

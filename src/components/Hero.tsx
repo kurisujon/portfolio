@@ -82,10 +82,15 @@ export function HeroSection() {
         duration: 20,
         ease: 'none',
         repeat: -1,
+        // Reversed playback (LTR) would otherwise halt at time 0 — push it forward again
+        onReverseComplete: () => {
+          marquee.totalTime(marquee.duration() * 1000)
+        },
       })
       
-      // Initialize marquee to LTR default
-      marquee.totalTime(10)
+      // Initialize marquee to LTR default. Start deep into the infinite timeline so
+      // reversed playback never reaches the beginning and stops.
+      marquee.totalTime(marquee.duration() * 1000)
       marquee.timeScale(-1)
 
       // Update marquee timeScale based on scroll direction
