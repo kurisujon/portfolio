@@ -3,7 +3,6 @@ import { Inter } from 'next/font/google'
 import { Background } from '@/components/layout/Background'
 import { ScrollProgressCircle } from '@/components/ui/ScrollProgressCircle'
 import { Preloader } from '@/components/ui/Preloader'
-import { CustomCursor } from '@/components/ui/CustomCursor'
 import SmoothScroll from '@/components/motion/SmoothScroll'
 import './globals.css'
 
@@ -55,8 +54,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} font-sans dark`} suppressHydrationWarning>
-      <body className={`${inter.className} text-zinc-100 antialiased min-h-screen cursor-none tracking-tight`}>
-        <CustomCursor />
+      <body className={`${inter.className} text-zinc-100 antialiased min-h-screen tracking-tight`}>
         <Preloader />
         <SmoothScroll>
           <Background />
