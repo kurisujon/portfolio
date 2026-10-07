@@ -40,7 +40,7 @@ export function HeroSection() {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ delay: 1.5 }) 
       
-      gsap.set(photoRef.current, { opacity: 0, y: 100 })
+      gsap.set(photoRef.current, { opacity: 0, xPercent: -50, y: 250 })
       gsap.set(nameContainerRef.current, { yPercent: 110 })
       gsap.set(locationRef.current, { opacity: 0, y: 60 })
       gsap.set(roleRef.current, { opacity: 0, y: 60 })
@@ -145,7 +145,7 @@ export function HeroSection() {
       {/* Portrait — center anchor, significantly larger */}
       <div 
         ref={photoRef} 
-        className="absolute left-1/2 -translate-x-1/2 bottom-[-5vh] md:bottom-[-8vh] h-[80vh] md:h-[110vh] w-[130vw] md:w-[95vw] lg:w-[85vw] z-30 will-change-transform pointer-events-none"
+        className="absolute left-1/2 bottom-[-5vh] md:bottom-[-8vh] h-[80vh] md:h-[110vh] w-[130vw] md:w-[95vw] lg:w-[85vw] z-30 will-change-transform pointer-events-none"
       >
         <Image
           src="/profile-cutout.png"
@@ -160,14 +160,14 @@ export function HeroSection() {
       {/* Location pill — left side */}
       <div 
         ref={locationRef}
-        className="absolute left-0 top-[58%] md:top-[55%] -translate-y-1/2 z-35 flex items-center bg-[#1c1d20] rounded-r-[999px] w-[180px] md:w-[260px] h-[75px] md:h-[120px] pl-[16px] md:pl-[30px] pr-[8px] md:pr-[12px] justify-between shadow-2xl"
+        className="absolute left-0 top-[58%] md:top-[55%] -translate-y-1/2 z-35 flex items-center bg-[#1c1d20] rounded-r-[999px] w-[210px] md:w-[320px] h-[64px] md:h-[90px] pl-[20px] md:pl-[40px] pr-[10px] md:pr-[16px] justify-between shadow-2xl"
       >
         <div className="flex flex-col text-[11px] md:text-[16px] font-snellenberg text-[#f5f5f3] leading-[1.3] tracking-wide whitespace-nowrap">
           <span>Located</span>
           <span>in the</span>
           <span>Philippines</span>
         </div>
-        <div className="w-[48px] h-[48px] md:w-[80px] md:h-[80px] rounded-full bg-[#aeb1b0] flex items-center justify-center overflow-hidden relative flex-shrink-0">
+        <div className="w-[44px] h-[44px] md:w-[64px] md:h-[64px] rounded-full bg-[#aeb1b0] flex items-center justify-center overflow-hidden relative flex-shrink-0">
            <GlobeCanvas />
         </div>
       </div>
