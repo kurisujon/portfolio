@@ -132,7 +132,7 @@ export function HeroSection() {
       {/* Header — highest z-index, always readable */}
       <div 
         ref={headerRef} 
-        className="absolute top-[40px] md:top-[48px] left-[24px] md:left-[56px] right-[24px] md:right-[56px] flex justify-between z-50 text-[#f5f5f3] text-[16px] md:text-[18px] font-snellenberg font-medium mix-blend-difference"
+        className="absolute top-[40px] md:top-[48px] left-[24px] md:left-[56px] right-[24px] md:right-[56px] flex justify-between z-50 text-[#f5f5f3] text-[16px] md:text-[18px] font-snellenberg font-medium"
       >
         <div>© Code by Cris</div>
         <div className="hidden md:flex gap-[48px]">

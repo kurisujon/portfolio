@@ -13,13 +13,6 @@ export function Preloader({ onComplete }: { onComplete?: () => void }) {
   const wrapperRef = useRef<HTMLDivElement>(null)
   
   useEffect(() => {
-    const hasLoaded = sessionStorage.getItem('webcris_loaded')
-    if (hasLoaded) {
-      setTimeout(() => setShouldRender(false), 0)
-      onComplete?.()
-      return
-    }
-
     document.body.style.overflow = 'hidden'
 
     // Text sequence
@@ -40,7 +33,6 @@ export function Preloader({ onComplete }: { onComplete?: () => void }) {
       const tl = gsap.timeline({
         onComplete: () => {
           document.body.style.overflow = ''
-          sessionStorage.setItem('webcris_loaded', 'true')
           setTimeout(() => setShouldRender(false), 0)
           onComplete?.()
         }
