@@ -40,35 +40,35 @@ export function HeroSection() {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ delay: 1.5 }) 
       
-      gsap.set(photoRef.current, { opacity: 0, scale: 1.04, y: 80 })
+      gsap.set(photoRef.current, { opacity: 0, y: 100 })
       gsap.set(nameContainerRef.current, { yPercent: 110 })
-      gsap.set(locationRef.current, { xPercent: -110 })
-      gsap.set(roleRef.current, { opacity: 0, y: 35 })
+      gsap.set(locationRef.current, { opacity: 0, y: 60 })
+      gsap.set(roleRef.current, { opacity: 0, y: 60 })
       gsap.set(headerRef.current, { opacity: 0, y: -10 })
 
       tl.to(photoRef.current, {
         opacity: 1,
-        scale: 1,
         y: 0,
-        duration: 1.3,
-        ease: 'expo.out',
+        duration: 1.5,
+        ease: 'power4.out',
       })
       .to(nameContainerRef.current, {
         yPercent: 0,
         duration: 1.3,
         ease: 'power4.out',
-      }, "-=0.9")
+      }, "-=1.2")
       .to(locationRef.current, {
-        xPercent: 0,
+        opacity: 1,
+        y: 0,
         duration: 1.2,
         ease: 'power4.out',
       }, "-=1.1")
       .to(roleRef.current, {
         opacity: 1,
         y: 0,
-        duration: 1,
-        ease: 'power3.out',
-      }, "-=1.0")
+        duration: 1.2,
+        ease: 'power4.out',
+      }, "-=1.1")
       .to(headerRef.current, {
         opacity: 1,
         y: 0,
