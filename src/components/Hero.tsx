@@ -145,7 +145,7 @@ export function HeroSection() {
       {/* Portrait — center anchor, significantly larger */}
       <div 
         ref={photoRef} 
-        className="absolute left-1/2 -translate-x-1/2 bottom-0 h-[80vh] md:h-[110vh] w-[130vw] md:w-[95vw] lg:w-[85vw] z-30 will-change-transform pointer-events-none"
+        className="absolute left-1/2 -translate-x-1/2 bottom-[-5vh] md:bottom-[-8vh] h-[80vh] md:h-[110vh] w-[130vw] md:w-[95vw] lg:w-[85vw] z-30 will-change-transform pointer-events-none"
       >
         <Image
           src="/profile-cutout.png"
@@ -187,14 +187,14 @@ export function HeroSection() {
       </div>
 
       {/* Massive name marquee — positioned higher, overlaps portrait */}
-      <div className="absolute bottom-[12%] md:bottom-[10%] left-0 w-full z-40 overflow-hidden pointer-events-none flex items-end">
+      <div className="absolute bottom-[12%] md:bottom-[10%] left-0 w-full z-40 pointer-events-none flex items-end">
         <div ref={nameContainerRef} className="w-full will-change-transform">
-          <div ref={marqueeRef} className="flex w-max whitespace-nowrap will-change-transform">
+          <div ref={marqueeRef} className="flex w-max whitespace-nowrap will-change-transform pb-4 md:pb-6">
             {[...Array(4)].map((_, i) => (
               <h1 
                 key={i}
                 className="font-snellenberg text-[#f5f5f3] font-normal tracking-[-0.055em] leading-[0.88] pr-8"
-                style={{ fontSize: 'clamp(3rem, 8vw, 10rem)' }}
+                style={{ fontSize: 'clamp(3.5rem, 9.5vw, 12rem)' }}
               >
                 Cris John Labiaga —
               </h1>
