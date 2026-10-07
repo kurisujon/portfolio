@@ -115,7 +115,7 @@ export function HeroSection() {
       {/* Portrait — center anchor */}
       <div 
         ref={photoRef} 
-        className="absolute left-1/2 -translate-x-1/2 top-[22vh] md:top-[8vh] h-[40vh] md:h-[85vh] w-[65vw] md:w-[40vw] lg:w-[32vw] z-30 will-change-transform pointer-events-none"
+        className="absolute left-1/2 -translate-x-1/2 bottom-0 h-[60vh] md:h-[85vh] w-[65vw] md:w-[40vw] lg:w-[32vw] z-30 will-change-transform pointer-events-none"
       >
         <Image
           src="/profile-cutout.png"
@@ -130,7 +130,7 @@ export function HeroSection() {
       {/* Location pill — left side */}
       <div 
         ref={locationRef}
-        className="absolute left-0 top-[58%] md:top-[42%] -translate-y-1/2 z-35 flex items-center bg-[#1c1d20] rounded-r-[999px] w-[200px] md:w-[310px] h-[75px] md:h-[120px] pl-[16px] md:pl-[36px] pr-[8px] md:pr-[20px] justify-between shadow-2xl"
+        className="absolute left-0 top-[58%] md:top-[55%] -translate-y-1/2 z-35 flex items-center bg-[#1c1d20] rounded-r-[999px] w-[180px] md:w-[260px] h-[75px] md:h-[120px] pl-[16px] md:pl-[30px] pr-[8px] md:pr-[12px] justify-between shadow-2xl"
       >
         <div className="flex flex-col text-[11px] md:text-[16px] font-snellenberg text-[#f5f5f3] leading-[1.3] tracking-wide whitespace-nowrap">
           <span>Located</span>
@@ -157,11 +157,11 @@ export function HeroSection() {
       </div>
 
       {/* Massive name — bottom, overlaps portrait */}
-      <div className="absolute bottom-[3%] md:bottom-[-0.03em] left-0 md:left-[-4vw] w-full md:w-[110vw] z-40 overflow-hidden pointer-events-none px-[16px] md:px-0 flex items-end">
+      <div className="absolute bottom-[3%] md:bottom-[-0.03em] left-0 md:left-[-2vw] w-full md:w-[110vw] z-40 overflow-hidden pointer-events-none px-[16px] md:px-0 flex items-end">
         <h1 
           ref={nameRef}
           className="font-snellenberg text-[#f5f5f3] font-normal tracking-[-0.055em] will-change-transform leading-[0.88] md:whitespace-nowrap flex flex-col md:block"
-          style={{ fontSize: 'clamp(3.8rem, 17vw, 20rem)' }}
+          style={{ fontSize: 'clamp(3rem, 11vw, 15rem)' }}
         >
           <span className="block md:inline">Cris John</span>
           <span className="block md:inline"> Labiaga —</span>
