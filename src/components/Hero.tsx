@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { gsap, ScrollTrigger } from '@/lib/motion'
 import { GlobeCanvas } from '@/components/ui/GlobeCanvas'
 import { useLenis } from 'lenis/react'
+import { Magnetic } from '@/components/ui/MagneticButton'
 
 export function HeroSection() {
   const heroRef = useRef<HTMLDivElement>(null)
@@ -139,11 +140,37 @@ export function HeroSection() {
         ref={headerRef} 
         className="absolute top-[40px] md:top-[48px] left-[24px] md:left-[56px] right-[24px] md:right-[56px] flex justify-between z-50 text-[#f5f5f3] text-[16px] md:text-[18px] font-snellenberg font-medium"
       >
-        <div>© Code by Cris</div>
+        <div className="group cursor-pointer flex items-center">
+          <span className="inline-block transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:rotate-[360deg] mr-2">©</span>
+          <div className="overflow-hidden relative grid">
+            <div className="col-start-1 row-start-1 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:-translate-x-full">
+              Code by Cris
+            </div>
+            <div className="col-start-1 row-start-1 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] translate-x-[110%] group-hover:translate-x-0" aria-hidden="true">
+              Cris John Labiaga
+            </div>
+          </div>
+        </div>
+
         <div className="hidden md:flex gap-[48px]">
-          <Link href="#projects" onClick={(e) => handleNavClick(e, '#projects')} className="hover:opacity-70 transition-opacity cursor-pointer">Work</Link>
-          <Link href="#about" onClick={(e) => handleNavClick(e, '#about')} className="hover:opacity-70 transition-opacity cursor-pointer">About</Link>
-          <Link href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="hover:opacity-70 transition-opacity cursor-pointer">Contact</Link>
+          <Magnetic strength={0.2} textStrength={0.1}>
+            <Link href="#projects" onClick={(e) => handleNavClick(e, '#projects')} className="group flex flex-col items-center justify-center cursor-pointer relative py-2">
+              <span className="transition-opacity">Work</span>
+              <span className="absolute -bottom-1 w-[5px] h-[5px] bg-[#f5f5f3] rounded-full opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 ease-[cubic-bezier(0.76,0,0.24,1)]"></span>
+            </Link>
+          </Magnetic>
+          <Magnetic strength={0.2} textStrength={0.1}>
+            <Link href="#about" onClick={(e) => handleNavClick(e, '#about')} className="group flex flex-col items-center justify-center cursor-pointer relative py-2">
+              <span className="transition-opacity">About</span>
+              <span className="absolute -bottom-1 w-[5px] h-[5px] bg-[#f5f5f3] rounded-full opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 ease-[cubic-bezier(0.76,0,0.24,1)]"></span>
+            </Link>
+          </Magnetic>
+          <Magnetic strength={0.2} textStrength={0.1}>
+            <Link href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="group flex flex-col items-center justify-center cursor-pointer relative py-2">
+              <span className="transition-opacity">Contact</span>
+              <span className="absolute -bottom-1 w-[5px] h-[5px] bg-[#f5f5f3] rounded-full opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 ease-[cubic-bezier(0.76,0,0.24,1)]"></span>
+            </Link>
+          </Magnetic>
         </div>
       </div>
 
