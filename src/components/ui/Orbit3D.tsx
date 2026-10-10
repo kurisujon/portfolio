@@ -363,7 +363,7 @@ export default function Orbit3DContainer({ fallback }: { fallback: React.ReactNo
   return (
     <div ref={containerRef} className="w-full h-full relative" aria-label="Orbit of technologies I work with">
       <Canvas
-        camera={{ position: [0, 0, 18], fov: 48 }}
+        camera={{ position: [0, 0, 18], fov: 40 }}
         frameloop={isVisible ? 'always' : 'never'}
         dpr={typeof window !== 'undefined' ? Math.min(window.devicePixelRatio, 1.5) : 1}
       >

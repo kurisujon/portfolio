@@ -140,7 +140,7 @@ export function TechStackSection() {
   }, [])
 
   return (
-    <section id="skills" ref={containerRef} className="relative w-full bg-[#f5f5f3] text-[#1c1d20] flex flex-col pb-[80px] z-10 overflow-hidden">
+    <section id="skills" ref={containerRef} className="relative w-full bg-[#f5f5f3] text-[#1c1d20] flex flex-col pb-[80px] z-10 ">
 
       <div className="w-full max-w-[1440px] mx-auto px-[24px] md:px-[5vw]">
 
@@ -194,7 +194,7 @@ export function TechStackSection() {
 
           {/* Right Column: Solar System Orbit Animation (Desktop only) */}
           <div className="w-full lg:w-[40%] hidden lg:flex justify-center pb-3">
-            <div className="w-full h-full border border-[rgba(28,29,32,0.18)] rounded-[8px] flex items-center justify-center bg-transparent relative overflow-hidden">
+            <div className="w-full h-full flex items-center justify-center bg-transparent relative ">
             <Orbit3DContainer fallback={
               <div className="group relative w-[400px] h-[400px] orbit-fallback">
                {/* AI Core */}
