@@ -216,7 +216,7 @@ function Planet({ name, angle, radius, speed, planetRadius, setHovered }: { name
   return (
     <>
       <group ref={groupRef}>
-        <mesh 
+        <mesh castShadow receiveShadow 
           ref={meshRef} 
           geometry={sharedGeom}
           onPointerOver={() => { setHover(true); setHovered(name); }}
@@ -293,31 +293,35 @@ function Scene() {
     <group>
       <fog attach="fog" args={['#f5f5f3', 11, 30]} />
       <ambientLight intensity={2.1} color="#ffffff" />
-      <directionalLight position={[-5, 6, 9]} intensity={2.1} color="#ffffff" />
+      <directionalLight castShadow shadow-mapSize={1024} position={[-5, 6, 9]} intensity={2.1} color="#ffffff" />
+      <mesh receiveShadow position={[0, 0, -4]}>
+        <planeGeometry args={[100, 100]} />
+        <shadowMaterial opacity={0.10} />
+      </mesh>
       <directionalLight position={[6, -3, 4]} intensity={0.75} color="#dfe6ff" />
       
       <group ref={rootRef}>
         <group rotation={[0.5, 0, 0]}>
           <group rotation={[-0.35, 0, 0.25]}>
-            <OrbitRing radius={2.1} color="#dedfdd" />
+            <OrbitRing radius={2.8} color="#dedfdd" />
             <group ref={innerRef}>
               {inner.map((name, i) => (
-                <Planet key={name} name={name} angle={(i / inner.length) * Math.PI * 2} radius={2.1} speed={0.55} planetRadius={0.47} setHovered={setHovered} />
+                <Planet key={name} name={name} angle={(i / inner.length) * Math.PI * 2} radius={2.8} speed={0.55} planetRadius={0.55} setHovered={setHovered} />
               ))}
             </group>
           </group>
           <group rotation={[0.50, 0, -0.40]}>
-            <OrbitRing radius={3.6} color="#dedfdd" />
+            <OrbitRing radius={4.5} color="#dedfdd" />
             <group ref={outerRef}>
               {outer.map((name, i) => (
-                <Planet key={name} name={name} angle={(i / outer.length) * Math.PI * 2} radius={3.6} speed={-0.34} planetRadius={0.53} setHovered={setHovered} />
+                <Planet key={name} name={name} angle={(i / outer.length) * Math.PI * 2} radius={4.5} speed={-0.34} planetRadius={0.65} setHovered={setHovered} />
               ))}
             </group>
           </group>
           
           {/* Core */}
-          <mesh>
-            <sphereGeometry args={[0.8, 48, 32]} />
+          <mesh castShadow receiveShadow>
+            <sphereGeometry args={[1.4, 48, 32]} />
             <meshStandardMaterial map={coreTex} roughness={0.34} metalness={0.25} />
           </mesh>
         </group>
@@ -362,8 +366,8 @@ export default function Orbit3DContainer({ fallback }: { fallback: React.ReactNo
   
   return (
     <div ref={containerRef} className="w-full h-full relative" aria-label="Orbit of technologies I work with">
-      <Canvas
-        camera={{ position: [0, 0, 13], fov: 42 }}
+      <Canvas shadows
+        camera={{ position: [0, 0, 18], fov: 48 }}
         frameloop={isVisible ? 'always' : 'never'}
         dpr={typeof window !== 'undefined' ? Math.min(window.devicePixelRatio, 1.5) : 1}
       >

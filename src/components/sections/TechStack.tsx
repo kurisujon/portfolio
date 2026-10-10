@@ -153,7 +153,7 @@ export function TechStackSection() {
         </div>
 
         {/* Two Column Layout */}
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-8 items-start relative">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-8 items-stretch relative">
 
           {/* Left Column: Grid of Magnetic Logo Cards */}
           <div className="w-full lg:w-[60%] flex flex-col ">
@@ -193,8 +193,8 @@ export function TechStackSection() {
           </div>
 
           {/* Right Column: Solar System Orbit Animation (Desktop only) */}
-          <div className="w-full lg:w-[40%] hidden lg:flex justify-center sticky top-24 h-fit">
-            <div className="w-full max-w-[400px] xl:max-w-[450px] aspect-square border border-[rgba(28,29,32,0.18)] rounded-[4px] flex items-center justify-center bg-transparent">
+          <div className="w-full lg:w-[40%] hidden lg:flex justify-center pb-3">
+            <div className="w-full h-full border border-[rgba(28,29,32,0.18)] rounded-[8px] flex items-center justify-center bg-transparent relative overflow-hidden">
             <Orbit3DContainer fallback={
               <div className="group relative w-[400px] h-[400px] orbit-fallback">
                {/* AI Core */}
