@@ -8,7 +8,7 @@ interface TypographyProps extends HTMLAttributes<HTMLElement> {
 }
 
 export function Typography({ variant = 'body', as, className, children, ...props }: TypographyProps) {
-  const Component = as || (variant === 'body' ? 'p' : variant === 'small' ? 'span' : variant)
+  const Component: any = as || (variant === 'body' ? 'p' : variant === 'small' ? 'span' : variant)
   
   const variants = {
     h1: "text-[3.5rem] md:text-[4rem] leading-[1.1] font-bold text-zinc-900 dark:text-primary tracking-tight transition-colors",
