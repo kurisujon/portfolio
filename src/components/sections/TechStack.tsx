@@ -187,7 +187,7 @@ export function TechStackSection() {
 
           {/* Right Column: Solar System Orbit Animation (Desktop only) */}
           <div className="w-full lg:w-[40%] hidden lg:flex justify-center sticky top-24 h-fit">
-            <div className="w-full max-w-[400px] xl:max-w-[450px] aspect-square border border-[rgba(28,29,32,0.18)] rounded-[4px] flex items-center justify-center bg-[#ffffff] shadow-sm">
+            <div className="w-full max-w-[400px] xl:max-w-[450px] aspect-square border border-[rgba(28,29,32,0.18)] rounded-[4px] flex items-center justify-center bg-transparent">
             <div className="group relative w-[400px] h-[400px]">
                {/* AI Core */}
                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-[#1c1d20] border border-[rgba(28,29,32,0.15)] rounded-full flex items-center justify-center shadow-lg z-20">
