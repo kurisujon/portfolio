@@ -149,19 +149,19 @@ export function TechStackSection() {
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-8 items-start relative">
 
           {/* Left Column: Grid of Magnetic Logo Cards */}
-          <div className="w-full lg:w-[60%] flex flex-col gap-6 md:gap-8">
+          <div className="w-full lg:w-[60%] flex flex-col ">
             {techCategories.map((group) => (
               <div key={group.id} className="tech-row group flex flex-col">
 
-                <div className="flex flex-col md:flex-row py-6 items-start md:items-center">
-                  <div className="w-full md:w-[30%] flex items-center gap-6 mb-6 md:mb-0">
+                <div className="flex flex-col md:flex-row py-4 items-start md:items-center">
+                  <div className="w-full md:w-[30%] flex items-center gap-6 mb-4 md:mb-0">
                     <span className="tech-number text-[#1c1d20]/50 text-[13px] font-mono tracking-widest">{group.id}</span>
                     <h3 className="tech-category text-[#1c1d20] text-[1.1rem] font-snellenberg font-medium uppercase tracking-[0.05em]">
                       {group.category}
                     </h3>
                   </div>
 
-                  <div className="flex-1 flex flex-wrap gap-3 md:gap-4 w-full justify-start md:justify-end">
+                  <div className="flex-1 flex flex-wrap gap-3 md:gap-4 w-full justify-start">
                     {group.items.map((tech, i) => {
                       const icon = getTechIcon(tech)
                       return (
