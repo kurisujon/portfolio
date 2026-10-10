@@ -216,7 +216,7 @@ function Planet({ name, angle, radius, speed, planetRadius, setHovered }: { name
   return (
     <>
       <group ref={groupRef}>
-        <mesh castShadow receiveShadow 
+        <mesh 
           ref={meshRef} 
           geometry={sharedGeom}
           onPointerOver={() => { setHover(true); setHovered(name); }}
@@ -293,11 +293,7 @@ function Scene() {
     <group>
       <fog attach="fog" args={['#f5f5f3', 11, 30]} />
       <ambientLight intensity={2.1} color="#ffffff" />
-      <directionalLight castShadow shadow-mapSize={1024} position={[-5, 6, 9]} intensity={2.1} color="#ffffff" />
-      <mesh receiveShadow position={[0, 0, -4]}>
-        <planeGeometry args={[100, 100]} />
-        <shadowMaterial opacity={0.10} />
-      </mesh>
+      <directionalLight position={[-5, 6, 9]} intensity={2.1} color="#ffffff" />
       <directionalLight position={[6, -3, 4]} intensity={0.75} color="#dfe6ff" />
       
       <group ref={rootRef}>
@@ -366,7 +362,7 @@ export default function Orbit3DContainer({ fallback }: { fallback: React.ReactNo
   
   return (
     <div ref={containerRef} className="w-full h-full relative" aria-label="Orbit of technologies I work with">
-      <Canvas shadows
+      <Canvas
         camera={{ position: [0, 0, 18], fov: 48 }}
         frameloop={isVisible ? 'always' : 'never'}
         dpr={typeof window !== 'undefined' ? Math.min(window.devicePixelRatio, 1.5) : 1}
