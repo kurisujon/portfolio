@@ -3,38 +3,38 @@
 import { useRef, useEffect } from 'react'
 import { gsap } from '@/lib/motion'
 import { Magnetic } from '@/components/ui/MagneticButton'
-import { BrainCircuit, Database, FileText, Binary, Link, Cpu } from 'lucide-react'
+import { BrainCircuit, Database, FileText, Binary, Link, Cpu, Bot, Sparkles, Smile } from 'lucide-react'
 
 const techCategories = [
   {
     id: '01',
     category: "Languages",
-    items: ["JavaScript", "TypeScript", "Python", "PHP", "SQL", "Dart"]
+    items: ["TypeScript", "JavaScript", "Python", "PHP", "Java"]
   },
   {
     id: '02',
-    category: "Frontend",
-    items: ["React", "Next.js", "Tailwind CSS"]
+    category: "Frontend & Frameworks",
+    items: ["Next.js", "React", "React Native", "Tailwind CSS"]
   },
   {
     id: '03',
-    category: "Backend",
-    items: ["Node.js", "Laravel", "FastAPI"]
+    category: "Backend & APIs",
+    items: ["Node.js", "FastAPI", "Laravel"]
   },
   {
     id: '04',
-    category: "Data",
-    items: ["PostgreSQL", "Supabase"]
+    category: "AI & ML",
+    items: ["OpenAI", "Claude", "Gemini", "LangChain", "Hugging Face"]
   },
   {
     id: '05',
-    category: "AI & Systems",
-    items: ["RAG", "Embeddings", "LangChain", "Qdrant", "Document Processing"]
+    category: "Databases",
+    items: ["PostgreSQL", "MongoDB", "MySQL", "Redis", "Supabase", "Firebase"]
   },
   {
     id: '06',
-    category: "Infrastructure",
-    items: ["Docker", "Git", "Vercel"]
+    category: "Cloud & DevOps",
+    items: ["Docker", "AWS", "Azure", "NGINX", "GitHub Actions"]
   }
 ]
 
@@ -46,19 +46,25 @@ const getTechIcon = (name: string): TechIcon => {
     "TypeScript": "typescript/typescript-original.svg",
     "Python": "python/python-original.svg",
     "PHP": "php/php-original.svg",
-    "SQL": "azuresqldatabase/azuresqldatabase-original.svg",
-    "Dart": "dart/dart-original.svg",
+    "Java": "java/java-original.svg",
     "React": "react/react-original.svg",
+    "React Native": "react/react-original.svg",
     "Next.js": "nextjs/nextjs-original.svg",
     "Tailwind CSS": "tailwindcss/tailwindcss-original.svg",
     "Node.js": "nodejs/nodejs-original.svg",
     "Laravel": "laravel/laravel-original.svg",
     "FastAPI": "fastapi/fastapi-original.svg",
     "PostgreSQL": "postgresql/postgresql-original.svg",
+    "MongoDB": "mongodb/mongodb-original.svg",
+    "MySQL": "mysql/mysql-original.svg",
+    "Redis": "redis/redis-original.svg",
     "Supabase": "supabase/supabase-original.svg",
+    "Firebase": "firebase/firebase-original.svg",
     "Docker": "docker/docker-original.svg",
-    "Git": "git/git-original.svg",
-    "Vercel": "vercel/vercel-original.svg",
+    "AWS": "amazonwebservices/amazonwebservices-original-wordmark.svg",
+    "Azure": "azure/azure-original.svg",
+    "NGINX": "nginx/nginx-original.svg",
+    "GitHub Actions": "githubactions/githubactions-original.svg",
   }
 
   if (map[name]) {
@@ -67,17 +73,17 @@ const getTechIcon = (name: string): TechIcon => {
 
   // Fallbacks using Lucide
   switch (name) {
-     case 'RAG': return { type: 'lucide', Icon: BrainCircuit }
-     case 'Embeddings': return { type: 'lucide', Icon: Binary }
+     case 'OpenAI': return { type: 'lucide', Icon: Bot }
+     case 'Claude': return { type: 'lucide', Icon: BrainCircuit }
+     case 'Gemini': return { type: 'lucide', Icon: Sparkles }
      case 'LangChain': return { type: 'lucide', Icon: Link }
-     case 'Qdrant': return { type: 'lucide', Icon: Database }
-     case 'Document Processing': return { type: 'lucide', Icon: FileText }
+     case 'Hugging Face': return { type: 'lucide', Icon: Smile }
      default: return { type: 'lucide', Icon: Cpu }
   }
 }
 
 const innerNodes = ["TypeScript", "React", "Next.js", "Tailwind CSS"]
-const outerNodes = ["Node.js", "PostgreSQL", "Supabase", "Docker", "Git", "Vercel"]
+const outerNodes = ["Python", "Node.js", "PostgreSQL", "Docker", "AWS", "OpenAI"]
 
 export function TechStackSection() {
   const containerRef = useRef<HTMLElement>(null)
