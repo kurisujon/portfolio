@@ -153,26 +153,26 @@ export function TechStackSection() {
             {techCategories.map((group) => (
               <div key={group.id} className="tech-row group flex flex-col">
 
-                <div className="flex flex-col md:flex-row py-4 items-start md:items-center">
-                  <div className="w-full md:w-[30%] flex items-center gap-6 mb-4 md:mb-0">
+                <div className="flex flex-col md:flex-row py-3 items-start md:items-center">
+                  <div className="w-full md:w-[30%] flex items-center gap-6 mb-3 md:mb-0">
                     <span className="tech-number text-[#1c1d20]/50 text-[13px] font-mono tracking-widest">{group.id}</span>
                     <h3 className="tech-category text-[#1c1d20] text-[1.1rem] font-snellenberg font-medium uppercase tracking-[0.05em]">
                       {group.category}
                     </h3>
                   </div>
 
-                  <div className="flex-1 flex flex-wrap gap-3 md:gap-4 w-full justify-start">
+                  <div className="flex-1 flex flex-wrap gap-2 md:gap-3 w-full justify-start">
                     {group.items.map((tech, i) => {
                       const icon = getTechIcon(tech)
                       return (
                         <Magnetic key={i} strength={0.2} textStrength={0.1}>
-                          <div className="tech-item group/card flex flex-col items-center justify-center w-[70px] h-[70px] md:w-[80px] md:h-[80px] bg-[#ffffff] border border-[rgba(28,29,32,0.1)] rounded-md hover:border-[rgba(28,29,32,0.3)] hover:-translate-y-1 transition-all duration-300 hover:shadow-md cursor-default">
+                          <div className="tech-item group/card flex flex-col items-center justify-center w-[60px] h-[60px] md:w-[70px] md:h-[70px] bg-[#ffffff] border border-[rgba(28,29,32,0.1)] rounded-md hover:border-[rgba(28,29,32,0.3)] hover:-translate-y-1 transition-all duration-300 hover:shadow-md cursor-default">
                             {icon.type === 'img' ? (
-                              <img src={icon.src} alt={tech} className="w-6 h-6 md:w-7 md:h-7 mb-1.5 opacity-80 group-hover/card:opacity-100 transition-opacity" />
+                              <img src={icon.src} alt={tech} className="w-5 h-5 md:w-6 md:h-6 mb-1 opacity-80 group-hover/card:opacity-100 transition-opacity" />
                             ) : (
-                              <icon.Icon className="w-6 h-6 md:w-7 md:h-7 mb-1.5 opacity-80 group-hover/card:opacity-100 transition-opacity text-[#1c1d20]" />
+                              <icon.Icon className="w-5 h-5 md:w-6 md:h-6 mb-1 opacity-80 group-hover/card:opacity-100 transition-opacity text-[#1c1d20]" />
                             )}
-                            <span className="text-[#1c1d20]/60 text-[9px] md:text-[10px] font-mono text-center group-hover/card:text-[#1c1d20] transition-colors leading-tight px-1">{tech}</span>
+                            <span className="text-[#1c1d20]/60 text-[8px] md:text-[9px] font-mono text-center group-hover/card:text-[#1c1d20] transition-colors leading-tight px-1">{tech}</span>
                           </div>
                         </Magnetic>
                       )
@@ -186,7 +186,8 @@ export function TechStackSection() {
           </div>
 
           {/* Right Column: Solar System Orbit Animation (Desktop only) */}
-          <div className="w-full lg:w-[40%] hidden lg:flex justify-center sticky top-24">
+          <div className="w-full lg:w-[40%] hidden lg:flex justify-center sticky top-24 h-fit">
+            <div className="w-full max-w-[400px] xl:max-w-[450px] aspect-square border border-[rgba(28,29,32,0.18)] rounded-[4px] flex items-center justify-center bg-[#ffffff] shadow-sm">
             <div className="group relative w-[400px] h-[400px]">
                {/* AI Core */}
                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-[#1c1d20] border border-[rgba(28,29,32,0.15)] rounded-full flex items-center justify-center shadow-lg z-20">
@@ -234,6 +235,7 @@ export function TechStackSection() {
                      )
                   })}
                </div>
+            </div>
             </div>
           </div>
 
