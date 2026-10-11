@@ -290,26 +290,32 @@ export function ProjectsSection() {
                     {project.id}
                   </span>
 
-                  <div className="flex-1 overflow-hidden">
+                  <div className="flex-1 overflow-visible pl-4 -ml-4">
                     <h3
-                      className={`font-snellenberg uppercase text-[clamp(3rem,5vw,5.5rem)] text-[#1c1d20] leading-none tracking-[-0.04em] font-normal inline-block transition-opacity ${
-                        isHovered ? 'opacity-[0.33]' : 'opacity-100'
+                      className={`font-snellenberg uppercase text-[clamp(3rem,5vw,5.5rem)] text-[#1c1d20] leading-none tracking-[-0.04em] font-normal inline-block transition-all ${
+                        isHovered
+                          ? 'opacity-[0.33] -translate-x-[12px] lg:-translate-x-[16px]'
+                          : 'opacity-100 translate-x-0 group-hover:opacity-[0.33] group-hover:-translate-x-[12px] group-hover:lg:-translate-x-[16px]'
                       }`}
                       style={{
-                        transitionDuration: isReducedMotion ? '0s' : '350ms',
+                        transitionDuration: isReducedMotion ? '0s' : '400ms',
                         transitionTimingFunction: 'cubic-bezier(0.76, 0, 0.24, 1)',
                       }}
                     >
-                      <span className="title-inner inline-block overflow-hidden pb-1">{project.title}</span>
+                      <span className="overflow-hidden inline-block pb-1">
+                        <span className="title-inner inline-block">{project.title}</span>
+                      </span>
                     </h3>
                   </div>
 
                   <span
-                    className={`fade-el text-[#1c1d20] text-[0.95rem] font-snellenberg w-[280px] text-right transition-opacity ${
-                      isHovered ? 'opacity-[0.33]' : 'opacity-100'
+                    className={`fade-el text-[#1c1d20] text-[0.95rem] font-snellenberg w-[280px] text-right transition-all inline-block ${
+                      isHovered
+                        ? 'opacity-[0.33] translate-x-[12px] lg:translate-x-[16px]'
+                        : 'opacity-100 translate-x-0 group-hover:opacity-[0.33] group-hover:translate-x-[12px] group-hover:lg:translate-x-[16px]'
                     }`}
                     style={{
-                      transitionDuration: isReducedMotion ? '0s' : '350ms',
+                      transitionDuration: isReducedMotion ? '0s' : '400ms',
                       transitionTimingFunction: 'cubic-bezier(0.76, 0, 0.24, 1)',
                     }}
                   >

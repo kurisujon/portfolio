@@ -46,18 +46,18 @@ export function ContactSection() {
             <div className="flex items-center">
               {/* Avatar 5.2vw circle */}
               <div
-                className="rounded-full shrink-0 mr-3 md:mr-[2vw] overflow-hidden relative bg-[#1c1d20]"
+                className="rounded-full shrink-0 mr-3 md:mr-[2vw] overflow-hidden relative bg-[#9fa3a2]"
                 style={{
                   width: 'clamp(44px, 5.2vw, 96px)',
                   height: 'clamp(44px, 5.2vw, 96px)',
                 }}
               >
                 <Image
-                  src="/profile.png"
+                  src="/profile-cutout.webp"
                   alt="Cris John Labiaga"
                   fill
-                  className="object-cover"
-                  style={{ transform: 'scale(1.8) translateY(15%)', objectPosition: 'center' }}
+                  className="object-cover select-none"
+                  style={{ transform: 'scale(1.35) translateY(6%)', objectPosition: 'center top' }}
                   sizes="(max-width: 768px) 50px, 5.2vw"
                 />
               </div>
