@@ -23,7 +23,7 @@ const projects = [
     id: '02',
     title: 'StudFlow',
     meta: 'Full Stack AI Developer',
-    image: '/studflow_preview.png',
+    image: '/studflow_preview.webp',
     href: '/work/studflow',
     backdrop: ['#2c314a', '#1e223a'],
     width: 1920,
@@ -33,7 +33,7 @@ const projects = [
     id: '03',
     title: 'CHoDaMS Web',
     meta: 'Full Stack Developer',
-    image: '/images/projects/chodams-web/chodams-portfolio-cover-v2.png',
+    image: '/images/projects/chodams-web/chodams-portfolio-cover-v2.webp',
     href: '/work/chodams-web',
     backdrop: ['#1b3a2c', '#0b2b1e'],
     width: 1672,
@@ -43,7 +43,7 @@ const projects = [
     id: '04',
     title: 'CHoDaMS Mobile',
     meta: 'Mobile Developer',
-    image: '/images/projects/chodams-mobile/cover-dashboard-gps.png',
+    image: '/images/projects/chodams-mobile/cover-dashboard-gps.webp',
     href: '/work/chodams-mobile',
     backdrop: ['#1e3a29', '#0f2a1b'],
     width: 1672,
@@ -174,6 +174,23 @@ export function ProjectsSection() {
           rowTl.to(imgMobile, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.9')
         }
       })
+
+      // Deactivate preview follower when list is out of view (FIX 3)
+      if (listRef.current) {
+        ScrollTrigger.create({
+          trigger: listRef.current,
+          start: 'top bottom',
+          end: 'bottom top',
+          onLeave: () => {
+            isVisibleRef.current = false
+            setActive(false)
+          },
+          onLeaveBack: () => {
+            isVisibleRef.current = false
+            setActive(false)
+          },
+        })
+      }
     }, container)
 
     return () => ctx.revert()
@@ -244,7 +261,7 @@ export function ProjectsSection() {
           </span>
         </div>
 
-        <div className="top-divider w-full h-[1px] bg-[#ebebec] will-change-transform" />
+        <div className="top-divider w-full h-[1px] bg-[#ebebec]" />
 
         {/* Project List (Contiguous, hover state on the list) */}
         <div
@@ -305,11 +322,11 @@ export function ProjectsSection() {
                   <span className="fade-el text-[#1c1d20]/70 text-[0.8rem] font-mono mb-[16px]">{project.id}</span>
 
                   <div className="img-mobile w-full relative rounded-[4px] overflow-hidden bg-[#e0e0de] mb-[24px]" style={{ aspectRatio: '4/3' }}>
-                    <Image src={project.image} alt={project.title} fill className="object-cover" />
+                    <Image src={project.image} alt={project.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
                   </div>
 
                   <div className="overflow-hidden mb-[8px]">
-                    <h3 className="title-inner font-snellenberg uppercase text-[clamp(2.4rem,11vw,3.6rem)] text-[#1c1d20] leading-[1] tracking-[-0.02em] font-normal will-change-transform">
+                    <h3 className="title-inner font-snellenberg uppercase text-[clamp(2.4rem,11vw,3.6rem)] text-[#1c1d20] leading-[1] tracking-[-0.02em] font-normal">
                       {project.title}
                     </h3>
                   </div>
@@ -325,7 +342,7 @@ export function ProjectsSection() {
                 </div>
 
                 {/* Row Bottom Divider */}
-                <div className="row-divider w-full h-[1px] bg-[#ebebec] will-change-transform" />
+                <div className="row-divider w-full h-[1px] bg-[#ebebec]" />
               </Link>
             )
           })}

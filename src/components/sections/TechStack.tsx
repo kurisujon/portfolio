@@ -149,7 +149,7 @@ export function TechStackSection() {
           <span className="section-label text-[#1c1d20]/60 text-[12px] md:text-[14px] font-snellenberg uppercase tracking-[0.04em] mb-[24px]">
             TECH STACK
           </span>
-          <div className="top-divider w-full h-[1px] bg-[rgba(28,29,32,0.18)] will-change-transform" />
+          <div className="top-divider w-full h-[1px] bg-[rgba(28,29,32,0.18)]" />
         </div>
 
         {/* Two Column Layout */}
@@ -187,7 +187,7 @@ export function TechStackSection() {
                   </div>
                 </div>
 
-                <div className="tech-divider w-full h-[1px] bg-[rgba(28,29,32,0.18)] will-change-transform" />
+                <div className="tech-divider w-full h-[1px] bg-[rgba(28,29,32,0.18)]" />
               </div>
             ))}
           </div>

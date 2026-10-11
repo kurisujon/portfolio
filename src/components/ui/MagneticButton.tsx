@@ -48,8 +48,8 @@ export function Magnetic({ children, strength = 0.3, textStrength = 0.15, classN
       yToChild(0)
     }
 
-    container.addEventListener("mousemove", handleMouseMove)
-    container.addEventListener("mouseleave", handleMouseLeave)
+    container.addEventListener("mousemove", handleMouseMove, { passive: true })
+    container.addEventListener("mouseleave", handleMouseLeave, { passive: true })
 
     return () => {
       container.removeEventListener("mousemove", handleMouseMove)

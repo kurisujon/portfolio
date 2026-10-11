@@ -33,25 +33,39 @@ export function Navbar() {
   const socialsContainerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    let currentScrolled = false
+    let currentActive: string | null = null
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 150)
-      
       const scrollY = window.scrollY
+      const nextScrolled = scrollY > 150
+      if (nextScrolled !== currentScrolled) {
+        currentScrolled = nextScrolled
+        setIsScrolled(nextScrolled)
+      }
+      
       const wh = window.innerHeight
-      if (scrollY < wh * 0.5) setActiveItem(null)
-      else if (scrollY >= document.documentElement.scrollHeight - wh - 100) setActiveItem('#contact')
-      else {
-        const sections = navLinks.map(l => ({ id: l.href, el: document.querySelector(l.href) as HTMLElement }))
-        let current = null
-        for (const sec of sections) {
-          if (sec.el && sec.el.offsetTop <= scrollY + wh * 0.3) {
-            current = sec.id
+      let nextActive: string | null = null
+      if (scrollY < wh * 0.5) {
+        nextActive = null
+      } else if (scrollY >= document.documentElement.scrollHeight - wh - 100) {
+        nextActive = '#contact'
+      } else {
+        for (const l of navLinks) {
+          const el = document.querySelector(l.href) as HTMLElement | null
+          if (el && el.offsetTop <= scrollY + wh * 0.3) {
+            nextActive = l.href
           }
         }
-        setActiveItem(current)
+      }
+
+      if (nextActive !== currentActive) {
+        currentActive = nextActive
+        setActiveItem(nextActive)
       }
     }
-    window.addEventListener('scroll', handleScroll)
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -161,8 +175,8 @@ export function Navbar() {
       // If we are navigating to Home
       if (href === '/') {
         if (window.location.pathname === '/') {
-          if (lenis) lenis.scrollTo(0, { duration: 1.5, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
-          else window.scrollTo({ top: 0, behavior: 'smooth' })
+          if (lenis) lenis.scrollTo(0, { duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
+          else window.scrollTo({ top: 0 })
         } else {
           router.push('/')
         }
@@ -178,12 +192,12 @@ export function Navbar() {
       const target = href === '#contact' ? 'bottom' : href
 
       if (lenis) {
-        lenis.scrollTo(target, { duration: 1.5, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
+        lenis.scrollTo(target, { duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
       } else {
         if (href === '#contact') {
-          window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' })
+          window.scrollTo({ top: document.documentElement.scrollHeight })
         } else {
-          document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
+          document.querySelector(href)?.scrollIntoView()
         }
       }
       if (window.history?.pushState) window.history.pushState(null, '', href)
@@ -236,11 +250,11 @@ export function Navbar() {
           
           {/* Navigation Section */}
           <div className="flex flex-col mb-[20px] md:mb-[40px] shrink-0">
-            <span ref={navLabelRef} className="text-[12px] font-mono text-[#f5f5f3]/50 uppercase tracking-[0.1em] mb-[16px] will-change-transform">
+            <span ref={navLabelRef} className="text-[12px] font-mono text-[#f5f5f3]/50 uppercase tracking-[0.1em] mb-[16px]">
               Navigation
             </span>
             <div className="w-full max-w-[400px] overflow-hidden">
-              <div ref={navDividerRef} className="w-full h-[1px] bg-[#f5f5f3]/20 will-change-transform" />
+              <div ref={navDividerRef} className="w-full h-[1px] bg-[#f5f5f3]/20" />
             </div>
           </div>
 
@@ -262,7 +276,7 @@ export function Navbar() {
                   <div 
                     className={`absolute left-0 w-[8px] h-[8px] md:w-[10px] md:h-[10px] bg-[#f5f5f3] rounded-full transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] ${showDot ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}
                   />
-                  <span className={`transition-transform duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] will-change-transform ${showDot ? 'translate-x-[20px] md:translate-x-[24px]' : 'translate-x-0'} group-hover:text-[#f5f5f3]/80 group-focus-visible:text-[#f5f5f3]/80`}>
+                  <span className={`transition-transform duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] ${showDot ? 'translate-x-[20px] md:translate-x-[24px]' : 'translate-x-0'} group-hover:text-[#f5f5f3]/80 group-focus-visible:text-[#f5f5f3]/80`}>
                     {link.name}
                   </span>
                 </Link>
@@ -272,7 +286,7 @@ export function Navbar() {
           
           {/* Socials Section */}
           <div className="flex flex-col shrink-0 mt-auto pt-[40px]">
-            <span ref={socialsLabelRef} className="text-[12px] font-mono text-[#f5f5f3]/50 uppercase tracking-[0.1em] mb-[16px] will-change-transform">
+            <span ref={socialsLabelRef} className="text-[12px] font-mono text-[#f5f5f3]/50 uppercase tracking-[0.1em] mb-[16px]">
               Socials
             </span>
             <div ref={socialsContainerRef} className="flex gap-[32px]">

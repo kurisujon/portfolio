@@ -85,7 +85,7 @@ export function ExperienceSection() {
           <span className="section-label text-[#1c1d20]/60 text-[12px] md:text-[14px] font-snellenberg uppercase tracking-[0.04em] mb-[24px]">
             EXPERIENCE
           </span>
-          <div className="top-divider w-full h-[1px] bg-[rgba(28,29,32,0.18)] will-change-transform" />
+          <div className="top-divider w-full h-[1px] bg-[rgba(28,29,32,0.18)]" />
         </div>
 
         {/* Experience List */}
@@ -132,7 +132,7 @@ export function ExperienceSection() {
                 </p>
               </div>
 
-              <div className="exp-divider w-full h-[1px] bg-[rgba(28,29,32,0.18)] will-change-transform" />
+              <div className="exp-divider w-full h-[1px] bg-[rgba(28,29,32,0.18)]" />
             </div>
           ))}
         </div>

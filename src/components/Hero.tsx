@@ -23,12 +23,12 @@ export function HeroSection() {
     e.preventDefault()
     const target = href === '#contact' ? 'bottom' : href
     if (lenis) {
-      lenis.scrollTo(target, { duration: 1.5, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
+      lenis.scrollTo(target, { duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
     } else {
       if (href === '#contact') {
-        window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' })
+        window.scrollTo({ top: document.documentElement.scrollHeight })
       } else {
-        document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
+        document.querySelector(href)?.scrollIntoView()
       }
     }
     if (window.history?.pushState) window.history.pushState(null, '', href)
@@ -94,12 +94,27 @@ export function HeroSection() {
       marquee.totalTime(marquee.duration() * 1000)
       marquee.timeScale(-1)
 
+      // Pause marquee when Hero leaves viewport (FIX 3)
+      ScrollTrigger.create({
+        trigger: heroRef.current,
+        start: 'top bottom',
+        end: 'bottom top',
+        onToggle: (self) => {
+          if (self.isActive) {
+            marquee.play()
+          } else {
+            marquee.pause()
+          }
+        },
+      })
+
       // Update marquee timeScale based on scroll direction
       ScrollTrigger.create({
         trigger: document.documentElement,
         start: 0,
         end: 'max',
         onUpdate: (self) => {
+          if (!heroRef.current || marquee.paused()) return
           // self.direction: 1 = scrolling down (RTL), -1 = scrolling up (LTR)
           const targetTimeScale = self.direction === 1 ? 1 : -1
           gsap.to(marquee, { 
@@ -180,12 +195,12 @@ export function HeroSection() {
         className="absolute left-1/2 bottom-[-5vh] md:bottom-[-8vh] h-[80vh] md:h-[110vh] w-[130vw] md:w-[95vw] lg:w-[85vw] z-30 will-change-transform pointer-events-none"
       >
         <Image
-          src="/profile-cutout.png"
+          src="/profile-cutout.webp"
           alt="Cris John Labiaga"
           fill
           priority
           sizes="(max-width: 768px) 130vw, (max-width: 1024px) 95vw, 85vw"
-          className="object-contain object-bottom drop-shadow-2xl"
+          className="object-contain object-bottom"
         />
       </div>
 

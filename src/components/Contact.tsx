@@ -110,7 +110,7 @@ export function ContactSection() {
               style={{ fontSize: 'clamp(4.2rem, 5.5vw, 5.8rem)' }}
             >
               <div className="overflow-hidden w-full pt-4">
-                <div className="line-reveal flex items-center will-change-transform">
+                <div className="line-reveal flex items-center">
                   <div className="w-[60px] h-[60px] md:w-[84px] md:h-[84px] rounded-full shrink-0 mr-6 md:mr-[32px] overflow-hidden relative bg-[#1c1d20]">
                     <Image src="/profile.png" alt="Cris John Labiaga" fill className="object-cover" style={{ transform: 'scale(1.8) translateY(15%)', objectPosition: 'center' }} sizes="(max-width: 768px) 60px, 84px" />
                   </div>
@@ -118,7 +118,7 @@ export function ContactSection() {
                 </div>
               </div>
               <div className="overflow-hidden w-full">
-                <div className="line-reveal inline-block will-change-transform pb-2">
+                <div className="line-reveal inline-block pb-2">
                   together
                 </div>
               </div>
@@ -134,10 +134,10 @@ export function ContactSection() {
 
           {/* Divider and Blue Circle - Gap increased by ~40px */}
           <div className="relative w-full mt-[50px] md:mt-[100px]">
-            <div className="divider-line w-full h-[1px] bg-[rgba(245,245,243,0.18)] will-change-transform" />
+            <div className="divider-line w-full h-[1px] bg-[rgba(245,245,243,0.18)]" />
 
             {/* CTA Exact Center at 82% */}
-            <div className="cta-wrapper absolute left-[82%] -translate-x-1/2 top-1/2 -translate-y-1/2 z-20 will-change-transform">
+            <div className="cta-wrapper absolute left-[82%] -translate-x-1/2 top-1/2 -translate-y-1/2 z-20">
               <Magnetic strength={0.2} textStrength={0.1}>
                 <a
                   href="mailto:johncrislabiaga@gmail.com"
@@ -153,7 +153,7 @@ export function ContactSection() {
           </div>
 
           {/* Contact Pills - Gap increased by ~35px */}
-          <div className="contact-row flex flex-col md:flex-row gap-4 mt-[50px] md:mt-[130px] will-change-transform">
+          <div className="contact-row flex flex-col md:flex-row gap-4 mt-[50px] md:mt-[130px]">
             <a
               href="mailto:johncrislabiaga@gmail.com"
               className="flex items-center justify-center px-6 md:px-8 rounded-full border border-[rgba(245,245,243,0.3)] hover:bg-white hover:text-[#1c1d20] transition-colors duration-300 font-snellenberg text-[16px] md:text-[18px] w-fit min-h-[76px] md:w-[310px]"
@@ -171,7 +171,7 @@ export function ContactSection() {
         </div>
 
         {/* Lower Footer Meta - shifted left and down slightly */}
-        <div className="meta-row w-full flex flex-col md:flex-row justify-between items-start md:items-end mt-auto pt-[60px] md:pt-[80px] px-[24px] md:px-[clamp(32px,4vw,50px)] will-change-transform pb-[20px] md:pb-[10px]">
+        <div className="meta-row w-full flex flex-col md:flex-row justify-between items-start md:items-end mt-auto pt-[60px] md:pt-[80px] px-[24px] md:px-[clamp(32px,4vw,50px)] pb-[20px] md:pb-[10px]">
 
           <div className="flex flex-col md:flex-row gap-10 md:gap-[30px]">
             <div className="flex flex-col gap-2">

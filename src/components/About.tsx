@@ -124,10 +124,10 @@ export function AboutSection() {
               className="font-snellenberg font-normal text-[#1c1d20] tracking-[-0.035em] leading-[1.03] md:leading-[1.08] flex flex-col"
               style={{ fontSize: 'clamp(2.1rem, 4vw, 4.75rem)' }}
             >
-              <span className="overflow-hidden inline-block"><span className="line-reveal-inner inline-block will-change-transform">I build full-stack systems</span></span>
-              <span className="overflow-hidden inline-block"><span className="line-reveal-inner inline-block will-change-transform">from interface to infrastructure,</span></span>
-              <span className="overflow-hidden inline-block"><span className="line-reveal-inner inline-block will-change-transform">with AI integrated where it</span></span>
-              <span className="overflow-hidden inline-block"><span className="line-reveal-inner inline-block will-change-transform">actually improves the product.</span></span>
+              <span className="overflow-hidden inline-block"><span className="line-reveal-inner inline-block">I build full-stack systems</span></span>
+              <span className="overflow-hidden inline-block"><span className="line-reveal-inner inline-block">from interface to infrastructure,</span></span>
+              <span className="overflow-hidden inline-block"><span className="line-reveal-inner inline-block">with AI integrated where it</span></span>
+              <span className="overflow-hidden inline-block"><span className="line-reveal-inner inline-block">actually improves the product.</span></span>
             </h2>
           </div>
 
@@ -138,7 +138,7 @@ export function AboutSection() {
           </div>
         </div>
 
-        <div ref={ctaRef} className="self-start md:self-auto md:absolute md:right-[6vw] md:bottom-[60px] lg:right-[8vw] lg:bottom-[80px] will-change-transform z-20 mt-[20px] md:mt-0 mb-[60px] md:mb-0">
+        <div ref={ctaRef} className="self-start md:self-auto md:absolute md:right-[6vw] md:bottom-[60px] lg:right-[8vw] lg:bottom-[80px] z-20 mt-[20px] md:mt-0 mb-[60px] md:mb-0">
           <Magnetic strength={0.2} textStrength={0.1}>
             <Link 
               href="#about"
@@ -158,7 +158,7 @@ export function AboutSection() {
             ABOUT
           </span>
           <div className="w-full h-[1px] bg-[rgba(28,29,32,0.20)] overflow-hidden">
-            <div ref={dividerRef} className="w-full h-full bg-[#1c1d20] origin-left will-change-transform" />
+            <div ref={dividerRef} className="w-full h-full bg-[#1c1d20] origin-left" />
           </div>
         </div>
 
@@ -172,7 +172,7 @@ export function AboutSection() {
           <span className="milestones-label text-[#1c1d20]/60 text-[12px] md:text-[14px] font-snellenberg uppercase tracking-[0.04em] mb-[24px]">
             MILESTONES
           </span>
-          <div className="milestones-top-divider w-full h-[1px] bg-[rgba(28,29,32,0.18)] will-change-transform" />
+          <div className="milestones-top-divider w-full h-[1px] bg-[rgba(28,29,32,0.18)]" />
         </div>
 
         {/* Milestone List */}
@@ -209,7 +209,7 @@ export function AboutSection() {
                 </p>
               </div>
 
-              <div className="milestone-divider w-full h-[1px] bg-[rgba(28,29,32,0.18)] will-change-transform" />
+              <div className="milestone-divider w-full h-[1px] bg-[rgba(28,29,32,0.18)]" />
             </div>
           ))}
         </div>

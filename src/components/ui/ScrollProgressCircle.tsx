@@ -2,12 +2,14 @@
 
 import { ArrowUp } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
+import { useLenis } from 'lenis/react'
 import { gsap, ScrollTrigger } from '@/lib/motion'
 
 export function ScrollProgressCircle() {
   const [isVisible, setIsVisible] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const progressCircleRef = useRef<SVGCircleElement>(null)
+  const lenis = useLenis()
   
   // Ref for the 3 particles
   const p1Ref = useRef<SVGCircleElement>(null)
@@ -15,10 +17,15 @@ export function ScrollProgressCircle() {
   const p3Ref = useRef<SVGCircleElement>(null)
 
   useEffect(() => {
+    let currentVisible = false
     const handleScroll = () => {
-      setIsVisible(window.scrollY > 150 && (window.innerHeight + window.scrollY) < document.body.offsetHeight - 200)
+      const nextVisible = window.scrollY > 150 && (window.innerHeight + window.scrollY) < document.body.offsetHeight - 200
+      if (nextVisible !== currentVisible) {
+        currentVisible = nextVisible
+        setIsVisible(nextVisible)
+      }
     }
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -86,7 +93,11 @@ export function ScrollProgressCircle() {
   }, [])
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    if (lenis) {
+      lenis.scrollTo(0, { duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
+    } else {
+      window.scrollTo({ top: 0 })
+    }
   }
 
   const particles = [
