@@ -210,6 +210,7 @@ export function Navbar() {
       <div className={`fixed top-6 right-6 md:top-8 md:right-12 z-[100] transition-opacity duration-500 ${(!isScrolled && !isActive) ? 'opacity-100 md:opacity-0 md:pointer-events-none' : 'opacity-100'}`}>
         <Magnetic strength={0.2} textStrength={0.1}>
           <button 
+            id="menu-btn"
             onClick={() => setIsActive(!isActive)}
             className={`group relative overflow-hidden w-[80px] h-[80px] md:w-[90px] md:h-[90px] rounded-full flex items-center justify-center transition-all duration-500 hover:scale-110 ${(!isScrolled && !isActive) ? "scale-100 md:scale-0" : "scale-100"} ${isActive ? "bg-[#455ce9] text-white" : "bg-[#1c1c1c] text-[#f5f5f3]"} cursor-pointer border-none`}
           >
