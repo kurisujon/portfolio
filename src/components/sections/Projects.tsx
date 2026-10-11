@@ -15,6 +15,9 @@ const projects = [
     meta: 'Full Stack AI Software Developer',
     image: '/veldra_preview.png',
     href: '/work/veldra',
+    backdrop: ['#472928', '#371b1a'],
+    width: 1920,
+    height: 1080,
   },
   {
     id: '02',
@@ -22,6 +25,9 @@ const projects = [
     meta: 'Full Stack AI Developer',
     image: '/studflow_preview.png',
     href: '/work/studflow',
+    backdrop: ['#2c314a', '#1e223a'],
+    width: 1920,
+    height: 1080,
   },
   {
     id: '03',
@@ -29,6 +35,9 @@ const projects = [
     meta: 'Full Stack Developer',
     image: '/images/projects/chodams-web/chodams-portfolio-cover-v2.png',
     href: '/work/chodams-web',
+    backdrop: ['#1b3a2c', '#0b2b1e'],
+    width: 1672,
+    height: 941,
   },
   {
     id: '04',
@@ -36,6 +45,9 @@ const projects = [
     meta: 'Mobile Developer',
     image: '/images/projects/chodams-mobile/cover-dashboard-gps.png',
     href: '/work/chodams-mobile',
+    backdrop: ['#1e3a29', '#0f2a1b'],
+    width: 1672,
+    height: 941,
   },
 ]
 
@@ -362,16 +374,33 @@ export function ProjectsSection() {
             }}
           >
             {projects.map((project) => (
-              <div key={project.id} className="w-full h-full relative flex-shrink-0">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  priority
-                  loading="eager"
-                  sizes="(max-width: 1024px) 0px, 540px"
-                  className="object-cover"
-                />
+              <div
+                key={project.id}
+                className="w-full h-full relative flex-shrink-0 flex items-center justify-center p-[9%]"
+                style={{
+                  background: `linear-gradient(160deg, ${project.backdrop[0]}, ${project.backdrop[1]})`,
+                }}
+              >
+                {/* Frame hugging the screenshot */}
+                <div
+                  className="relative rounded-md overflow-hidden max-w-full max-h-full"
+                  style={{
+                    aspectRatio: `${project.width} / ${project.height}`,
+                    width: project.width >= project.height ? '100%' : 'auto',
+                    height: project.width < project.height ? '100%' : 'auto',
+                    boxShadow: '0 22px 44px -14px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.07)',
+                  }}
+                >
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    priority
+                    loading="eager"
+                    sizes="(max-width: 1024px) 0px, 540px"
+                    className="object-cover"
+                  />
+                </div>
               </div>
             ))}
           </motion.div>
