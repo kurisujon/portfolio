@@ -6,16 +6,22 @@ import { gsap, ScrollTrigger } from '@/lib/motion'
 const experiences = [
   {
     date: "2026 — PRESENT",
-    role: "OJT Backend Developer",
-    company: "Infosoft Tech Solutions",
-    description: "Contributing to the development and maintenance of government local taxation systems deployed across multiple cities. Engineering backend workflows, RESTful APIs, relational database transactions, and ensuring production reliability.",
+    role: "Full-Stack & AI Systems Developer",
+    company: "Freelance & Independent Software",
+    description: "Architecting and shipping AI-powered SaaS platforms and production web applications (Veldra, StudFlow, CHoDaMS). Building agentic workflows, RAG search pipelines, responsive interactive interfaces, and containerized backend architectures.",
   },
   {
-    date: "2023 — PRESENT",
-    role: "Full Stack Developer",
-    company: "Independent Projects",
-    description: "Architecting and building full-stack applications. Designing frontend interfaces, backend APIs, data pipelines, and integrating AI automation capabilities for scalable digital products.",
-  }
+    date: "2026",
+    role: "Backend & Systems Developer",
+    company: "Infosoft Tech Solutions",
+    description: "Engineered mission-critical backend services and relational database transactions for government local taxation platforms deployed across multiple cities. Built RESTful APIs, optimized schema performance, and implemented automated data validation for municipal compliance.",
+  },
+  {
+    date: "2023 — 2025",
+    role: "Systems & Web Developer",
+    company: "Client & Contract Solutions",
+    description: "Designed and deployed custom web systems, relational database schemas, GIS/geospatial mapping utilities, and mobile integrations. Focused on end-to-end delivery from database architecture to responsive user interfaces.",
+  },
 ]
 
 export function ExperienceSection() {

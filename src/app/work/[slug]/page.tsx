@@ -25,14 +25,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!project) return { title: 'Project Not Found — Cris John Labiaga' }
 
   return {
-    title: `${project.title} — Cris John Labiaga`,
-    description: project.overview || project.subtitle || '',
+    title: `${project.name} — Cris John Labiaga`,
+    description: project.tagline || '',
     alternates: {
       canonical: `/work/${slug}`,
     },
     openGraph: {
-      title: `${project.title} — Cris John Labiaga`,
-      description: project.overview || project.subtitle || '',
+      title: `${project.name} — Cris John Labiaga`,
+      description: project.tagline || '',
       url: `https://www.webcris.dev/work/${slug}`,
       siteName: 'Cris John Labiaga',
       images: project.heroImage ? [project.heroImage] : [],
@@ -40,8 +40,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${project.title} — Cris John Labiaga`,
-      description: project.overview || project.subtitle || '',
+      title: `${project.name} — Cris John Labiaga`,
+      description: project.tagline || '',
       images: project.heroImage ? [project.heroImage] : [],
     }
   }
