@@ -4,6 +4,12 @@ import { CurtainReveal } from '@/components/layout/CurtainReveal'
 import { CaseStudyLayout } from '@/components/case-study/CaseStudyLayout'
 import { projectData } from '@/data/projects'
 
+export function generateStaticParams() {
+  return Object.keys(projectData).map((slug) => ({
+    slug,
+  }))
+}
+
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const project = projectData[slug as keyof typeof projectData]

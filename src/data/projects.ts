@@ -47,13 +47,13 @@ export const projectData: Record<string, Project> = {
     tagline: 'AI-powered learning platform grounded strictly in user-supplied documents',
     links: {
       live: 'https://studflow.webcris.dev/',
-      source: undefined,
+      source: 'https://github.com/kurisujon/studflow',
     },
     meta: {
       role: 'Full Stack AI Developer',
       type: 'AI Learning Workspace',
       year: '2025',
-      stack: ['Next.js 15', 'FastAPI', 'PostgreSQL', 'LangChain', 'Docker', 'Tailwind CSS'],
+      stack: ['Next.js 15', 'FastAPI', 'Gemini API', 'PostgreSQL', 'LangChain', 'Docker', 'Tailwind CSS'],
     },
     brief: {
       problem: 'An answer can only be as reliable as the context supplied to the model. Generic models hallucinate when responding without strict grounding in student materials.',
@@ -71,7 +71,7 @@ export const projectData: Record<string, Project> = {
       },
       {
         title: 'Full-Stack Study Workspace',
-        text: 'Interactive summaries, flashcards, annotations, and chat interfaces built with Next.js.',
+        text: 'Interactive summaries, SM-2 spaced-repetition flashcards, quizzes, and grounded AI chat interfaces built with Next.js.',
       },
       {
         title: 'Validation & Fallbacks',
@@ -114,7 +114,7 @@ export const projectData: Record<string, Project> = {
     tagline: 'Deterministic document verification and discrepancy detection for visa workflows',
     links: {
       live: 'https://veldra-sand.vercel.app/',
-      source: undefined,
+      source: 'https://github.com/kurisujon/veldra',
     },
     meta: {
       role: 'Full Stack AI Software Developer',
@@ -176,12 +176,12 @@ export const projectData: Record<string, Project> = {
     tagline: 'Centralized municipal housing registry, eligibility scoring, and GIS platform',
     links: {
       live: undefined,
-      source: undefined,
+      source: 'https://github.com/kurisujon/chodams_web',
     },
     meta: {
       role: 'Full Stack Developer',
       type: 'Municipal Housing Registry',
-      year: '2024',
+      year: '2025',
       stack: ['React', 'PHP', 'Laravel', 'MySQL', 'Leaflet GIS', 'CSS'],
     },
     brief: {
@@ -234,12 +234,12 @@ export const projectData: Record<string, Project> = {
     tagline: 'Offline-first field census collection with GPS tagging and sync queues',
     links: {
       live: undefined,
-      source: undefined,
+      source: 'https://github.com/kurisujon/chodams_mobile',
     },
     meta: {
       role: 'Mobile Developer',
       type: 'Field Collection App',
-      year: '2024',
+      year: '2025',
       stack: ['Flutter', 'Dart', 'SQLite', 'REST APIs', 'GPS & Camera'],
     },
     brief: {

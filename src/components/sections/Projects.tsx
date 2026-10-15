@@ -253,10 +253,10 @@ export function ProjectsSection() {
       <div className="w-full max-w-[1440px] mx-auto px-[24px] md:px-[5vw]">
         {/* Section Header */}
         <div className="flex justify-between items-center mb-8">
-          <span className="section-label text-[#1c1d20]/60 text-[12px] md:text-[14px] font-snellenberg uppercase tracking-[0.04em]">
+          <span className="section-label text-[#5c5d61] text-[12px] md:text-[14px] font-snellenberg uppercase tracking-[0.04em]">
             SELECTED WORK
           </span>
-          <span className="count-label text-[#1c1d20]/60 text-[12px] md:text-[14px] font-snellenberg">
+          <span className="count-label text-[#5c5d61] text-[12px] md:text-[14px] font-snellenberg">
             (04)
           </span>
         </div>
@@ -323,7 +323,7 @@ export function ProjectsSection() {
 
                 {/* --- MOBILE VIEW --- */}
                 <div className="md:hidden flex flex-col py-[40px]">
-                  <span className="fade-el text-[#1c1d20]/70 text-[0.8rem] font-mono mb-[16px]">{project.id}</span>
+                  <span className="fade-el text-[#5c5d61] text-[0.8rem] font-mono mb-[16px]">{project.id}</span>
 
                   <div className="img-mobile w-full relative rounded-[4px] overflow-hidden bg-[#e0e0de] mb-[24px]" style={{ aspectRatio: '4/3' }}>
                     <Image src={project.image} alt={project.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />

@@ -6,15 +6,15 @@ import { gsap, ScrollTrigger } from '@/lib/motion'
 const experiences = [
   {
     date: "2026 — PRESENT",
-    role: "Full-Stack & AI Systems Developer",
+    role: "Full Stack AI Software Developer",
     company: "Freelance & Independent Software",
-    description: "Architecting and shipping AI-powered SaaS platforms and production web applications (Veldra, StudFlow, CHoDaMS). Building agentic workflows, RAG search pipelines, responsive interactive interfaces, and containerized backend architectures.",
+    description: "Architecting and developing modern SaaS systems and production AI-powered web applications (Veldra, StudFlow, CHoDaMS), integrating agentic workflows, RAG search pipelines, interactive UIs, and containerized backends.",
   },
   {
     date: "2026",
-    role: "Backend & Systems Developer",
-    company: "Infosoft Tech Solutions",
-    description: "Engineered mission-critical backend services and relational database transactions for government local taxation platforms deployed across multiple cities. Built RESTful APIs, optimized schema performance, and implemented automated data validation for municipal compliance.",
+    role: "Full Stack Developer",
+    company: "Mini Clean Business Solutions",
+    description: "Collaborated with the CEO and engineering team to develop Government Systems LTS web platforms deployed across Davao de Oro, Panabo City, and Tagum City, supporting frontend interfaces, backend workflows, and relational data handling. Built, tested, and debugged RESTful API integrations using Postman for request validation, endpoint testing, and reliable service communication, while supporting feature implementation, troubleshooting, and maintenance across frontend-backend workflows.",
   },
   {
     date: "2023 — 2025",
@@ -88,7 +88,7 @@ export function ExperienceSection() {
         
         {/* Section Header */}
         <div className="flex flex-col mb-0">
-          <span className="section-label text-[#1c1d20]/60 text-[12px] md:text-[14px] font-snellenberg uppercase tracking-[0.04em] mb-[24px]">
+          <span className="section-label text-[#5c5d61] text-[12px] md:text-[14px] font-snellenberg uppercase tracking-[0.04em] mb-[24px]">
             EXPERIENCE
           </span>
           <div className="top-divider w-full h-[1px] bg-[rgba(28,29,32,0.18)]" />
@@ -102,7 +102,7 @@ export function ExperienceSection() {
               {/* Desktop / Tablet Row */}
               <div className="hidden md:flex flex-row py-[50px] lg:py-[70px]">
                 <div className="w-[25%] lg:w-[25%] shrink-0 pt-2">
-                  <span className="exp-date text-[#1c1d20]/60 text-[14px] lg:text-[15px] font-mono tracking-widest uppercase">
+                  <span className="exp-date text-[#5c5d61] text-[14px] lg:text-[15px] font-mono tracking-widest uppercase">
                     {exp.date}
                   </span>
                 </div>
@@ -116,7 +116,7 @@ export function ExperienceSection() {
                   <span className="exp-company text-[#1c1d20]/80 text-[1.2rem] lg:text-[1.4rem] font-snellenberg font-medium">
                     {exp.company}
                   </span>
-                  <p className="exp-desc text-[#1c1d20]/70 text-[16px] lg:text-[1.1rem] font-snellenberg leading-[1.6] max-w-[700px] mt-2">
+                  <p className="exp-desc text-[#5c5d61] text-[16px] lg:text-[1.1rem] font-snellenberg leading-[1.6] max-w-[700px] mt-2">
                     {exp.description}
                   </p>
                 </div>
@@ -124,7 +124,7 @@ export function ExperienceSection() {
 
               {/* Mobile Row */}
               <div className="md:hidden flex flex-col py-[40px]">
-                <span className="exp-date text-[#1c1d20]/60 text-[13px] font-mono tracking-widest uppercase mb-[20px]">
+                <span className="exp-date text-[#5c5d61] text-[13px] font-mono tracking-widest uppercase mb-[20px]">
                   {exp.date}
                 </span>
                 <h3 className="exp-role text-[#1c1d20] font-snellenberg font-normal tracking-[-0.02em] leading-[1.05] text-[2.4rem] mb-[12px]">
@@ -133,7 +133,7 @@ export function ExperienceSection() {
                 <span className="exp-company text-[#1c1d20]/80 text-[1.1rem] font-snellenberg font-medium mb-[16px]">
                   {exp.company}
                 </span>
-                <p className="exp-desc text-[#1c1d20]/70 text-[16px] font-snellenberg leading-[1.5]">
+                <p className="exp-desc text-[#5c5d61] text-[16px] font-snellenberg leading-[1.5]">
                   {exp.description}
                 </p>
               </div>

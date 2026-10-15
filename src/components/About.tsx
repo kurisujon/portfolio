@@ -154,7 +154,7 @@ export function AboutSection() {
         </div>
 
         <div className="w-full mt-auto pt-[40px] md:pt-[120px] flex flex-col relative z-10">
-          <span ref={labelRef} className="text-[12px] md:text-[14px] font-snellenberg tracking-[0.04em] text-[#1c1d20]/60 mb-[16px] md:mb-[24px]">
+          <span ref={labelRef} className="text-[12px] md:text-[14px] font-snellenberg tracking-[0.04em] text-[#5c5d61] mb-[16px] md:mb-[24px]">
             ABOUT
           </span>
           <div className="w-full h-[1px] bg-[rgba(28,29,32,0.20)] overflow-hidden">
@@ -169,7 +169,7 @@ export function AboutSection() {
         
         {/* Section Header */}
         <div className="flex flex-col mb-0">
-          <span className="milestones-label text-[#1c1d20]/60 text-[12px] md:text-[14px] font-snellenberg uppercase tracking-[0.04em] mb-[24px]">
+          <span className="milestones-label text-[#5c5d61] text-[12px] md:text-[14px] font-snellenberg uppercase tracking-[0.04em] mb-[24px]">
             MILESTONES
           </span>
           <div className="milestones-top-divider w-full h-[1px] bg-[rgba(28,29,32,0.18)]" />
@@ -183,7 +183,7 @@ export function AboutSection() {
               {/* Desktop / Tablet Row */}
               <div className="hidden md:flex flex-row py-[40px] lg:py-[55px]">
                 <div className="w-[25%] lg:w-[20%] shrink-0">
-                  <span className="milestone-year text-[#1c1d20]/60 text-[15px] font-mono tracking-widest">{item.year}</span>
+                  <span className="milestone-year text-[#5c5d61] text-[15px] font-mono tracking-widest">{item.year}</span>
                 </div>
                 <div className="flex flex-col gap-2 md:w-[75%] lg:w-[80%]">
                   <h3 
@@ -192,7 +192,7 @@ export function AboutSection() {
                   >
                     {item.title}
                   </h3>
-                  <p className="milestone-desc text-[#1c1d20]/70 font-snellenberg text-[16px] md:text-[1.1rem]">
+                  <p className="milestone-desc text-[#5c5d61] font-snellenberg text-[16px] md:text-[1.1rem]">
                     {item.subtitle}
                   </p>
                 </div>
@@ -200,11 +200,11 @@ export function AboutSection() {
 
               {/* Mobile Row */}
               <div className="md:hidden flex flex-col py-[32px]">
-                <span className="milestone-year text-[#1c1d20]/60 text-[14px] font-mono tracking-widest mb-[16px]">{item.year}</span>
+                <span className="milestone-year text-[#5c5d61] text-[14px] font-mono tracking-widest mb-[16px]">{item.year}</span>
                 <h3 className="milestone-title text-[#1c1d20] font-snellenberg font-normal tracking-[-0.02em] leading-[1.1] text-[2.2rem] mb-[8px]">
                   {item.title}
                 </h3>
-                <p className="milestone-desc text-[#1c1d20]/70 font-snellenberg text-[16px]">
+                <p className="milestone-desc text-[#5c5d61] font-snellenberg text-[16px]">
                   {item.subtitle}
                 </p>
               </div>

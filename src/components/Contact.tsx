@@ -139,14 +139,14 @@ export function ContactSection() {
             johncrislabiaga@gmail.com
           </a>
           <a
-            href="tel:+639123456789"
+            href="tel:+639702454456"
             className="flex items-center justify-center px-6 md:px-8 rounded-full hover:bg-white hover:text-[#1c1d20] transition-colors duration-300 font-snellenberg text-[15px] md:text-[18px] w-fit"
             style={{
               height: 'clamp(46px, 5.1vw, 76px)',
               border: '1px solid rgba(255, 255, 255, 0.2)',
             }}
           >
-            +63 912 345 6789
+            +63 970 245 4456
           </a>
         </div>
       </div>
@@ -203,7 +203,7 @@ export function ContactSection() {
               <span className="absolute left-0 bottom-[-4px] w-0 h-[1px] bg-[#f5f5f3] transition-all duration-300 ease-out group-hover:w-full" />
             </a>
             <a
-              href="https://github.com/webcris-dev"
+              href="https://github.com/kurisujon"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#f5f5f3] hover:-translate-y-[2px] transition-transform duration-300 relative group block"

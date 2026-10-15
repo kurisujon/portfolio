@@ -146,7 +146,7 @@ export function TechStackSection() {
 
         {/* Section Header */}
         <div className="flex flex-col mb-12">
-          <span className="section-label text-[#1c1d20]/60 text-[12px] md:text-[14px] font-snellenberg uppercase tracking-[0.04em] mb-[24px]">
+          <span className="section-label text-[#5c5d61] text-[12px] md:text-[14px] font-snellenberg uppercase tracking-[0.04em] mb-[24px]">
             TECH STACK
           </span>
           <div className="top-divider w-full h-[1px] bg-[rgba(28,29,32,0.18)]" />
@@ -162,7 +162,7 @@ export function TechStackSection() {
 
                 <div className="flex flex-col md:flex-row py-3 items-start md:items-center">
                   <div className="w-full md:w-[30%] flex items-center gap-6 mb-3 md:mb-0">
-                    <span className="tech-number text-[#1c1d20]/50 text-[13px] font-mono tracking-widest">{group.id}</span>
+                    <span className="tech-number text-[#5c5d61] text-[13px] font-mono tracking-widest">{group.id}</span>
                     <h3 className="tech-category text-[#1c1d20] text-[1.1rem] font-snellenberg font-medium uppercase tracking-[0.05em]">
                       {group.category}
                     </h3>
@@ -179,7 +179,7 @@ export function TechStackSection() {
                             ) : (
                               <icon.Icon className="w-5 h-5 md:w-6 md:h-6 mb-1 opacity-80 group-hover/card:opacity-100 transition-opacity text-[#1c1d20]" />
                             )}
-                            <span className="text-[#1c1d20]/60 text-[8px] md:text-[9px] font-mono text-center group-hover/card:text-[#1c1d20] transition-colors leading-tight px-1">{tech}</span>
+                            <span className="text-[#5c5d61] text-[8px] md:text-[9px] font-mono text-center group-hover/card:text-[#1c1d20] transition-colors leading-tight px-1">{tech}</span>
                           </div>
                         </Magnetic>
                       )

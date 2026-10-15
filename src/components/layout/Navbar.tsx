@@ -305,7 +305,7 @@ export function Navbar() {
             <div ref={socialsContainerRef} className="flex gap-[32px]">
               <Magnetic strength={0.12} textStrength={0.05}>
                 <a 
-                  href="https://github.com/webcris-dev" 
+                  href="https://github.com/kurisujon" 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="social-link relative text-[14px] md:text-[16px] font-mono text-[#f5f5f3] transition-colors outline-none pb-1"
