@@ -3,6 +3,7 @@
 import { useRef, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { gsap, ScrollTrigger } from '@/lib/motion'
 import { GlobeCanvas } from '@/components/ui/GlobeCanvas'
 import { useLenis } from 'lenis/react'
@@ -18,20 +19,28 @@ export function HeroSection() {
   const roleRef = useRef<HTMLDivElement>(null)
   
   const lenis = useLenis()
+  const pathname = usePathname()
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault()
-    const target = href === '#contact' ? 'bottom' : href
-    if (lenis) {
-      lenis.scrollTo(target, { duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
-    } else {
-      if (href === '#contact') {
-        window.scrollTo({ top: document.documentElement.scrollHeight })
-      } else {
-        document.querySelector(href)?.scrollIntoView()
+    if (href.startsWith('/#')) {
+      const targetHash = href.substring(1)
+      if (pathname === '/') {
+        e.preventDefault()
+        const target = targetHash === '#contact' ? 'bottom' : targetHash
+        if (lenis) {
+          lenis.scrollTo(target, { duration: 1.2, easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
+        } else {
+          if (targetHash === '#contact') {
+            window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' })
+          } else {
+            document.querySelector(targetHash)?.scrollIntoView({ behavior: 'smooth' })
+          }
+        }
+        if (typeof window !== 'undefined' && window.history?.pushState) {
+          window.history.pushState(null, '', targetHash)
+        }
       }
     }
-    if (window.history?.pushState) window.history.pushState(null, '', href)
   }
 
   useEffect(() => {
@@ -169,19 +178,19 @@ export function HeroSection() {
 
         <div className="hidden md:flex gap-[48px]">
           <Magnetic strength={0.2} textStrength={0.1}>
-            <Link href="#projects" onClick={(e) => handleNavClick(e, '#projects')} className="group flex flex-col items-center justify-center cursor-pointer relative py-2">
+            <Link href="/#projects" onClick={(e) => handleNavClick(e, '/#projects')} className="group flex flex-col items-center justify-center cursor-pointer relative py-2">
               <span className="transition-opacity">Work</span>
               <span className="absolute -bottom-1 w-[5px] h-[5px] bg-[#f5f5f3] rounded-full opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 ease-[cubic-bezier(0.76,0,0.24,1)]"></span>
             </Link>
           </Magnetic>
           <Magnetic strength={0.2} textStrength={0.1}>
-            <Link href="#about" onClick={(e) => handleNavClick(e, '#about')} className="group flex flex-col items-center justify-center cursor-pointer relative py-2">
+            <Link href="/#about" onClick={(e) => handleNavClick(e, '/#about')} className="group flex flex-col items-center justify-center cursor-pointer relative py-2">
               <span className="transition-opacity">About</span>
               <span className="absolute -bottom-1 w-[5px] h-[5px] bg-[#f5f5f3] rounded-full opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 ease-[cubic-bezier(0.76,0,0.24,1)]"></span>
             </Link>
           </Magnetic>
           <Magnetic strength={0.2} textStrength={0.1}>
-            <Link href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="group flex flex-col items-center justify-center cursor-pointer relative py-2">
+            <Link href="/#contact" onClick={(e) => handleNavClick(e, '/#contact')} className="group flex flex-col items-center justify-center cursor-pointer relative py-2">
               <span className="transition-opacity">Contact</span>
               <span className="absolute -bottom-1 w-[5px] h-[5px] bg-[#f5f5f3] rounded-full opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 ease-[cubic-bezier(0.76,0,0.24,1)]"></span>
             </Link>
@@ -237,15 +246,26 @@ export function HeroSection() {
       <div className="absolute bottom-[12%] md:bottom-[10%] left-0 w-full z-40 pointer-events-none flex items-end">
         <div ref={nameContainerRef} className="w-full will-change-transform">
           <div ref={marqueeRef} className="flex w-max whitespace-nowrap will-change-transform pb-4 md:pb-6">
-            {[...Array(4)].map((_, i) => (
-              <h1 
-                key={i}
-                className="font-snellenberg text-[#f5f5f3] font-normal tracking-[-0.055em] leading-[0.88] pr-8"
-                style={{ fontSize: 'clamp(3.5rem, 9.5vw, 12rem)' }}
-              >
-                Cris John Labiaga —
-              </h1>
-            ))}
+            {[...Array(4)].map((_, i) =>
+              i === 0 ? (
+                <h1 
+                  key={i}
+                  className="font-snellenberg text-[#f5f5f3] font-normal tracking-[-0.055em] leading-[0.88] pr-8"
+                  style={{ fontSize: 'clamp(3.5rem, 9.5vw, 12rem)' }}
+                >
+                  Cris John Labiaga —
+                </h1>
+              ) : (
+                <span 
+                  key={i}
+                  aria-hidden="true"
+                  className="font-snellenberg text-[#f5f5f3] font-normal tracking-[-0.055em] leading-[0.88] pr-8 inline-block"
+                  style={{ fontSize: 'clamp(3.5rem, 9.5vw, 12rem)' }}
+                >
+                  Cris John Labiaga —
+                </span>
+              )
+            )}
           </div>
         </div>
       </div>

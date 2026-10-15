@@ -1,12 +1,15 @@
 'use client'
 
 import { useEffect, useRef, ReactNode } from 'react'
+import { usePathname } from 'next/navigation'
 import { ReactLenis, useLenis } from 'lenis/react'
 import type { LenisRef } from 'lenis/react'
 import { gsap, ScrollTrigger } from '@/lib/motion'
+import 'lenis/dist/lenis.css'
 
 function ScrollTriggerSync() {
   const lenis = useLenis()
+  const pathname = usePathname()
 
   useEffect(() => {
     if (!lenis) return
@@ -38,19 +41,28 @@ function ScrollTriggerSync() {
     }
   }, [lenis])
 
-  // Handle URL hash on initial load or browser navigation
+  // Handle route and URL hash on initial load or browser navigation
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.location.hash === '#contact') {
-      const timer = setTimeout(() => {
-        lenis?.resize()
-        lenis?.scrollTo('bottom', {
+    if (!lenis) return
+
+    const hash = typeof window !== 'undefined' ? window.location.hash : ''
+
+    if (hash && (hash === '#projects' || hash === '#about' || hash === '#contact' || document.querySelector(hash))) {
+      const rafId = requestAnimationFrame(() => {
+        ScrollTrigger.refresh()
+        const target = hash === '#contact' ? 'bottom' : hash
+        lenis.scrollTo(target, {
+          offset: 0,
           duration: 1.2,
-          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         })
-      }, 500)
-      return () => clearTimeout(timer)
+      })
+      return () => cancelAnimationFrame(rafId)
+    } else {
+      lenis.scrollTo(0, { immediate: true })
+      ScrollTrigger.refresh()
     }
-  }, [lenis])
+  }, [pathname, lenis])
 
   return null
 }
@@ -70,6 +82,8 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
       options={{
         autoRaf: false,
         lerp: 0.1,
+        smoothWheel: true,
+        syncTouch: false,
       }}
     >
       <ScrollTriggerSync />
@@ -79,3 +93,4 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
 }
 
 export default SmoothScroll
+

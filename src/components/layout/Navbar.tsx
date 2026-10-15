@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { useState, useEffect, useRef } from 'react'
 import { useLenis } from 'lenis/react'
 import { gsap } from '@/lib/motion'
@@ -9,9 +9,9 @@ import { Magnetic } from '@/components/ui/MagneticButton'
 
 const navLinks = [
   { name: 'Home', href: '/' },
-  { name: 'Work', href: '#projects' },
-  { name: 'About', href: '#about' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'Work', href: '/#projects' },
+  { name: 'About', href: '/#about' },
+  { name: 'Contact', href: '/#contact' },
 ]
 
 export function Navbar() {
@@ -21,6 +21,7 @@ export function Navbar() {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
   const lenis = useLenis()
   const router = useRouter()
+  const pathname = usePathname()
   
   const drawerRef = useRef<HTMLDivElement>(null)
   const svgPathRef = useRef<SVGPathElement>(null)
@@ -49,10 +50,12 @@ export function Navbar() {
       if (scrollY < wh * 0.5) {
         nextActive = null
       } else if (scrollY >= document.documentElement.scrollHeight - wh - 100) {
-        nextActive = '#contact'
+        nextActive = '/#contact'
       } else {
         for (const l of navLinks) {
-          const el = document.querySelector(l.href) as HTMLElement | null
+          if (l.href === '/') continue
+          const selector = l.href.startsWith('/#') ? l.href.substring(1) : l.href
+          const el = document.querySelector(selector) as HTMLElement | null
           if (el && el.offsetTop <= scrollY + wh * 0.3) {
             nextActive = l.href
           }
@@ -167,41 +170,50 @@ export function Navbar() {
   }, [isActive])
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault()
-    setIsActive(false)
-    lenis?.resize()
-    
-    setTimeout(() => {
-      // If we are navigating to Home
-      if (href === '/') {
-        if (window.location.pathname === '/') {
-          if (lenis) lenis.scrollTo(0, { duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
-          else window.scrollTo({ top: 0 })
+    // If navigating to Home
+    if (href === '/') {
+      if (pathname === '/') {
+        e.preventDefault()
+        setIsActive(false)
+        if (lenis) {
+          lenis.scrollTo(0, { duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
         } else {
-          router.push('/')
+          window.scrollTo({ top: 0, behavior: 'smooth' })
         }
-        return
-      }
-
-      // If we are not on the homepage but trying to click a hash link
-      if (href.startsWith('#') && window.location.pathname !== '/') {
-        router.push('/' + href)
-        return
-      }
-      
-      const target = href === '#contact' ? 'bottom' : href
-
-      if (lenis) {
-        lenis.scrollTo(target, { duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
       } else {
-        if (href === '#contact') {
-          window.scrollTo({ top: document.documentElement.scrollHeight })
-        } else {
-          document.querySelector(href)?.scrollIntoView()
-        }
+        setIsActive(false)
       }
-      if (window.history?.pushState) window.history.pushState(null, '', href)
-    }, 600)
+      return
+    }
+
+    // Root-relative hash link (e.g. '/#projects', '/#about', '/#contact')
+    if (href.startsWith('/#')) {
+      const targetHash = href.substring(1)
+      if (pathname === '/') {
+        e.preventDefault()
+        setIsActive(false)
+        const target = targetHash === '#contact' ? 'bottom' : targetHash
+        if (lenis) {
+          lenis.scrollTo(target, {
+            duration: 1.2,
+            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          })
+        } else {
+          if (targetHash === '#contact') {
+            window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' })
+          } else {
+            document.querySelector(targetHash)?.scrollIntoView({ behavior: 'smooth' })
+          }
+        }
+        if (typeof window !== 'undefined' && window.history?.pushState) {
+          window.history.pushState(null, '', targetHash)
+        }
+      } else {
+        // When on /work/*, close the drawer and let Next.js Link navigate back to /#projects cleanly
+        setIsActive(false)
+      }
+      return
+    }
   }
 
   return (

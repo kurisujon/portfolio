@@ -141,7 +141,7 @@ export function AboutSection() {
         <div ref={ctaRef} className="self-start md:self-auto md:absolute md:right-[6vw] md:bottom-[60px] lg:right-[8vw] lg:bottom-[80px] z-20 mt-[20px] md:mt-0 mb-[60px] md:mb-0">
           <Magnetic strength={0.2} textStrength={0.1}>
             <Link 
-              href="#about"
+              href="/#about"
               className="group relative overflow-hidden flex items-center justify-center bg-[#1c1d20] text-[#f5f5f3] rounded-full shadow-xl"
               style={{ width: 'clamp(110px, 12vw, 180px)', aspectRatio: '1/1' }}
             >

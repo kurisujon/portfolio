@@ -277,8 +277,6 @@ export function ProjectsSection() {
               <Link
                 key={project.id}
                 href={project.href}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="project-row group block w-full relative cursor-pointer outline-none"
                 onPointerEnter={(e) => handleRowPointerEnter(e, index)}
                 onFocus={(e) => handleRowFocus(e, index)}
@@ -358,7 +356,7 @@ export function ProjectsSection() {
         <div className="w-full flex justify-end mt-[60px] md:mt-[80px]">
           <Magnetic strength={0.2} textStrength={0.1}>
             <Link
-              href="#projects"
+              href="/#projects"
               className="group relative overflow-hidden flex items-center justify-center bg-[#1c1d20] text-[#f5f5f3] rounded-full shadow-xl"
               style={{ width: 'clamp(120px, 12vw, 160px)', aspectRatio: '1/1' }}
             >

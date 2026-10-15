@@ -9,7 +9,7 @@ export function Preloader({ onComplete }: { onComplete?: () => void }) {
   const [index, setIndex] = useState(0)
   const [shouldRender, setShouldRender] = useState(true)
   const svgPathRef = useRef<SVGPathElement>(null)
-  const textRef = useRef<HTMLHeadingElement>(null)
+  const textRef = useRef<HTMLParagraphElement>(null)
   const wrapperRef = useRef<HTMLDivElement>(null)
   
   useEffect(() => {
@@ -33,7 +33,10 @@ export function Preloader({ onComplete }: { onComplete?: () => void }) {
       const tl = gsap.timeline({
         onComplete: () => {
           document.body.style.overflow = ''
-          setTimeout(() => setShouldRender(false), 0)
+          if (wrapperRef.current) {
+            wrapperRef.current.style.display = 'none'
+          }
+          setShouldRender(false)
           onComplete?.()
         }
       })
@@ -66,6 +69,7 @@ export function Preloader({ onComplete }: { onComplete?: () => void }) {
     }, 1400) // 180ms * 5 words + short delay
 
     return () => {
+      document.body.style.overflow = ''
       clearInterval(interval)
       clearTimeout(exitTimeout)
     }
@@ -89,12 +93,13 @@ export function Preloader({ onComplete }: { onComplete?: () => void }) {
         />
       </svg>
 
-      <h1 
+      <p 
         ref={textRef}
+        aria-hidden="true"
         className="relative z-10 text-4xl md:text-6xl text-white font-snellenberg uppercase tracking-tight select-none"
       >
         {words[index]}
-      </h1>
+      </p>
     </div>
   )
 }

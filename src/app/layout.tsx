@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Background } from '@/components/layout/Background'
-import { ScrollProgressCircle } from '@/components/ui/ScrollProgressCircle'
 import { Preloader } from '@/components/ui/Preloader'
 import SmoothScroll from '@/components/motion/SmoothScroll'
 import 'lenis/dist/lenis.css'
@@ -59,7 +58,6 @@ export default function RootLayout({
         <Preloader />
         <SmoothScroll>
           <Background />
-          <ScrollProgressCircle />
           <div className="relative z-10">
             {children}
           </div>
