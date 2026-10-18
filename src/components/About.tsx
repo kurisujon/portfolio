@@ -4,27 +4,32 @@ import { useRef, useEffect } from 'react'
 import { gsap, ScrollTrigger } from '@/lib/motion'
 import Link from 'next/link'
 import { Magnetic } from '@/components/ui/MagneticButton'
+import { GraduationCap, Trophy, Award, Smartphone, ArrowUpRight } from 'lucide-react'
 
-const milestoneItems = [
+const milestones = [
   {
-    title: 'Bachelor of Science in Information Technology',
-    subtitle: 'University of Mindanao - Digos College',
-    year: '2026',
+    year: "2026",
+    title: "Bachelor of Science in Information Technology",
+    subtitle: "University of Mindanao - Digos College",
+    icon: GraduationCap,
   },
   {
-    title: 'Ideation Bootcamp Champion',
-    subtitle: 'SalinKaalaman (Language Barrier Solution)',
-    year: '2025',
+    year: "2025",
+    title: "Ideation Bootcamp Champion",
+    subtitle: "SalinKaalaman (Language Barrier Solution)",
+    icon: Trophy,
   },
   {
-    title: 'SIA Top 5 Best Project',
-    subtitle: 'CHoDaMS - City Housing Data System',
-    year: '2025',
+    year: "2025",
+    title: "SIA Top 5 Best Project",
+    subtitle: "CHoDaMS - City Housing Data System",
+    icon: Award,
   },
   {
-    title: 'CODECRAFT Top 5 Mobile',
-    subtitle: 'Eathink About It Mobile',
-    year: '2023',
+    year: "2023",
+    title: "CODECRAFT Top 5 Mobile",
+    subtitle: "Eathink About It Mobile",
+    icon: Smartphone,
   },
 ]
 
@@ -85,26 +90,21 @@ export function AboutSection() {
         .to(milestonesTopDivider, { scaleX: 1, duration: 1.2, ease: 'power3.out' }, "-=0.6")
       }
 
-      const rows = container.querySelectorAll('.milestone-row')
-      rows.forEach((row) => {
-        const year = row.querySelector('.milestone-year')
-        const title = row.querySelector('.milestone-title')
-        const desc = row.querySelector('.milestone-desc')
-        const divider = row.querySelector('.milestone-divider')
-        
-        gsap.set(year, { opacity: 0, y: 15 })
-        gsap.set([title, desc], { opacity: 0, y: 20 })
-        gsap.set(divider, { scaleX: 0, transformOrigin: 'left' })
+      const cards = container.querySelectorAll('.milestone-card')
+      if (cards.length > 0) {
+        gsap.set(cards, { opacity: 0, y: 30 })
 
-        const tl = gsap.timeline({
-          scrollTrigger: { trigger: row, start: 'top 90%', once: true }
+        gsap.timeline({
+          scrollTrigger: { trigger: cards[0], start: 'top 88%', once: true }
         })
-        
-        tl.to(divider, { scaleX: 1, duration: 1.2, ease: 'power3.out' })
-          .to(year, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, "-=0.8")
-          .to(title, { opacity: 1, y: 0, duration: 0.8, ease: 'power4.out' }, "-=0.6")
-          .to(desc, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, "-=0.6")
-      })
+        .to(cards, {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          stagger: 0.12,
+          ease: 'power3.out',
+        })
+      }
     }
 
     }, container)
@@ -113,7 +113,7 @@ export function AboutSection() {
   }, [])
 
   return (
-    <section id="about" ref={containerRef} className="relative w-full bg-[#f5f5f3] text-[#1c1d20] flex flex-col z-10 pt-[140px] md:pt-[180px] ">
+    <section id="about" ref={containerRef} className="relative w-full bg-[#f5f5f3] text-[#1c1d20] flex flex-col z-10 pt-[140px] md:pt-[180px] pb-[100px] md:pb-[140px]">
       
       {/* SECTION 2: INTRO / ABOUT TEASER */}
       <div className="w-full max-w-[1440px] mx-auto px-[24px] md:px-[5vw] relative min-h-[70vh] flex flex-col">
@@ -175,43 +175,40 @@ export function AboutSection() {
           <div className="milestones-top-divider w-full h-[1px] bg-[rgba(28,29,32,0.18)]" />
         </div>
 
-        {/* Milestone List */}
-        <div className="flex flex-col">
-          {milestoneItems.map((item, index) => (
-            <div key={index} className="milestone-row group flex flex-col">
-              
-              {/* Desktop / Tablet Row */}
-              <div className="hidden md:flex flex-row py-[40px] lg:py-[55px]">
-                <div className="w-[25%] lg:w-[20%] shrink-0">
-                  <span className="milestone-year text-[#5c5d61] text-[15px] font-mono tracking-widest">{item.year}</span>
+        {/* Milestone 2x2 Architectural Card Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-[32px] md:mt-[48px]">
+          {milestones.map((item) => {
+            const Icon = item.icon
+            return (
+              <div
+                key={item.title}
+                className="milestone-card group relative bg-[#0a0a0a] border border-white/10 rounded-md p-6 md:p-8 flex flex-col justify-between min-h-[190px] md:min-h-[210px] transition-all duration-300 hover:border-white/20"
+              >
+                {/* Top Row: Icon + Year badge & ArrowUpRight */}
+                <div className="flex items-start justify-between mb-6 md:mb-8">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 md:w-10 md:h-10 rounded-md bg-white/[0.04] border border-white/10 flex items-center justify-center text-white/80 transition-colors duration-300 group-hover:text-white group-hover:border-white/20">
+                      <Icon className="w-4 h-4 md:w-5 md:h-5 stroke-[1.5]" />
+                    </div>
+                    <span className="font-mono text-[13px] md:text-[14px] text-white/50 tracking-widest uppercase">
+                      {item.year}
+                    </span>
+                  </div>
+                  <ArrowUpRight className="w-4 h-4 text-white/30 group-hover:text-white/80 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300 stroke-[1.5]" />
                 </div>
-                <div className="flex flex-col gap-2 md:w-[75%] lg:w-[80%]">
-                  <h3 
-                    className="milestone-title text-[#1c1d20] font-snellenberg font-normal tracking-[-0.03em] leading-[1.05]"
-                    style={{ fontSize: 'clamp(2rem, 3vw, 3.5rem)' }}
-                  >
+
+                {/* Content: Title & Subtitle */}
+                <div className="flex flex-col gap-2">
+                  <h3 className="text-[#f5f5f3] font-snellenberg text-[1.2rem] sm:text-[1.3rem] md:text-[1.4rem] lg:text-[1.5rem] font-normal leading-[1.18] tracking-[-0.02em] group-hover:text-white transition-colors">
                     {item.title}
                   </h3>
-                  <p className="milestone-desc text-[#5c5d61] font-snellenberg text-[16px] md:text-[1.1rem]">
+                  <p className="text-white/60 font-snellenberg text-[14px] md:text-[15px] leading-relaxed">
                     {item.subtitle}
                   </p>
                 </div>
               </div>
-
-              {/* Mobile Row */}
-              <div className="md:hidden flex flex-col py-[32px]">
-                <span className="milestone-year text-[#5c5d61] text-[14px] font-mono tracking-widest mb-[16px]">{item.year}</span>
-                <h3 className="milestone-title text-[#1c1d20] font-snellenberg font-normal tracking-[-0.02em] leading-[1.1] text-[2.2rem] mb-[8px]">
-                  {item.title}
-                </h3>
-                <p className="milestone-desc text-[#5c5d61] font-snellenberg text-[16px]">
-                  {item.subtitle}
-                </p>
-              </div>
-
-              <div className="milestone-divider w-full h-[1px] bg-[rgba(28,29,32,0.18)]" />
-            </div>
-          ))}
+            )
+          })}
         </div>
       </div>
 
