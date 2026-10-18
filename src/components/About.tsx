@@ -176,33 +176,33 @@ export function AboutSection() {
         </div>
 
         {/* Milestone 2x2 Architectural Card Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-[32px] md:mt-[48px]">
-          {milestones.map((item) => {
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full mt-[32px] md:mt-[48px]">
+          {milestones.map((item, index) => {
             const Icon = item.icon
             return (
               <div
-                key={item.title}
-                className="milestone-card group relative bg-[#0a0a0a] border border-white/10 rounded-md p-6 md:p-8 flex flex-col justify-between min-h-[190px] md:min-h-[210px] transition-all duration-300 hover:border-white/20"
+                key={index}
+                className="milestone-card group relative bg-transparent hover:bg-black/[0.02] border border-black/10 hover:border-black/25 rounded-2xl p-8 md:p-10 flex flex-col justify-between min-h-[220px] transition-all duration-300 cursor-pointer"
               >
                 {/* Top Row: Icon + Year badge & ArrowUpRight */}
                 <div className="flex items-start justify-between mb-6 md:mb-8">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 md:w-10 md:h-10 rounded-md bg-white/[0.04] border border-white/10 flex items-center justify-center text-white/80 transition-colors duration-300 group-hover:text-white group-hover:border-white/20">
-                      <Icon className="w-4 h-4 md:w-5 md:h-5 stroke-[1.5]" />
+                    <div className="w-10 h-10 md:w-11 md:h-11 rounded-xl bg-black/[0.04] border border-black/10 flex items-center justify-center text-[#1c1d20] transition-colors duration-300 group-hover:bg-black/[0.07] group-hover:border-black/20">
+                      <Icon className="w-5 h-5 stroke-[1.5]" />
                     </div>
-                    <span className="font-mono text-[13px] md:text-[14px] text-white/50 tracking-widest uppercase">
+                    <span className="font-mono text-[13px] md:text-[14px] text-[#5c5d61] tracking-widest uppercase">
                       {item.year}
                     </span>
                   </div>
-                  <ArrowUpRight className="w-4 h-4 text-white/30 group-hover:text-white/80 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300 stroke-[1.5]" />
+                  <ArrowUpRight className="w-5 h-5 text-black/30 group-hover:text-[#1c1d20] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300 stroke-[1.5]" />
                 </div>
 
                 {/* Content: Title & Subtitle */}
                 <div className="flex flex-col gap-2">
-                  <h3 className="text-[#f5f5f3] font-snellenberg text-[1.2rem] sm:text-[1.3rem] md:text-[1.4rem] lg:text-[1.5rem] font-normal leading-[1.18] tracking-[-0.02em] group-hover:text-white transition-colors">
+                  <h3 className="text-[#1c1d20] font-snellenberg text-[1.35rem] sm:text-[1.5rem] md:text-[1.65rem] lg:text-[1.75rem] font-normal leading-[1.18] tracking-[-0.02em] transition-colors">
                     {item.title}
                   </h3>
-                  <p className="text-white/60 font-snellenberg text-[14px] md:text-[15px] leading-relaxed">
+                  <p className="text-[#5c5d61] font-snellenberg text-[15px] md:text-[16px] leading-relaxed">
                     {item.subtitle}
                   </p>
                 </div>
