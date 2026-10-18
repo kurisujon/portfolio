@@ -11,7 +11,7 @@ const experiences = [
     description: "Architecting and developing modern SaaS systems and production AI-powered web applications (Veldra, StudFlow, CHoDaMS), integrating agentic workflows, RAG search pipelines, interactive UIs, and containerized backends.",
   },
   {
-    date: "2026",
+    date: "2025 — 2026",
     role: "Full Stack Developer",
     company: "Mini Clean Business Solutions",
     description: "Collaborated with the CEO and engineering team to develop Government Systems LTS web platforms deployed across Davao de Oro, Panabo City, and Tagum City, supporting frontend interfaces, backend workflows, and relational data handling. Built, tested, and debugged RESTful API integrations using Postman for request validation, endpoint testing, and reliable service communication, while supporting feature implementation, troubleshooting, and maintenance across frontend-backend workflows.",
