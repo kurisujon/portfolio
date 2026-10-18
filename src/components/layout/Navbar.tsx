@@ -80,6 +80,11 @@ export function Navbar() {
       lenis?.start()
       document.body.style.overflow = ''
     }
+
+    return () => {
+      lenis?.start()
+      document.body.style.overflow = ''
+    }
   }, [isActive, lenis])
 
   const tlRef = useRef<gsap.core.Timeline | null>(null);
@@ -161,7 +166,7 @@ export function Navbar() {
   useEffect(() => {
     if (tlRef.current) {
       if (isActive) {
-        gsap.set(drawerRef.current, { display: 'flex' })
+        gsap.set(drawerRef.current, { display: 'flex', pointerEvents: 'auto' })
         tlRef.current.timeScale(1).play()
       } else {
         tlRef.current.timeScale(1.5).reverse()
@@ -170,18 +175,30 @@ export function Navbar() {
   }, [isActive])
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    // Immediately unlock body scroll and resume Lenis so navigation is never blocked
+    document.body.style.overflow = ''
+    lenis?.start()
+    setIsActive(false)
+    if (drawerRef.current) {
+      drawerRef.current.style.pointerEvents = 'none'
+    }
+
     // If navigating to Home
     if (href === '/') {
       if (pathname === '/') {
         e.preventDefault()
-        setIsActive(false)
+        if (typeof window !== 'undefined' && window.history?.pushState) {
+          window.history.pushState(null, '', '/')
+        }
         if (lenis) {
-          lenis.scrollTo(0, { duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
+          lenis.scrollTo(0, {
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            force: true,
+          })
         } else {
           window.scrollTo({ top: 0, behavior: 'smooth' })
         }
-      } else {
-        setIsActive(false)
       }
       return
     }
@@ -191,12 +208,15 @@ export function Navbar() {
       const targetHash = href.substring(1)
       if (pathname === '/') {
         e.preventDefault()
-        setIsActive(false)
-        const target = targetHash === '#contact' ? 'bottom' : targetHash
+        if (typeof window !== 'undefined' && window.history?.pushState) {
+          window.history.pushState(null, '', targetHash)
+        }
+        const target = targetHash === '#contact' ? 'bottom' : (document.getElementById(targetHash.slice(1)) || targetHash)
         if (lenis) {
           lenis.scrollTo(target, {
             duration: 1.2,
             easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            force: true,
           })
         } else {
           if (targetHash === '#contact') {
@@ -205,12 +225,6 @@ export function Navbar() {
             document.querySelector(targetHash)?.scrollIntoView({ behavior: 'smooth' })
           }
         }
-        if (typeof window !== 'undefined' && window.history?.pushState) {
-          window.history.pushState(null, '', targetHash)
-        }
-      } else {
-        // When on /work/*, close the drawer and let Next.js Link navigate back to /#projects cleanly
-        setIsActive(false)
       }
       return
     }

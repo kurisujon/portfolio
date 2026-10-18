@@ -45,21 +45,32 @@ function ScrollTriggerSync() {
   useEffect(() => {
     if (!lenis) return
 
+    // Ensure Lenis is running and body overflow is reset on route transitions
+    lenis.start()
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = ''
+    }
+
     const hash = typeof window !== 'undefined' ? window.location.hash : ''
 
     if (hash && (hash === '#projects' || hash === '#about' || hash === '#contact' || document.querySelector(hash))) {
-      const rafId = requestAnimationFrame(() => {
+      const target = hash === '#contact' ? 'bottom' : hash
+
+      // Wait a tick for DOM and layout to mount after route transition
+      const timer = setTimeout(() => {
         ScrollTrigger.refresh()
-        const target = hash === '#contact' ? 'bottom' : hash
-        lenis.scrollTo(target, {
+        const el = target === 'bottom' ? 'bottom' : (document.getElementById(target.slice(1)) || target)
+        lenis.scrollTo(el, {
           offset: 0,
           duration: 1.2,
           easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          force: true,
         })
-      })
-      return () => cancelAnimationFrame(rafId)
+      }, 50)
+
+      return () => clearTimeout(timer)
     } else {
-      lenis.scrollTo(0, { immediate: true })
+      lenis.scrollTo(0, { immediate: true, force: true })
       ScrollTrigger.refresh()
     }
   }, [pathname, lenis])

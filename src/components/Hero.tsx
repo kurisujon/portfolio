@@ -26,9 +26,15 @@ export function HeroSection() {
       const targetHash = href.substring(1)
       if (pathname === '/') {
         e.preventDefault()
-        const target = targetHash === '#contact' ? 'bottom' : targetHash
+        document.body.style.overflow = ''
+        lenis?.start()
+        const target = targetHash === '#contact' ? 'bottom' : (document.getElementById(targetHash.slice(1)) || targetHash)
         if (lenis) {
-          lenis.scrollTo(target, { duration: 1.2, easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
+          lenis.scrollTo(target, {
+            duration: 1.2,
+            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            force: true,
+          })
         } else {
           if (targetHash === '#contact') {
             window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' })
